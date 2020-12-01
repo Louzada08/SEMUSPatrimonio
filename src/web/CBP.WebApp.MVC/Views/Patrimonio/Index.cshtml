@@ -1,0 +1,45 @@
+﻿@using CBP.WebApp.MVC.Extensions
+@model IEnumerable<CBP.WebApp.MVC.Models.PatrimonioViewModel>
+
+@{
+    ViewData["Title"] = "Todos os patrimônios";
+}
+
+<section>
+    <div>
+        <div style="background-image: url(images/banners/Template.jpg); height: 100%; background-position: center; background-repeat: no-repeat; background-size: cover">
+            <div style="text-align: center;">
+                <img src="~/images/banners/nerdstore.png" />
+            </div>
+        </div>
+        <div class="container" style=" padding-top: 20px">
+            <div class="row">
+                @{
+                    foreach (var patrimonio in Model.OrderBy(p=>p.Descricao))
+                    {
+                        <div class="col-md-3">
+                            <div href="#" class="card card-product-grid">
+                                <a asp-controller="Patrimonio" asp-action="PatrimonioDetalhe" asp-route-id="@patrimonio.Id" class="img-wrap">
+                                    <img src="~/images/produtos/caneca1.jpg" alt="caneca1">
+                                </a>
+                                <figcaption class="info-wrap">
+                                    <a asp-controller="Patrimonio" asp-action="ProdutoDetalhe" asp-route-id="@patrimonio.Id" class="title">
+                                        <b> @patrimonio.Descricao</b>
+                                    </a>
+
+                                    <small class="card-text">
+                                        @this.MensagemEstoque(Convert.ToInt32(patrimonio.NumeroNotaFiscal))<br/><br/>
+                                        @patrimonio.CodigoPatrimonio
+                                    </small>
+                                </figcaption>
+                                <div class="card-footer price mt-1">
+                                    <h3>@patrimonio.Ativo</h3>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</section>
