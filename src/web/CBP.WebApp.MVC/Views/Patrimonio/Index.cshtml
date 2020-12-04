@@ -29,11 +29,11 @@
 
                                     <small class="card-text">
                                         @this.MensagemEstoque(Convert.ToInt32(patrimonio.NumeroNotaFiscal))<br/><br/>
-                                        @patrimonio.CodigoPatrimonio
+                                        @patrimonio.Descricao
                                     </small>
                                 </figcaption>
                                 <div class="card-footer price mt-1">
-                                    <h3>@patrimonio.Ativo</h3>
+                                    <h3>@this.FormatoMoeda(patrimonio.ValorBem)</h3>
                                 </div>
                             </div>
                         </div>

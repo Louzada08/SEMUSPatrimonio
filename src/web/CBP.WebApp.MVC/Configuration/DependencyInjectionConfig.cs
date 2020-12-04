@@ -5,6 +5,10 @@ using CBP.WebApp.MVC.Services;
 using CBP.WebApp.MVC.Services.Handlers;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Net.Http;
+using Polly;
+using Polly.Retry;
+using Polly.Extensions.Http;
 
 namespace CBP.WebApp.MVC.Configuration
 {
@@ -17,7 +21,10 @@ namespace CBP.WebApp.MVC.Configuration
       services.AddHttpClient<IAutenticacaoService, AutenticacaoService>();
 
       services.AddHttpClient<IPatrimonioService, PatrimonioService>()
-        .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
+        .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
+                .AddPolicyHandler(PollyExtensions.EsperarTentar())
+                .AddTransientHttpErrorPolicy(
+                    p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
       //services.AddHttpClient("Refit",options =>
       //{
@@ -29,6 +36,28 @@ namespace CBP.WebApp.MVC.Configuration
       services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
       services.AddScoped<IUser, AspNetUser>();
+    }
+  }
+
+  public class PollyExtensions
+  {
+    public static AsyncRetryPolicy<HttpResponseMessage> EsperarTentar()
+    {
+      var retry = HttpPolicyExtensions
+          .HandleTransientHttpError()
+          .WaitAndRetryAsync(new[]
+          {
+                    TimeSpan.FromSeconds(1),
+                    TimeSpan.FromSeconds(5),
+                    TimeSpan.FromSeconds(10),
+          }, (outcome, timespan, retryCount, context) =>
+          {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine($"Tentando pela {retryCount} vez!");
+            Console.ForegroundColor = ConsoleColor.White;
+          });
+
+      return retry;
     }
   }
 }
