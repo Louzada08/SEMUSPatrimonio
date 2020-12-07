@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace NSE.Catalogo.API.Configuration
+namespace CBP.Catalogo.API.Configuration
 {
   public static class ApiConfig
   {

@@ -9,6 +9,7 @@ using System.Net.Http;
 using Polly;
 using Polly.Retry;
 using Polly.Extensions.Http;
+using Microsoft.AspNetCore.Mvc.DataAnnotations;
 
 namespace CBP.WebApp.MVC.Configuration
 {
@@ -16,6 +17,8 @@ namespace CBP.WebApp.MVC.Configuration
   {
     public static void RegisterServices(this IServiceCollection services, IConfiguration configuration)
     {
+      services.AddSingleton<IValidationAttributeAdapterProvider, EmailValidationAttributeAdapterProvider>();
+
       services.AddTransient<HttpClientAuthorizationDelegatingHandler>();
 
       services.AddHttpClient<IAutenticacaoService, AutenticacaoService>();

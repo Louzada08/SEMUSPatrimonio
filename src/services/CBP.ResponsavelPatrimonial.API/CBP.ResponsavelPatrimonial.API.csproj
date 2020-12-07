@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\building blocks\CBP.Core\CBP.Core.csproj" />
+    <ProjectReference Include="..\..\building blocks\CBP.MessageBus\CBP.MessageBus.csproj" />
     <ProjectReference Include="..\..\building blocks\CBP.WebAPI.Core\CBP.WebAPI.Core.csproj" />
   </ItemGroup>
 

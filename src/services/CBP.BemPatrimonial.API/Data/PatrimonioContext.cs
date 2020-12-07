@@ -3,6 +3,8 @@ using CBP.BemPatrimonial.API.Models;
 using System.Linq;
 using CBP.Core.Data;
 using System.Threading.Tasks;
+using CBP.Core.Messages;
+using FluentValidation.Results;
 
 namespace CBP.BemPatrimonial.API.Data 
 {
@@ -15,6 +17,9 @@ namespace CBP.BemPatrimonial.API.Data
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+      modelBuilder.Ignore<ValidationResult>();
+      modelBuilder.Ignore<Event>();
+
       foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(
           e => e.GetProperties().Where(p => p.ClrType == typeof(string))))
         property.SetColumnType("varchar(100)");

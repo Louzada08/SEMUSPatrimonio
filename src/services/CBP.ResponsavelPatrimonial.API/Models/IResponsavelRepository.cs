@@ -9,6 +9,6 @@ namespace CBP.ResponsavelPatrimonial.API.Models
     void Adicionar(Responsavel responsavel);
 
     Task<IEnumerable<Responsavel>> ObterTodos();
-    //Task<Responsavel> ObterPorCpf(string cpf);
+    Task<Responsavel> ObterPorEmail(string email);
   }
 }

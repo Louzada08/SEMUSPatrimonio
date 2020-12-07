@@ -25,13 +25,13 @@ namespace CBP.ResponsavelPatrimonial.API.Application.Commands
 
       var responsavel = new Responsavel(message.Id, message.Nome, message.Email);
 
-      //var responsavelExistente = await _responsavelRepository.ObterPorCpf(responsavel.Cpf.Numero);
+      var responsavelExistente = await _responsavelRepository.ObterPorEmail(responsavel.Email.Endereco);
 
-      //if (responsavelExistente != null)
-      //{
-      //    AdicionarErro("Este CPF já está em uso.");
-      //    return ValidationResult;
-      //}
+      if (responsavelExistente != null)
+      {
+          AdicionarErro("Este Email já está em uso.");
+          return ValidationResult;
+      }
 
       _responsavelRepository.Adicionar(responsavel);
 

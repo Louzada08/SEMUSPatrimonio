@@ -3,7 +3,7 @@ using CBP.BemPatrimonial.API.Data.Repository;
 using CBP.BemPatrimonial.API.Models;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace NSE.Catalogo.API.Configuration
+namespace CBP.Catalogo.API.Configuration
 {
   public static class DependencyInjectionConfig
     {

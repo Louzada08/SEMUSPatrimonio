@@ -6,35 +6,35 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CBP.ResponsavelPatrimonial.API.Data.Repository
 {
-    public class ResponsavelRepository : IResponsavelRepository
+  public class ResponsavelRepository : IResponsavelRepository
+  {
+    private readonly ResponsavelContext _context;
+
+    public ResponsavelRepository(ResponsavelContext context)
     {
-        private readonly ResponsavelContext _context;
+      _context = context;
+    }
 
-        public ResponsavelRepository(ResponsavelContext context)
-        {
-            _context = context;
-        }
+    public IUnitOfWork UnitOfWork => _context;
 
-        public IUnitOfWork UnitOfWork => _context;
+    public async Task<IEnumerable<Responsavel>> ObterTodos()
+    {
+      return await _context.Responsaveis.AsNoTracking().ToListAsync();
+    }
 
-        public async Task<IEnumerable<Responsavel>> ObterTodos()
-        {
-            return await _context.Responsaveis.AsNoTracking().ToListAsync();
-        }
+    public Task<Responsavel> ObterPorEmail(string email)
+    {
+      return _context.Responsaveis.FirstOrDefaultAsync(c => c.Email.Endereco == email);
+    }
 
-        //public Task<Responsavel> ObterPorCpf(string cpf)
-        //{
-        //    return _context.Responsaveis.FirstOrDefaultAsync(c => c.Cpf.Numero == cpf);
-        //}
+    public void Adicionar(Responsavel responsavel)
+    {
+      _context.Responsaveis.Add(responsavel);
+    }
 
-        public void Adicionar(Responsavel responsavel)
-        {
-            _context.Responsaveis.Add(responsavel);
-        }
-
-        public void Dispose()
-        {
-            _context.Dispose();
-        }
+    public void Dispose()
+    {
+      _context.Dispose();
+    }
   }
 }

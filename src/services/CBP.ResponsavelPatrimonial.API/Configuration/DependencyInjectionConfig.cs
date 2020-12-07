@@ -7,20 +7,21 @@ using CBP.ResponsavelPatrimonial.API.Data;
 using CBP.ResponsavelPatrimonial.API.Models;
 using CBP.Core.Mediator;
 using CBP.ResponsavelPatrimonial.API.Data.Repository;
+using CBP.ResponsavelPatrimonial.API.Services;
 
 namespace CBP.ResponsavelPatrimonial.API.Configuration
 {
   public static class DependencyInjectionConfig
+  {
+    public static void RegisterServices(this IServiceCollection services)
     {
-        public static void RegisterServices(this IServiceCollection services)
-        {
-            services.AddScoped<IMediatorHandler, MediatorHandler>();
-            services.AddScoped<IRequestHandler<RegistrarResponsavelCommand, ValidationResult>, ResponsavelCommandHandler>();
+      services.AddScoped<IMediatorHandler, MediatorHandler>();
+      services.AddScoped<IRequestHandler<RegistrarResponsavelCommand, ValidationResult>, ResponsavelCommandHandler>();
 
-            services.AddScoped<INotificationHandler<ResponsavelRegistradoEvent>, ResponsavelEventHandler>();
+      services.AddScoped<INotificationHandler<ResponsavelRegistradoEvent>, ResponsavelEventHandler>();
 
-            services.AddScoped<IResponsavelRepository, ResponsavelRepository>();
-            services.AddScoped<ResponsavelContext>();
-        }
+      services.AddScoped<IResponsavelRepository, ResponsavelRepository>();
+      services.AddScoped<ResponsavelContext>();
     }
+  }
 }

@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CBP.BemPatrimonial.API.Models;
+using CBP.WebAPI.Core.Controllers;
 using CBP.WebAPI.Core.Identidade;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CBP.BemPatrimonial.API.Controllers
 {
-  [ApiController]
   [Authorize]
-  public class PatrimonioController : Controller
+  public class PatrimonioController : MainController
   {
     private readonly IPatrimonioRepository _patrimonioRepository;
 
@@ -20,7 +20,7 @@ namespace CBP.BemPatrimonial.API.Controllers
     }
 
     [AllowAnonymous]
-    [HttpGet("patrimonio/patrimonios")]
+    [HttpGet("vitrine")]
     public async Task<IEnumerable<Patrimonio>> Index()
     {
       return await _patrimonioRepository.ObterTodos();
