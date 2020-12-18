@@ -84,6 +84,7 @@ namespace CBP.MessageBus
           .WaitAndRetry(3, retryAttempt =>
               TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
 
+      //melhorando a resiliencia para quando o serviço de fila cair (event quie)
       policy.Execute(() =>
       {
         _bus = RabbitHutch.CreateBus(_connectionString);

@@ -1,6 +1,6 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using CBP.WebApp.MVC.Extensions
-@inject IUser AppUser
+﻿@using CBP.WebApp.MVC.Extensions
+@using CBP.WebAPI.Core.Usuario
+@inject IAspNetUser AppUser
 
 @if (AppUser.EstaAutenticado())
 {

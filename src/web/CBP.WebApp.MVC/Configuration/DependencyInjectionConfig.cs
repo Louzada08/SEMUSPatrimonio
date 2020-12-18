@@ -10,6 +10,7 @@ using Polly;
 using Polly.Retry;
 using Polly.Extensions.Http;
 using Microsoft.AspNetCore.Mvc.DataAnnotations;
+using CBP.WebAPI.Core.Usuario;
 
 namespace CBP.WebApp.MVC.Configuration
 {
@@ -18,10 +19,16 @@ namespace CBP.WebApp.MVC.Configuration
     public static void RegisterServices(this IServiceCollection services, IConfiguration configuration)
     {
       services.AddSingleton<IValidationAttributeAdapterProvider, EmailValidationAttributeAdapterProvider>();
+      services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+      services.AddScoped<IAspNetUser, AspNetUser>();
 
+      #region HttpServices
       services.AddTransient<HttpClientAuthorizationDelegatingHandler>();
 
-      services.AddHttpClient<IAutenticacaoService, AutenticacaoService>();
+      services.AddHttpClient<IAutenticacaoService, AutenticacaoService>()
+          .AddPolicyHandler(PollyExtensions.EsperarTentar())
+          .AddTransientHttpErrorPolicy(
+              p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
       services.AddHttpClient<IPatrimonioService, PatrimonioService>()
         .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
@@ -29,16 +36,12 @@ namespace CBP.WebApp.MVC.Configuration
                 .AddTransientHttpErrorPolicy(
                     p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
-      //services.AddHttpClient("Refit",options =>
-      //{
-      //  options.BaseAddress = new Uri(configuration.GetSection("PatrimonioUrl").Value);
-      //})
-      //  .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
-      //  .AddTypedClient(Refit.RestService.For<IPatrimonioServiceRefit>);
-
-      services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-      services.AddScoped<IUser, AspNetUser>();
+      services.AddHttpClient<ITermoTransferenciaService, TermoTransferenciaService>()
+          .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
+          .AddPolicyHandler(PollyExtensions.EsperarTentar())
+          .AddTransientHttpErrorPolicy(
+              p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+      #endregion
     }
   }
 

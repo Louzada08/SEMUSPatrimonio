@@ -105,6 +105,9 @@ namespace CBP.BemPatrimonial.API.Migrations
                     b.Property<Guid?>("PessoaResponsavelId")
                         .HasColumnType("uuid");
 
+                    b.Property<int>("QuantidadeEstoque")
+                        .HasColumnType("integer");
+
                     b.Property<decimal>("ValorBem")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("decimal(9,2)")
@@ -137,11 +140,8 @@ namespace CBP.BemPatrimonial.API.Migrations
                     b.Property<string>("Cargo")
                         .HasColumnType("varchar(100)");
 
-                    b.Property<Guid?>("LocaisId")
+                    b.Property<Guid>("LocaisId")
                         .HasColumnType("uuid");
-
-                    b.Property<int>("LocalId")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Login")
                         .HasColumnType("varchar(100)");
@@ -188,7 +188,9 @@ namespace CBP.BemPatrimonial.API.Migrations
                 {
                     b.HasOne("CBP.BemPatrimonial.API.Models.Local", "Locais")
                         .WithMany("Pessoas")
-                        .HasForeignKey("LocaisId");
+                        .HasForeignKey("LocaisId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

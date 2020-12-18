@@ -23,12 +23,12 @@
                                     <img src="~/images/produtos/caneca1.jpg" alt="caneca1">
                                 </a>
                                 <figcaption class="info-wrap">
-                                    <a asp-controller="Patrimonio" asp-action="ProdutoDetalhe" asp-route-id="@patrimonio.Id" class="title">
+                                    <a asp-controller="Patrimonio" asp-action="PatrimonioDetalhe" asp-route-id="@patrimonio.Id" class="title">
                                         <b> @patrimonio.Descricao</b>
                                     </a>
 
                                     <small class="card-text">
-                                        @this.MensagemEstoque(Convert.ToInt32(patrimonio.NumeroNotaFiscal))<br/><br/>
+                                        @this.MensagemEstoque(patrimonio.QuantidadeEstoque)<br/><br/>
                                         @patrimonio.Descricao
                                     </small>
                                 </figcaption>

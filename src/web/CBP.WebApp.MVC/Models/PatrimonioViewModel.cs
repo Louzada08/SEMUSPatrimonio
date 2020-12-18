@@ -10,5 +10,6 @@ namespace CBP.WebApp.MVC.Models
     public Guid EstadoConservacaoId { get; set; }
     public int? NumeroNotaFiscal { get; set; }
     public decimal ValorBem { get; set; }
+    public int QuantidadeEstoque { get; set; }
   }
 }

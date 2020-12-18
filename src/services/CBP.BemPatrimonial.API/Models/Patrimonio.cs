@@ -20,6 +20,7 @@ namespace CBP.BemPatrimonial.API.Models
     public DateTime? DataEmprestimo { get; set; }
     public DateTime? DataRetornoEmprestimo { get; set; }
     public DateTime? DataBaixa { get; set; }
+    public int QuantidadeEstoque { get; set; }
     public decimal ValorBem { get; set; }
     public Guid? PessoaResponsavelId { get; set; }
     public Pessoa PessoasResponsaveis { get; set; }

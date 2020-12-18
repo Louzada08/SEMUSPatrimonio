@@ -64,7 +64,7 @@ namespace CBP.WebApp.MVC.Controllers
 
             await RealizarLogin(resposta);
 
-            if (string.IsNullOrEmpty(returnUrl)) return RedirectToAction("Index", controllerName:"Home");
+            if (string.IsNullOrEmpty(returnUrl)) return RedirectToAction("Index", controllerName:"Patrimonio");
 
             return LocalRedirect(returnUrl);
         }
