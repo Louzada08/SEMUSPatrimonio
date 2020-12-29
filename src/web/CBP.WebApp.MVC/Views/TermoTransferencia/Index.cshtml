@@ -50,29 +50,27 @@
                                                         <small class="text-muted"> @this.FormatoMoeda(item.Valor) cada</small>
                                                     </div>
                                                 </td>
-                                                <form method="post" asp-controller="TermoTransferencia" asp-action="AtualizarItemTermoTransferencia">
-                                                    <td>
+                                                <td>
+                                                        @*<form asp-controller="TermoTransferencia" asp-action="AdicionarItemTermoTransferencia" method="post">*@
+                                                        <form asp-controller="TermoTransferencia" asp-action="AtualizarItemTermoTransferencia" method="post">
 
-                                                        <input type="hidden" id="PatrimonioId" name="PatrimonioId" value="@item.PatrimonioId" />
+                                                            <input type="hidden" id="PatrimonioId" name="PatrimonioId" value="@item.PatrimonioId" />
 
-                                                        <div class="text-left">
-                                                            <select id="Quantidade" name="Quantidade" style="width: 80px" class="form-control">
-                                                                @{
-                                                                    @Html.Raw(this.SelectOptionsPorQuantidade(5, item.Quantidade))
-                                                                }
-                                                            </select>
-                                                        </div>
+                                                            <div class="text-left">
+                                                                <select id="Quantidade" name="Quantidade" style="width: 80px" class="form-control">
+                                                                    @{
+                                                                        @Html.Raw(this.SelectOptionsPorQuantidade(5, item.Quantidade))
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                            <div class="text-right">
+                                                                <button type="submit" class="btn btn-success">
+                                                                    <i class="fas fa-sync"></i>
+                                                                </button>
+                                                            </div>
+                                                        </form>
 
-
-                                                    </td>
-                                                    <td>
-                                                        <div class="text-right">
-                                                            <button type="submit" class="btn btn-success">
-                                                                <i class="fas fa-sync"></i>
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                </form>
+                                                </td>
                                                 <td>
                                                     <form method="post" asp-controller="TermoTransferencia" asp-action="RemoverItemTermoTransferencia">
                                                         <div>

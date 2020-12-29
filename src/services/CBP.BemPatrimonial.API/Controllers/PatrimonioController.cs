@@ -20,7 +20,7 @@ namespace CBP.BemPatrimonial.API.Controllers
     }
 
     [AllowAnonymous]
-    [HttpGet("vitrine")]
+    [HttpGet("patrimonio/vitrine")]
     public async Task<IEnumerable<Patrimonio>> Index()
     {
       return await _patrimonioRepository.ObterTodos();

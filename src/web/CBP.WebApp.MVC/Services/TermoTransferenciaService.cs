@@ -19,7 +19,7 @@ namespace CBP.WebApp.MVC.Services
 
     public async Task<TermoTransferenciaViewModel> ObterTermoTransferencia()
     {
-      var response = await _httpClient.GetAsync("termotransferencia/");
+      var response = await _httpClient.GetAsync("/termotransferencia");
 
       TratarErrosResponse(response);
 

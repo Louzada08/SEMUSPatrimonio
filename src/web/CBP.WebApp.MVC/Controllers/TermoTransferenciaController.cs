@@ -49,7 +49,7 @@ namespace CBP.WebApp.MVC.Controllers
 
     [HttpPost]
     [Route("termotransferencia/atualizar-item")]
-    public async Task<IActionResult> AtualizarItemCarrinho(Guid patrimonioId, int quantidade)
+    public async Task<IActionResult> AtualizarItemTermoTransferencia(Guid patrimonioId, int quantidade)
     {
       var patrimonio = await _patrimonioService.ObterPorId(patrimonioId);
 
@@ -66,7 +66,7 @@ namespace CBP.WebApp.MVC.Controllers
 
     [HttpPost]
     [Route("termotransferencia/remover-item")]
-    public async Task<IActionResult> RemoverItemCarrinho(Guid patrimonioId)
+    public async Task<IActionResult> RemoverItemTermoTransferencia(Guid patrimonioId)
     {
       var patrimonio = await _patrimonioService.ObterPorId(patrimonioId);
 
