@@ -2,27 +2,86 @@
 @using CBP.WebAPI.Core.Usuario
 @inject IAspNetUser AppUser
 
-@if (AppUser.EstaAutenticado())
-{
-    <div class="dropdown d-inline-block">
-        <a href="#" class="icontext dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-            <img class="icon icon-sm rounded-circle" src="https://s.gravatar.com/avatar/@this.HashEmailForGravatar(AppUser.ObterUserEmail())?d=mm&s=45">
-            </a> <!-- iconbox // -->
-        <div class="dropdown-menu dropdown-menu-left" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 12px; left: 91px; transform: translate3d(150px, 32px, 0px);">
-            <a class="dropdown-item" href="#">Meu Perfil</a>
-            <a class="dropdown-item" href="#">Meus Pedidos</a>
+@{
+    if (AppUser.EstaAutenticado())
+    {
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <div style="width:4rem; height:4rem;">
+                <a class="navbar-brand" asp-action="Index" asp-controller="Patrimonio">
+                    <img alt="brasao" class="card-img-top" src="~/images/brasao.png" width="30" height="52">
+                </a>
+            </div>
+            <h2 class="text-white">SEMUS</h2>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" asp-controller="Identidade" asp-action="Login">Sair</a>
-        </div>
-    </div>
-}
-else
-{
-    <div class="widget-header">
-        <small class="title text-muted">Bem vindo!</small>
-        <div>
-            <a asp-controller="Identidade" asp-action="Registro">Crie sua conta</a> <span> | </span>
-            <a asp-controller="Identidade" asp-action="Login"> Login</a>
-        </div>
-    </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Termos <span class="sr-only"></span></a>
+                    </li>
+
+                    <li class="nav-item dropdown navbar-dark" bg->
+                        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cadastros</a>
+                        <div class="dropdown-menu" style="background-color: rgba(211, 212, 213, 0.67);" aria-labelledby="dropdown02">
+                            <a class="dropdown-item" asp-controller="Patrimonio" asp-action="Index">Patrimônio</a>
+                            <a class="dropdown-item" asp-controller="Local" asp-action="Index">Unidade</a>
+                            <a class="dropdown-item" asp-controller="Fornecedor" asp-action="Index">Fornecedor</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Relatórios</a>
+                    </li>
+                    <li class="nav-item dropdown navbar-dark" bg->
+                        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administração</a>
+                        <div class="dropdown-menu" style="background-color: rgba(211, 212, 213, 0.67);" aria-labelledby="dropdown04">
+                            <a class="dropdown-item" href="#">Baixa Patrimônio</a>
+                            <a class="dropdown-item" href="#">Cadastro Usuário/Responsavel</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            @*<form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Pesquisa por Nota Fiscal" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
+                </form>*@
+                <div>
+                    <div class="dropdown d-inline-block">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item dropdown">
+
+                                <a href="#" class="icontext dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <img class="icon icon-sm rounded-circle" src="https://s.gravatar.com/avatar/@this.HashEmailForGravatar(AppUser.ObterUserEmail())?d=mm&s=45">
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdown" x-placement="bottom-end"
+                                     style="background-color: rgba(211, 212, 213, 0.67); position: absolute; will-change: transform; top: 12px; left: -120px; transform: translate3d(10px, 42px, 0px);">
+                                    <a class="dropdown-item" href="#">Ajuda Operacional</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" asp-controller="Identidade" asp-action="Logout">Sair</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+        </nav>
+    }
+    else
+    {
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <div style="width:4rem; height:4rem;">
+                <a class="navbar-brand" asp-action="Index" asp-controller="Patrimonio">
+                    <img alt="brasao" class="card-img-top" src="~/images/brasao.png">
+                </a>
+            </div>
+            <h2 class="text-white">SEMUS</h2>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </nav>
+    }
 }
