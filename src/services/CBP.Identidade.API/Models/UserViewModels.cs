@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using CBP.WebAPI.Core.Usuario;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace CBP.Identidade.API.Models
@@ -7,6 +8,9 @@ namespace CBP.Identidade.API.Models
   {
     [Required(ErrorMessage = "O campo {0} é obrigatório")]
     public string Nome { get; set; }
+
+    [Required(ErrorMessage = "O campo {0} é obrigatório")]
+    public Funcao Funcao { get; set; }
 
     [Required(ErrorMessage = "O campo {0} é obrigatório")]
     [EmailAddress(ErrorMessage = "O campo {0} está em formato inválido")]

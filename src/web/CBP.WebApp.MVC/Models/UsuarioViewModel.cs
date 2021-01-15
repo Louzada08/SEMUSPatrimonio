@@ -1,11 +1,13 @@
-﻿using CBP.WebApp.MVC.Extensions;
+﻿using CBP.Core.DomainObjects;
+using CBP.WebApp.MVC.Extensions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace CBP.WebApp.MVC.Models
 {
-  public class UsuarioRegistro
+  public class UsuarioViewModel
   {
     [Required(ErrorMessage = "O campo {0} é obrigatório")]
     [DisplayName("Nome Completo")]
@@ -16,13 +18,26 @@ namespace CBP.WebApp.MVC.Models
     [Email]
     public string Email { get; set; }
 
+    public Funcao Funcao { get; set; }
+
+    public bool Excluido { get; set; }
+
     [Required(ErrorMessage = "O campo {0} é obrigatório")]
     [StringLength(100, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 6)]
     public string Senha { get; set; }
 
-    [DisplayName("Confirme sua senha")]
     [Compare("Senha", ErrorMessage = "As senhas não conferem.")]
     public string SenhaConfirmacao { get; set; }
+
+    public ResponseResult ResponseResult { get; set; }
+  }
+
+  public enum Funcao
+  {
+    Desenvolvedor = 4,
+    Administrador = 3,
+    Responsavel = 2,
+    Operador = 1,
   }
 
   public class UsuarioLogin
@@ -56,4 +71,5 @@ namespace CBP.WebApp.MVC.Models
     public string Value { get; set; }
     public string Type { get; set; }
   }
+
 }

@@ -6,17 +6,19 @@
 @{
     if (Model == null)
     {
-    <div>
-        <h2>Ooops! Ocorreu um erro, mas não se preocupe. Nosso time será avisado e iremos corrigir em breve!</h2>
-    </div>
+        <div>
+            <h2>Ooops! Ocorreu um erro, mas não se preocupe. Nosso time será avisado e iremos corrigir em breve!</h2>
+        </div>
     }
     else
     {
-    ViewData["Title"] = Model.Titulo;
+        ViewData["Title"] = Model.Titulo;
 
-    <div>
-        <h2>@Html.Raw(Model.Mensagem)</h2>
-    </div>
-
+        <div class="row" style="padding-top: 100px">
+            <div class="alert alert-danger text-center col-md-12" role="alertdialog">
+                <h2>Acesso Negado!</h2>
+                <h2>@Html.Raw(Model.Mensagem)</h2>
+            </div>
+        </div>
     }
 }

@@ -45,7 +45,7 @@ namespace CBP.ResponsavelPatrimonial.API.Services
 
         private async Task<ResponseMessage> RegistrarCliente(UsuarioRegistradoIntegrationEvent message)
         {
-            var clienteCommand = new RegistrarResponsavelCommand(message.Id, message.Nome, message.Email);
+            var clienteCommand = new RegistrarResponsavelCommand(message.Id, message.Nome, message.Funcao, message.Email);
             ValidationResult sucesso;
 
             using (var scope = _serviceProvider.CreateScope())

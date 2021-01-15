@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using CBP.WebApp.MVC.Models;
-using CBP.WebApp.MVC.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using CBP.WebApp.MVC.Models;
+using CBP.WebApp.MVC.Services;
 
 namespace CBP.WebApp.MVC.Controllers
 {
@@ -33,6 +33,7 @@ namespace CBP.WebApp.MVC.Controllers
       var patrimonio = await _patrimonioService.ObterPorId(itemPatrimonio.PatrimonioId);
 
       ValidarItemTermoTransferencia(patrimonio, itemPatrimonio.Quantidade);
+
       if (!OperacaoValida()) return View("Index", await _termoTransferenciaService.ObterTermoTransferencia());
 
       itemPatrimonio.Descricao = patrimonio.Descricao;

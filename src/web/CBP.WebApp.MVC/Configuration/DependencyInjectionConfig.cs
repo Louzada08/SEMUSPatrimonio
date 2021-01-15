@@ -30,6 +30,11 @@ namespace CBP.WebApp.MVC.Configuration
           .AddTransientHttpErrorPolicy(
               p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
+      services.AddHttpClient<IResponsavelService, ResponsavelService>()
+          .AddPolicyHandler(PollyExtensions.EsperarTentar())
+          .AddTransientHttpErrorPolicy(
+              p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+
       services.AddHttpClient<IPatrimonioService, PatrimonioService>()
         .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
                 .AddPolicyHandler(PollyExtensions.EsperarTentar())
@@ -41,6 +46,12 @@ namespace CBP.WebApp.MVC.Configuration
           .AddPolicyHandler(PollyExtensions.EsperarTentar())
           .AddTransientHttpErrorPolicy(
               p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+
+      //services.AddHttpClient<IUsuarioService, UsuarioService>()
+      //    .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
+      //    .AddPolicyHandler(PollyExtensions.EsperarTentar())
+      //    .AddTransientHttpErrorPolicy(
+      //        p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
       #endregion
     }
   }

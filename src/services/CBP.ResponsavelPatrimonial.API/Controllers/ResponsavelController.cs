@@ -1,30 +1,27 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using CBP.ResponsavelPatrimonial.API.Application.Commands;
-using CBP.Core.Mediator;
+﻿using CBP.Core.Mediator;
+using CBP.ResponsavelPatrimonial.API.Models;
 using CBP.WebAPI.Core.Controllers;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CBP.ResponsavelPatrimonial.API.Controllers
 {
   public class ResponsavelController : MainController
   {
+    private readonly IResponsavelRepository _responsavelRepository;
     private readonly IMediatorHandler _mediatorHandler;
 
-    public ResponsavelController(IMediatorHandler mediatorHandler)
+    public ResponsavelController(IMediatorHandler mediatorHandler, IResponsavelRepository responsavelRepository)
     {
       _mediatorHandler = mediatorHandler;
+      _responsavelRepository = responsavelRepository;
     }
 
-    [HttpGet("responsavel")]
-    public async Task<IActionResult> Index()
+    [HttpGet("responsaveis")]
+    public async Task<IEnumerable<Responsavel>> ObterListaResponsaveis()
     {
-      var resultado = await _mediatorHandler.EnviarComando(
-          new RegistrarResponsavelCommand(Guid.NewGuid(), "Valdivino Patrimonio Silva", "valdivino@gmail.com"));
-
-      if (resultado.IsValid) CustomResponse(resultado);
-
-      return CustomResponse(resultado);
+      return await _responsavelRepository.ObterTodos();
     }
   }
 }

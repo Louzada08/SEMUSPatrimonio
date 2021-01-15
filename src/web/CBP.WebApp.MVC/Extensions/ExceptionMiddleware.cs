@@ -29,13 +29,13 @@ namespace CBP.WebApp.MVC.Extensions
       {
         HandleRequestExceptionAsync(httpContext, ex.StatusCode);
       }
-      catch (BrokenCircuitException)
-      {
-        HandleCircuitBreakerExceptionAsync(httpContext);
-      }
       catch (ApiException ex)
       {
         HandleRequestExceptionAsync(httpContext, ex.StatusCode);
+      }
+      catch (BrokenCircuitException)
+      {
+        HandleCircuitBreakerExceptionAsync(httpContext);
       }
     }
 

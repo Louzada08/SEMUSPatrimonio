@@ -8,7 +8,13 @@ using CBP.WebApp.MVC.Models;
 
 namespace CBP.WebApp.MVC.Services
 {
-    public class PatrimonioService : Service, IPatrimonioService
+  public interface IPatrimonioService
+  {
+    Task<IEnumerable<PatrimonioViewModel>> ObterTodos();
+    Task<PatrimonioViewModel> ObterPorId(Guid id);
+  }
+
+  public class PatrimonioService : Service, IPatrimonioService
     {
         private readonly HttpClient _httpClient;
 

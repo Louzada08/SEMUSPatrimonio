@@ -14,6 +14,7 @@ using CBP.Identidade.API.Models;
 using CBP.WebAPI.Core.Controllers;
 using CBP.Core.Messages.Integration;
 using CBP.MessageBus;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CBP.Identidade.API.Controllers
 {
@@ -52,6 +53,8 @@ namespace CBP.Identidade.API.Controllers
 
       if (result.Succeeded)
       {
+        var funcao = (short)usuarioRegistro.Funcao;
+
         var responsavelResult = await RegistrarResponsavel(usuarioRegistro);
 
         if (!responsavelResult.ValidationResult.IsValid)
@@ -59,6 +62,8 @@ namespace CBP.Identidade.API.Controllers
           await _userManager.DeleteAsync(user);
           return CustomResponse(responsavelResult.ValidationResult);
         }
+
+        await _userManager.AddClaimAsync(user, new Claim("NivelDeAcesso", funcao.ToString("d2")));
 
         return CustomResponse(await GerarJwt(usuarioRegistro.Email));
       }
@@ -71,6 +76,7 @@ namespace CBP.Identidade.API.Controllers
       return CustomResponse();
     }
 
+    [AllowAnonymous]
     [HttpPost("autenticar")]
     public async Task<ActionResult> Login(UsuarioLogin usuarioLogin)
     {
@@ -164,7 +170,7 @@ namespace CBP.Identidade.API.Controllers
       var usuario = await _userManager.FindByEmailAsync(usuarioRegistro.Email);
 
       var usuarioRegistrado = new UsuarioRegistradoIntegrationEvent(
-          Guid.Parse(usuario.Id), usuarioRegistro.Nome, usuarioRegistro.Email);
+          Guid.Parse(usuario.Id), usuarioRegistro.Nome, usuarioRegistro.Funcao.ToString(), usuarioRegistro.Email);
 
       try
       {

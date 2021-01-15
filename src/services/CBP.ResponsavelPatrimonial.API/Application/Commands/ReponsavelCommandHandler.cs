@@ -23,7 +23,7 @@ namespace CBP.ResponsavelPatrimonial.API.Application.Commands
     {
       if (!message.EhValido()) return message.ValidationResult;
 
-      var responsavel = new Responsavel(message.Id, message.Nome, message.Email);
+      var responsavel = new Responsavel(message.Id, message.Nome, message.Funcao, message.Email);
 
       var responsavelExistente = await _responsavelRepository.ObterPorEmail(responsavel.Email.Endereco);
 

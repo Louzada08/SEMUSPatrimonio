@@ -1,0 +1,73 @@
+﻿@model IEnumerable<CBP.WebApp.MVC.Models.ResponsavelViewModel>
+@{
+    ViewData["Title"] = "Todos os patrimônios";
+}
+
+<section>
+    <div class="container" style=" padding-top: 90px">
+        <vc:Summary></vc:Summary>
+        <div class="row">
+            <div class="col-md-10">
+                <a href="javascript:void(0)" class="btn btn-primary float-md-left" data-toggle="modal" data-target="#novoUsuarioModal">
+                    <i class="fa fa-location-arrow"></i> Novo Usuário
+                </a>
+            </div>
+            <div class="col-md-2">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-end">
+                        <li class="breadcrumb-item"><a asp-controller="Patrimonio" asp-action="Index">Inicio</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Usuario</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row border border-info">
+            <div class="col-md-4 border-info">
+                <h6>Nome Completo</h6>
+            </div>
+            <div class="col-md-4 border-left border-info">
+                <h6>Email</h6>
+            </div>
+            <div class="col-md-2 border-left border-info">
+                <h6>Função</h6>
+            </div>
+            <div class="col-md-2 border-left border-info">
+                <h6>Comandos</h6>
+            </div>
+        </div>
+        @{
+            foreach (var item in Model.OrderBy(p => p.Nome))
+            {
+                <div class="row border-left border-bottom border-info">
+                    <div class="col-md-4">
+                        @item.Nome
+                    </div>
+                    <div class="col-md-4 border-left border-info">
+                        @item.Email.Endereco
+                    </div>
+                    <div class="col-md-2 border-left border-info">
+                        @item.Funcao
+                    </div>
+                    <div class="col-md-2 border-left border-right border-info">
+                        <a asp-controller="Usuario" asp-action="Editar" asp-route-id="@item.Id">Editar</a> |
+                        <a asp-controller="Usuario" asp-action="Excluir" asp-route-id="@item.Id">Excluir</a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</section>
+
+<partial name="_NovoUsuario" model="new UsuarioViewModel()" />
+
+@section Scripts {
+
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(document).ready(function () {
+            BuscaCep();
+        });
+    </script>
+
+}

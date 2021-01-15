@@ -7,7 +7,14 @@ using CBP.WebApp.MVC.Models;
 
 namespace CBP.WebApp.MVC.Services
 {
-    public class AutenticacaoService : Service, IAutenticacaoService
+  public interface IAutenticacaoService
+  {
+    Task<UsuarioRespostaLogin> Login(UsuarioLogin usuarioLogin);
+
+    Task<UsuarioRespostaLogin> Registro(UsuarioViewModel usuarioRegistro);
+  }
+
+  public class AutenticacaoService : Service, IAutenticacaoService
     {
         private readonly HttpClient _httpClient;
 
@@ -36,7 +43,7 @@ namespace CBP.WebApp.MVC.Services
             return await DeserializarObjetoResponse<UsuarioRespostaLogin>(response);
         }
 
-        public async Task<UsuarioRespostaLogin> Registro(UsuarioRegistro usuarioRegistro)
+        public async Task<UsuarioRespostaLogin> Registro(UsuarioViewModel usuarioRegistro)
         {
             var registroContent = ObterConteudo(usuarioRegistro);
 

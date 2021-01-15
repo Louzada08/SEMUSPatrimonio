@@ -26,7 +26,7 @@ namespace CBP.BemPatrimonial.API.Controllers
       return await _patrimonioRepository.ObterTodos();
     }
 
-    [ClaimsAuthorize("Patrimonio", "Ler")]
+    [ClaimsAuthorize("NivelDeAcesso", "Responsavel")]
     [HttpGet("patrimonio/patrimonios/{id}")]
     public async Task<Patrimonio> ProdutoDetalhe(Guid id)
     {
