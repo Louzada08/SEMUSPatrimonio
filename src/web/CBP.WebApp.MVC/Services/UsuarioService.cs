@@ -10,7 +10,6 @@ namespace CBP.WebApp.MVC.Services
 {
   public interface IUsuarioService
   {
-    Task<ResponsavelViewModel> ObterPorId(Guid id);
     Task<IEnumerable<ResponsavelViewModel>> ObterTodos();
   }
 
@@ -24,15 +23,6 @@ namespace CBP.WebApp.MVC.Services
       httpClient.BaseAddress = new Uri(settings.Value.UsuarioUrl);
 
       _httpClient = httpClient;
-    }
-
-    public async Task<ResponsavelViewModel> ObterPorId(Guid id)
-    {
-      var response = await _httpClient.GetAsync($"/patrimonio/patrimonios/{id}");
-
-      TratarErrosResponse(response);
-
-      return await DeserializarObjetoResponse<ResponsavelViewModel>(response);
     }
 
     public async Task<IEnumerable<ResponsavelViewModel>> ObterTodos()

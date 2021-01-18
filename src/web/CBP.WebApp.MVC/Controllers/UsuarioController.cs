@@ -3,11 +3,13 @@ using CBP.WebApp.MVC.Controllers;
 using CBP.WebApp.MVC.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace CBP.WebApp.MVC.Services
 {
+  [Authorize]
   public class UsuarioController : MainController
   {
     private readonly IAutenticacaoService _autenticacaoService;
@@ -19,11 +21,19 @@ namespace CBP.WebApp.MVC.Services
       _responsavelService = responsavelService;
     }
 
+    [ClaimsAuthorize("NivelDeAcesso", "Administrador")]
     [HttpGet]
     [Route("usuarios")]
     public async Task<IActionResult> Index()
     {
       return View(await _responsavelService.ObterTodos());
+    }
+
+    [HttpGet]
+    [Route("usuario/{id}")]
+    public async Task<IActionResult> Editar(Guid id)
+    {
+      return View("_EditarUsuario", await _responsavelService.ObterUsuarioPorId(id));
     }
 
     [HttpPost]

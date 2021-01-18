@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CBP.Core.Data;
 using CBP.ResponsavelPatrimonial.API.Models;
@@ -16,6 +17,11 @@ namespace CBP.ResponsavelPatrimonial.API.Data.Repository
     }
 
     public IUnitOfWork UnitOfWork => _context;
+
+    public async Task<Responsavel> GetUsuarioId(Guid id)
+    {
+      return await _context.Responsaveis.FirstOrDefaultAsync(u => u.Id == id);
+    }
 
     public async Task<IEnumerable<Responsavel>> ObterTodos()
     {
@@ -36,5 +42,6 @@ namespace CBP.ResponsavelPatrimonial.API.Data.Repository
     {
       _context.Dispose();
     }
+
   }
 }
