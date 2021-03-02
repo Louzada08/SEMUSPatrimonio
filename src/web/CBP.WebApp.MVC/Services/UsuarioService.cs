@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using CBP.WebApp.MVC.Extensions;
 using CBP.WebApp.MVC.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace CBP.WebApp.MVC.Services
 {
   public interface IUsuarioService
   {
-    Task<IEnumerable<ResponsavelViewModel>> ObterTodos();
+    Task<IEnumerable<UsuarioViewModel>> ObterTodos();
   }
 
   public class UsuarioService : Service, IUsuarioService
@@ -25,15 +26,15 @@ namespace CBP.WebApp.MVC.Services
       _httpClient = httpClient;
     }
 
-    public async Task<IEnumerable<ResponsavelViewModel>> ObterTodos()
+    public async Task<IEnumerable<UsuarioViewModel>> ObterTodos()
     {
-      var response = await _httpClient.GetAsync("/responsaveis");
+      var response = await _httpClient.GetAsync("/usuarios");
 
       TratarErrosResponse(response);
 
-      var responsavel = await DeserializarObjetoResponse<IEnumerable<ResponsavelViewModel>>(response);
+      var usuarios = await DeserializarObjetoResponse<IEnumerable<UsuarioViewModel>>(response);
 
-      return responsavel;
+      return usuarios;
     }
 
   }

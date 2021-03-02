@@ -27,7 +27,7 @@ namespace CBP.ResponsavelPatrimonial.API.Services
         private void SetResponder()
         {
             _bus.RespondAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(async request =>
-                await RegistrarCliente(request));
+                await RegistrarResponsavel(request));
 
             _bus.AdvancedBus.Connected += OnConnect;
         }
@@ -43,15 +43,15 @@ namespace CBP.ResponsavelPatrimonial.API.Services
             SetResponder();
         }
 
-        private async Task<ResponseMessage> RegistrarCliente(UsuarioRegistradoIntegrationEvent message)
+        private async Task<ResponseMessage> RegistrarResponsavel(UsuarioRegistradoIntegrationEvent message)
         {
-            var clienteCommand = new RegistrarResponsavelCommand(message.Id, message.Nome, message.Funcao, message.Email);
+            var responsavelCommand = new RegistrarResponsavelCommand(message.Id, message.Nome, message.Funcao, message.Email, message.Excluido);
             ValidationResult sucesso;
 
             using (var scope = _serviceProvider.CreateScope())
             {
                 var mediator = scope.ServiceProvider.GetRequiredService<IMediatorHandler>();
-                sucesso = await mediator.EnviarComando(clienteCommand);
+                sucesso = await mediator.EnviarComando(responsavelCommand);
             }
 
             return new ResponseMessage(sucesso);

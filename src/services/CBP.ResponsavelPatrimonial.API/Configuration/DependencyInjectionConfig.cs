@@ -7,7 +7,6 @@ using CBP.ResponsavelPatrimonial.API.Data;
 using CBP.ResponsavelPatrimonial.API.Models;
 using CBP.Core.Mediator;
 using CBP.ResponsavelPatrimonial.API.Data.Repository;
-using CBP.ResponsavelPatrimonial.API.Services;
 
 namespace CBP.ResponsavelPatrimonial.API.Configuration
 {
@@ -15,8 +14,14 @@ namespace CBP.ResponsavelPatrimonial.API.Configuration
   {
     public static void RegisterServices(this IServiceCollection services)
     {
+      //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
       services.AddScoped<IMediatorHandler, MediatorHandler>();
+
       services.AddScoped<IRequestHandler<RegistrarResponsavelCommand, ValidationResult>, ResponsavelCommandHandler>();
+      services.AddScoped<IRequestHandler<AtualizarResponsavelCommand, ValidationResult>, ResponsavelCommandHandler>();
+      //services.AddScoped<IRequestHandler<RemoverResponsavelCommand, ValidationResult>, ResponsavelCommandHandler>();
+      services.AddScoped<IRequestHandler<AdicionarEnderecoCommand, ValidationResult>, ResponsavelCommandHandler>();
 
       services.AddScoped<INotificationHandler<ResponsavelRegistradoEvent>, ResponsavelEventHandler>();
 

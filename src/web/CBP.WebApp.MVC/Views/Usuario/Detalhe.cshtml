@@ -1,0 +1,72 @@
+﻿@model CBP.WebApp.MVC.Models.ResponsavelViewModel
+
+@{
+    ViewData["Title"] = "Detalhe";
+}
+
+<section>
+    <div class="container" style=" padding-top: 90px">
+        <div class="row">
+            <div class="col-md-9"><h3>@ViewData["Title"]</h3></div>
+            <div class="col-md-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-end">
+                        <li class="breadcrumb-item"><a asp-controller="Patrimonio" asp-action="Index">Inicio</a></li>
+                        <li class="breadcrumb-item"><a asp-action="Index">Usuários</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Detalhe</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Id)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Id)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Nome)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Nome)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Email.Endereco)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Funcao)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Funcao)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Excluido)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Excluido)
+                </dd>
+            </dl>
+        </div>
+        <div>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#editarUsuarioModal">Editar</button> |
+            <button class="btn btn-primary" data-toggle="modal" data-target="#resetSenhaModal">Reset Senha</button> |
+            <button class="btn btn-primary" data-toggle="modal" data-target="#trocarEmailModal">Trocar Email</button> |
+            @*@Html.ActionLink("Edit", "Editar", new { id = Model.Id })*@
+            <a class="btn btn-primary" asp-action="Index"> Voltar</a>
+        </div>
+    </div>
+</section>
+
+<partial name="_EditarUsuario" model="Model" />
+
+@section Scripts {
+
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

@@ -7,16 +7,16 @@ namespace CBP.Core.Messages.Integration
     public Guid Id { get; private set; }
     public string Nome { get; private set; }
     public string Funcao { get; private set; }
-    public string Email { get; private set; }
-    // public string Cpf { get; private set; }
+    public string Email { get; protected set; }
+    public bool Excluido { get; protected set; }
 
-    public UsuarioRegistradoIntegrationEvent(Guid id, string nome, string funcao, string email)
+    public UsuarioRegistradoIntegrationEvent(Guid id, string nome, string funcao, string email, bool excluido)
     {
       Id = id;
       Nome = nome;
       Funcao = funcao;
       Email = email;
-      // Cpf = cpf;
+      Excluido = excluido;
     }
   }
 }

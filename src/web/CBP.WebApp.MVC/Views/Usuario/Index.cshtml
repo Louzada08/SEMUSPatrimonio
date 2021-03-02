@@ -1,4 +1,5 @@
-﻿@model IEnumerable<CBP.WebApp.MVC.Models.ResponsavelViewModel>
+﻿@using CBP.WebApp.MVC.Models
+@model IEnumerable<CBP.WebApp.MVC.Models.ResponsavelViewModel>
 @{
     ViewData["Title"] = "Todos os patrimônios";
 }
@@ -49,21 +50,25 @@
                         @item.Funcao
                     </div>
                     <div class="col-md-2 border-left border-right border-info">
-                        @*<a href="javascript:void(0)" class="btn btn-primary float-md-left" data-toggle="modal" data-target="#novoUsuarioModal">
-                            <i class="fa fa-location-arrow"></i> Novo Usuário
-                        </a>*@
-                        <a asp-controller="Usuario" asp-action="Editar" asp-route-id="@item.Id" >Editar</a> |
-                        <a asp-controller="Usuario" asp-action="Excluir" asp-route-id="@item.Id">Excluir</a>
+
+                        <a class="btn btn-info" asp-route-id="@item.Id" asp-controller="Usuario" asp-action="Detalhe">
+                            Detalhe
+                        </a>
+                        @*<button type="button" class="btn btn-info" data-toggle="modal" data-target="#editarUsuarioModal" data-Id="@item.Id"
+                                asp-controller="Usuario" asp-action="Editar">
+                            Editar
+                        </button>*@
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#excluirUsuarioModal" data-Id="@item.Id">Excluir</button>
+                        @*<a asp-controller="Usuario" asp-action="Excluir" asp-route-id="@item.Id">Excluir</a>*@
                     </div>
                 </div>
             }
         }
     </div>
+
 </section>
 
 <partial name="_NovoUsuario" model="new UsuarioViewModel()" />
-
-<partial name="_EditarUsuario" model="new UsuarioViewModel()" />
 
 @section Scripts {
 

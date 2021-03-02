@@ -1,4 +1,5 @@
 ﻿using CBP.WebAPI.Core.Identidade;
+using CBP.WebAPI.Core.Usuario;
 using CBP.WebApp.MVC.Controllers;
 using CBP.WebApp.MVC.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -26,14 +27,16 @@ namespace CBP.WebApp.MVC.Services
     [Route("usuarios")]
     public async Task<IActionResult> Index()
     {
-      return View(await _responsavelService.ObterTodos());
+      return View(await _responsavelService.ObterTodosUsuarios());
     }
 
     [HttpGet]
-    [Route("usuario/{id}")]
-    public async Task<IActionResult> Editar(Guid id)
+    [Route("responsavel/{id}")]
+    public async Task<IActionResult> Detalhe(Guid id)
     {
-      return View("_EditarUsuario", await _responsavelService.ObterUsuarioPorId(id));
+      var responsavel = await _responsavelService.ObterResponsavelPorId(id);
+
+      return View(responsavel);
     }
 
     [HttpPost]

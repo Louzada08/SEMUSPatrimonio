@@ -170,7 +170,7 @@ namespace CBP.Identidade.API.Controllers
       var usuario = await _userManager.FindByEmailAsync(usuarioRegistro.Email);
 
       var usuarioRegistrado = new UsuarioRegistradoIntegrationEvent(
-          Guid.Parse(usuario.Id), usuarioRegistro.Nome, usuarioRegistro.Funcao.ToString(), usuarioRegistro.Email);
+          Guid.Parse(usuario.Id), usuarioRegistro.Nome, usuarioRegistro.Funcao.ToString(), usuarioRegistro.Email, false);
 
       try
       {
@@ -182,6 +182,26 @@ namespace CBP.Identidade.API.Controllers
         throw;
       }
     }
+
+    private async Task<ResponseMessage> EditarResponsavel(UsuarioRegistro usuarioRegistro)
+    {
+      var responsavel = await _userManager.FindByEmailAsync(usuarioRegistro.Email);
+
+      var usuarioRegistrado = new UsuarioRegistradoIntegrationEvent(
+          Guid.Parse(responsavel.Id), usuarioRegistro.Nome, usuarioRegistro.Funcao.ToString(), usuarioRegistro.Email, false);
+
+      try
+      {
+        return await _bus.RequestAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(usuarioRegistrado);
+      }
+      catch
+      {
+        await _userManager.DeleteAsync(responsavel);
+        throw;
+      }
+    }
+
+
 
   }
 }

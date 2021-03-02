@@ -1,11 +1,11 @@
-﻿using System;
-using FluentValidation;
+﻿using FluentValidation;
+using System;
 
 namespace CBP.ResponsavelPatrimonial.API.Application.Commands
 {
-  public class RegistrarResponsavelCommand : ResponsavelCommand
+  public class AtualizarResponsavelCommand : ResponsavelCommand
   {
-    public RegistrarResponsavelCommand(Guid id, string nome, string funcao, string email, bool excluido)
+    public AtualizarResponsavelCommand(Guid id, string nome, string funcao, string email, bool excluido)
     {
       AggregateId = id;
       Id = id;
@@ -15,15 +15,17 @@ namespace CBP.ResponsavelPatrimonial.API.Application.Commands
       Excluido = excluido;
     }
 
+    public AtualizarResponsavelCommand() { }
+
     public override bool EhValido()
     {
-      ValidationResult = new RegistrarResponsavelValidation().Validate(this);
+      ValidationResult = new AtualizarResponsavelValidation().Validate(this);
       return ValidationResult.IsValid;
     }
 
-    public class RegistrarResponsavelValidation : AbstractValidator<RegistrarResponsavelCommand>
+    public class AtualizarResponsavelValidation : AbstractValidator<AtualizarResponsavelCommand>
     {
-      public RegistrarResponsavelValidation()
+      public AtualizarResponsavelValidation()
       {
         RuleFor(c => c.Id)
             .NotEqual(Guid.Empty)
@@ -41,11 +43,6 @@ namespace CBP.ResponsavelPatrimonial.API.Application.Commands
             .Must(TerEmailValido)
             .WithMessage("O e-mail informado não é válido.");
       }
-
-      //protected static bool TerCpfValido(string cpf)
-      //{
-      //    return Core.DomainObjects.Cpf.Validar(cpf);
-      //}
 
       protected static bool TerEmailValido(string email)
       {

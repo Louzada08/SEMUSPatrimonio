@@ -1,4 +1,4 @@
-﻿@model CBP.WebApp.MVC.Models.UsuarioViewModel
+﻿@model CBP.WebApp.MVC.Models.ResponsavelViewModel
 
 @{
     ViewData["Title"] = "Editar Usuário";
@@ -16,24 +16,30 @@
                     </button>
                 </div>
                 <vc:summary></vc:summary>
-                <form asp-controller="Usuario" asp-action="Editar" method="post">
+                <form asp-controller="Responsavel" asp-action="Editar" method="post">
                     <div class="modal-body">
 
                         <div class="form-group">
+                            <label asp-for="Id"></label>
+                            <br />@Model.Id
+                            <input type="hidden" asp-for="Id" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
                             <label asp-for="Nome"></label>
-                            <input asp-for="Nome" value="Nome" class="form-control" />
+                            <input asp-for="Nome" class="form-control" />
                             <span asp-validation-for="Nome" class="text-danger"></span>
                         </div>
 
                         <div class="form-group">
                             <label asp-for="Email"></label>
-                            <input asp-for="Email" value="Email" class="form-control" />
-                            <span asp-validation-for="Email" class="text-danger"></span>
+                            <input asp-for="Email.Endereco"  class="form-control" />
+                            <span asp-validation-for="Email.Endereco" class="text-danger"></span>
                         </div>
 
                         <div class="form-group">
                             <label asp-for="Funcao"></label>
-                            <select class="form-control" asp-for="Funcao"  placeholder="Funcao">
+                            <select class="form-control" asp-for="Funcao" placeholder="Funcao">
                                 <option>Administrador</option>
                                 <option selected>Responsavel</option>
                                 <option>Operador</option>
@@ -42,17 +48,17 @@
                             <span asp-validation-for="Funcao" class="text-danger"></span>
                         </div>
 
-                        <div class="form-group">
-                            <label asp-for="Senha"></label>
-                            <input type="password" asp-for="Senha" value="Senha" class="form-control" />
-                            <span asp-validation-for="Senha" class="text-danger"></span>
+                        @*<div class="form-group">
+                            <label asp-for="Usuario.Senha"></label>
+                            <input type="password" asp-for="Usuario.Senha"  class="form-control" />
+                            <span asp-validation-for="Usuario.Senha" class="text-danger"></span>
                         </div>
 
                         <div class="form-group">
-                            <label asp-for="SenhaConfirmacao"></label>
-                            <input type="password" asp-for="SenhaConfirmacao" value="Senha" class="form-control" />
-                            <span asp-validation-for="SenhaConfirmacao" class="text-danger"></span>
-                        </div>
+                            <label asp-for="Usuario.SenhaConfirmacao"></label>
+                            <input type="password" asp-for="Usuario.SenhaConfirmacao"  class="form-control" />
+                            <span asp-validation-for="Usuario.SenhaConfirmacao" class="text-danger"></span>
+                        </div>*@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

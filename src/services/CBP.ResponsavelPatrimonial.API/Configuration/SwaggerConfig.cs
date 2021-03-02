@@ -13,9 +13,9 @@ namespace CBP.ResponsavelPatrimonial.API.Configuration
             {
                 c.SwaggerDoc("v1", new OpenApiInfo()
                 {
-                    Title = "NerdStore Enterprise Clientes API",
-                    Description = "Esta API faz parte do curso ASP.NET Core Enterprise Applications.",
-                    Contact = new OpenApiContact() { Name = "Eduardo Pires", Email = "contato@desenvolvedor.io" },
+                    Title = "Controle Patrimonial API",
+                    Description = "Esta API faz parte do projeto Patrimônio em ASP.NET Core.",
+                    Contact = new OpenApiContact() { Name = "Anderson Luiz Louzada", Email = "valuz.anderson.to@gmail.com" },
                     License = new OpenApiLicense() { Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT") }
                 });
 
@@ -52,7 +52,7 @@ namespace CBP.ResponsavelPatrimonial.API.Configuration
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1 Docs");
             });
         }
     }

@@ -1,18 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using CBP.WebApp.MVC.Extensions;
 using CBP.WebApp.MVC.Models;
+using System.Collections.Generic;
 
 namespace CBP.WebApp.MVC.Services
 {
   public interface IResponsavelService
   {
-    Task<UsuarioViewModel> ObterUsuarioPorId(Guid id);
+    Task<IEnumerable<ResponsavelViewModel>> ObterTodosUsuarios();
+    Task<ResponsavelViewModel> ObterResponsavelPorId(Guid id);
     Task<ResponsavelViewModel> ObterPorId(Guid id);
-    Task<IEnumerable<ResponsavelViewModel>> ObterTodos();
+    Task<ResponseResult> Atualizacao(ResponsavelViewModel responsavelViewModel);
+    Task<ResponseResult> AdicionarEndereco(EnderecoViewModel endereco);
   }
 
   public class ResponsavelService : Service, IResponsavelService
@@ -22,30 +24,28 @@ namespace CBP.WebApp.MVC.Services
     public ResponsavelService(HttpClient httpClient,
         IOptions<AppSettings> settings)
     {
-      httpClient.BaseAddress = new Uri(settings.Value.ResponsavelUrl);
-
       _httpClient = httpClient;
+      httpClient.BaseAddress = new Uri(settings.Value.ResponsavelUrl);
     }
 
-    public async Task<UsuarioViewModel> ObterUsuarioPorId(Guid id)
+    public async Task<IEnumerable<ResponsavelViewModel>> ObterTodosUsuarios()
     {
-      var response = await _httpClient.GetAsync($"/usuario/{id}");
+      var responsaveis = await _httpClient.GetAsync("/responsaveis");
+
+      TratarErrosResponse(responsaveis);
+
+      return await DeserializarObjetoResponse<IEnumerable<ResponsavelViewModel>>(responsaveis);
+    }
+
+    public async Task<ResponsavelViewModel> ObterResponsavelPorId(Guid id)
+    {
+      var response = await _httpClient.GetAsync($"/responsavel/{id}");
 
       TratarErrosResponse(response);
 
       var responsavel = await DeserializarObjetoResponse<ResponsavelViewModel>(response);
 
-      UsuarioViewModel usuarioViewModel = new UsuarioViewModel
-      {
-        Nome = responsavel.Nome,
-        Email = responsavel.Email.Endereco,
-        Funcao = (Funcao)Enum.Parse(typeof(Funcao), responsavel.Funcao),
-        Senha = "",
-        SenhaConfirmacao = "",
-        Excluido = responsavel.Excluido
-      };
-
-      return usuarioViewModel;
+      return responsavel;
     }
 
     public async Task<ResponsavelViewModel> ObterPorId(Guid id)
@@ -57,15 +57,29 @@ namespace CBP.WebApp.MVC.Services
       return await DeserializarObjetoResponse<ResponsavelViewModel>(response);
     }
 
-    public async Task<IEnumerable<ResponsavelViewModel>> ObterTodos()
+    public async Task<ResponseResult> Atualizacao(ResponsavelViewModel responsavelViewModel)
     {
-      var response = await _httpClient.GetAsync("/responsaveis");
+      var registroContent = ObterConteudo(responsavelViewModel);
 
-      TratarErrosResponse(response);
+      var response = await _httpClient.PostAsync("/responsavel-editar", registroContent);
 
-      var responsavel = await DeserializarObjetoResponse<IEnumerable<ResponsavelViewModel>>(response);
+      if (!TratarErrosResponse(response))
+      {
+        return await DeserializarObjetoResponse<ResponseResult>(response);
+      }
 
-      return responsavel;
+      return RetornoOk();
+    }
+
+    public async Task<ResponseResult> AdicionarEndereco(EnderecoViewModel endereco)
+    {
+      var enderecoContent = ObterConteudo(endereco);
+
+      var response = await _httpClient.PostAsync("/responsavel/endereco/", enderecoContent);
+
+      if (!TratarErrosResponse(response)) return await DeserializarObjetoResponse<ResponseResult>(response);
+
+      return RetornoOk();
     }
 
   }

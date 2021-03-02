@@ -18,7 +18,7 @@ namespace CBP.ResponsavelPatrimonial.API.Data.Repository
 
     public IUnitOfWork UnitOfWork => _context;
 
-    public async Task<Responsavel> GetUsuarioId(Guid id)
+    public async Task<Responsavel> GetResponsavelId(Guid id)
     {
       return await _context.Responsaveis.FirstOrDefaultAsync(u => u.Id == id);
     }
@@ -36,6 +36,21 @@ namespace CBP.ResponsavelPatrimonial.API.Data.Repository
     public void Adicionar(Responsavel responsavel)
     {
       _context.Responsaveis.Add(responsavel);
+    }
+
+    public void Atualizar(Responsavel responsavel)
+    {
+      _context.Responsaveis.Update(responsavel);
+    }
+
+    public void Remover(Responsavel responsavel)
+    {
+      _context.Responsaveis.Remove(responsavel);
+    }
+
+    public void AdicionarEndereco(Endereco endereco)
+    {
+      _context.Enderecos.Add(endereco);
     }
 
     public void Dispose()

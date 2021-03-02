@@ -1,4 +1,4 @@
-﻿using CBP.Core.DomainObjects;
+﻿using CBP.WebAPI.Core.Usuario;
 using CBP.WebApp.MVC.Extensions;
 using System;
 using System.Collections.Generic;
@@ -9,6 +9,8 @@ namespace CBP.WebApp.MVC.Models
 {
   public class UsuarioViewModel
   {
+    public Guid Id { get; set; }
+
     [Required(ErrorMessage = "O campo {0} é obrigatório")]
     [DisplayName("Nome Completo")]
     public string Nome { get; set; }
@@ -28,16 +30,6 @@ namespace CBP.WebApp.MVC.Models
 
     [Compare("Senha", ErrorMessage = "As senhas não conferem.")]
     public string SenhaConfirmacao { get; set; }
-
-    public ResponseResult ResponseResult { get; set; }
-  }
-
-  public enum Funcao
-  {
-    Desenvolvedor = 4,
-    Administrador = 3,
-    Responsavel = 2,
-    Operador = 1,
   }
 
   public class UsuarioLogin
