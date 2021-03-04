@@ -28,7 +28,7 @@ namespace CBP.WebApp.MVC.Controllers
           ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage)).ToList();
       }
 
-      return View(resposta);
+      return RedirectToAction("Detalhe","Usuario", responsavelViewModel.Id);
     }
 
     [HttpPost]

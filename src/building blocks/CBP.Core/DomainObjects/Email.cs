@@ -6,10 +6,10 @@ namespace CBP.Core.DomainObjects
     {
         public const int EnderecoMaxLength = 254;
         public const int EnderecoMinLength = 5;
-        public string Endereco { get; private set; }
+        public string Endereco { get; set; }
 
         //Construtor do EntityFramework
-        protected Email() { }
+        public Email() { }
 
         public Email(string endereco)
         {

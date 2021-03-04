@@ -1,6 +1,8 @@
-﻿using System;
+﻿using CBP.Core.DomainObjects;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace CBP.WebApp.MVC.Models
 {
@@ -23,10 +25,10 @@ namespace CBP.WebApp.MVC.Models
     public bool Excluido { get; set; }
   }
 
-  public class Email
-  {
-    public string Endereco { get; set; }
-  }
+  //public class Email
+  //{
+  //  public string Endereco { get; set; }
+  //}
   public class EnderecoViewModel
   {
     public string Logradouro { get; set; }

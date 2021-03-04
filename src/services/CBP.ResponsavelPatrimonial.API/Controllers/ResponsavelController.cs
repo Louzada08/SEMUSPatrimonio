@@ -1,4 +1,6 @@
 ﻿using CBP.Core.Mediator;
+using CBP.Core.Messages.Integration;
+using CBP.MessageBus;
 using CBP.ResponsavelPatrimonial.API.Application.Commands;
 using CBP.ResponsavelPatrimonial.API.Models;
 using CBP.WebAPI.Core.Controllers;
@@ -14,9 +16,9 @@ namespace CBP.ResponsavelPatrimonial.API.Controllers
     private readonly IResponsavelRepository _responsavelRepository;
     private readonly IMediatorHandler _mediator;
 
-    public ResponsavelController(IMediatorHandler mediatorHandler, IResponsavelRepository responsavelRepository)
+    public ResponsavelController(IMediatorHandler mediator, IResponsavelRepository responsavelRepository)
     {
-      _mediator = mediatorHandler;
+      _mediator = mediator;
       _responsavelRepository = responsavelRepository;
     }
 
@@ -34,23 +36,21 @@ namespace CBP.ResponsavelPatrimonial.API.Controllers
       return await _responsavelRepository.ObterTodos();
     }
 
-    [HttpPost("responsavel-editar")]
-    public async Task<IActionResult> Atualizar(AtualizarResponsavelCommand responsavelCommand)
+    [HttpPut("responsavel-editar/{id}")]
+    public async Task<IActionResult> Atualizar(Guid id, AtualizarResponsavelCommand responsavel)
     {
-      //var responsavel = await _responsavelRepository.GetResponsavelId(id);
+      var responsavelObter = await _responsavelRepository.GetResponsavelId(id);
 
-      //if(responsavel == null) return NotFound();
+      if (responsavelObter == null) return NotFound();
 
-      return CustomResponse(await _mediator.EnviarComando(responsavelCommand));
+        var responsavelAtualizado = new AtualizarResponsavelCommand(responsavel.Id, responsavel.Nome, responsavel.Funcao, 
+            responsavel.Email, responsavel.Excluido);
+
+      return CustomResponse(await _mediator.EnviarComando(responsavelAtualizado));
 
 
       //if (responsavel is null) return NotFound();
 
-      //responsavelViewModel.Id = responsavelViewModel.Usuario.Id;
-      //responsavelViewModel.Nome = responsavelViewModel.Usuario.Nome;
-      //responsavelViewModel.Email = responsavel.Email;
-      //responsavelViewModel.Excluido = responsavel.Excluido;
-      //responsavelViewModel.Funcao = responsavel.Funcao;
 
       //if (!ModelState.IsValid) return CustomResponse(ModelState);
 
@@ -71,7 +71,6 @@ namespace CBP.ResponsavelPatrimonial.API.Controllers
       //{
       //  //var funcao = (short)usuarioRegistro.Funcao;
 
-      //  var responsavelResult = await EditarResponsavel(usuarioRegistro);
 
       //  //if (!responsavelResult.ValidationResult.IsValid)
       //  //{
@@ -92,6 +91,23 @@ namespace CBP.ResponsavelPatrimonial.API.Controllers
 
       //return CustomResponse();
     }
+
+    //  private async Task<AtualizarResponsavelCommand> EditarResponsavel(Responsavel responsavelEdita)
+    //{
+    //  var responsavel = await _responsavelRepository.GetResponsavelId(responsavelEdita.Id);
+
+    //  var responsavelAtualizado = new UsuarioRegistradoIntegrationEvent(
+    //      responsavelEdita.Id, responsavelEdita.Nome, responsavelEdita.Funcao.ToString(), responsavelEdita.Email.Endereco, responsavelEdita.Excluido);
+
+    //  try
+    //  {
+    //    return await _bus.RequestAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(responsavelAtualizado);
+    //  }
+    //  catch
+    //  {
+    //    throw;
+    //  }
+    //}
 
   }
 }

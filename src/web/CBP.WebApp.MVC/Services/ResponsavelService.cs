@@ -57,16 +57,13 @@ namespace CBP.WebApp.MVC.Services
       return await DeserializarObjetoResponse<ResponsavelViewModel>(response);
     }
 
-    public async Task<ResponseResult> Atualizacao(ResponsavelViewModel responsavelViewModel)
+    public async Task<ResponseResult> Atualizacao(ResponsavelViewModel responsavel)
     {
-      var registroContent = ObterConteudo(responsavelViewModel);
+      var responsavelContent = ObterConteudo(responsavel);
 
-      var response = await _httpClient.PostAsync("/responsavel-editar", registroContent);
+      var response = await _httpClient.PutAsync($"/responsavel-editar/{responsavel.Id}", responsavelContent);
 
-      if (!TratarErrosResponse(response))
-      {
-        return await DeserializarObjetoResponse<ResponseResult>(response);
-      }
+      if (!TratarErrosResponse(response)) return await DeserializarObjetoResponse<ResponseResult>(response);
 
       return RetornoOk();
     }

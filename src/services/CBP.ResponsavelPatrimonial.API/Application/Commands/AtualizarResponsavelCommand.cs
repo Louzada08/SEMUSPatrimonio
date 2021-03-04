@@ -1,17 +1,18 @@
-﻿using FluentValidation;
+﻿using CBP.Core.DomainObjects;
+using FluentValidation;
 using System;
 
 namespace CBP.ResponsavelPatrimonial.API.Application.Commands
 {
   public class AtualizarResponsavelCommand : ResponsavelCommand
   {
-    public AtualizarResponsavelCommand(Guid id, string nome, string funcao, string email, bool excluido)
+    public AtualizarResponsavelCommand(Guid id, string nome, string funcao, Email email, bool excluido)
     {
       AggregateId = id;
       Id = id;
       Nome = nome;
       Funcao = funcao;
-      Email = email;
+      Email = Email;
       Excluido = excluido;
     }
 
@@ -39,7 +40,7 @@ namespace CBP.ResponsavelPatrimonial.API.Application.Commands
             .NotEmpty()
             .WithMessage("A função informada não é válido.");
 
-        RuleFor(c => c.Email)
+        RuleFor(c => c.Email.Endereco)
             .Must(TerEmailValido)
             .WithMessage("O e-mail informado não é válido.");
       }

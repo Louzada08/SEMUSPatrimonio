@@ -1,11 +1,12 @@
 ﻿using System;
+using CBP.Core.DomainObjects;
 using FluentValidation;
 
 namespace CBP.ResponsavelPatrimonial.API.Application.Commands
 {
   public class RegistrarResponsavelCommand : ResponsavelCommand
   {
-    public RegistrarResponsavelCommand(Guid id, string nome, string funcao, string email, bool excluido)
+    public RegistrarResponsavelCommand(Guid id, string nome, string funcao, Email email, bool excluido)
     {
       AggregateId = id;
       Id = id;
@@ -37,7 +38,7 @@ namespace CBP.ResponsavelPatrimonial.API.Application.Commands
             .NotEmpty()
             .WithMessage("A função informada não é válido.");
 
-        RuleFor(c => c.Email)
+        RuleFor(c => c.Email.Endereco)
             .Must(TerEmailValido)
             .WithMessage("O e-mail informado não é válido.");
       }
