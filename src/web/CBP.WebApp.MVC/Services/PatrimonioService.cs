@@ -37,7 +37,7 @@ namespace CBP.WebApp.MVC.Services
 
         public async Task<IEnumerable<PatrimonioViewModel>> ObterTodos()
         {
-            var response = await _httpClient.GetAsync("/patrimonio/vitrine");
+            var response = await _httpClient.GetAsync("patrimonio/vitrine");
 
             TratarErrosResponse(response);
 

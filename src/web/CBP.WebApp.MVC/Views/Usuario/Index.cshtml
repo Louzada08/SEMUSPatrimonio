@@ -1,5 +1,5 @@
-﻿@*@using CBP.WebApp.MVC.Models*@
-@model IEnumerable<CBP.WebApp.MVC.Models.ResponsavelViewModel>
+﻿@using CBP.WebApp.MVC.Models
+@model IEnumerable<UsuarioViewModel>
 @{
     ViewData["Title"] = "Todos os patrimônios";
 }
@@ -44,7 +44,7 @@
                         @item.Nome
                     </div>
                     <div class="col-md-4 border-left border-info">
-                        @item.Email.Endereco
+                        @item.Email
                     </div>
                     <div class="col-md-2 border-left border-info">
                         @item.Funcao

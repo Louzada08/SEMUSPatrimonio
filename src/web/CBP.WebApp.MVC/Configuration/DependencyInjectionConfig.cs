@@ -11,6 +11,7 @@ using Polly.Retry;
 using Polly.Extensions.Http;
 using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using CBP.WebAPI.Core.Usuario;
+using CBP.WebApp.MVC.AutoMapper;
 
 namespace CBP.WebApp.MVC.Configuration
 {
@@ -21,6 +22,9 @@ namespace CBP.WebApp.MVC.Configuration
       services.AddSingleton<IValidationAttributeAdapterProvider, EmailValidationAttributeAdapterProvider>();
       services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
       services.AddScoped<IAspNetUser, AspNetUser>();
+
+      //services.AddAutoMapper(typeof(ViewModelToDomainMappingProfile), typeof(DomainToViewModelMappingProfile));
+      services.AddAutoMapper(typeof(Startup));
 
       #region HttpServices
       services.AddTransient<HttpClientAuthorizationDelegatingHandler>();

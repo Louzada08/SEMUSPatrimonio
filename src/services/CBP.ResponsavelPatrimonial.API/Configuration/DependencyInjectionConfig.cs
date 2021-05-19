@@ -15,7 +15,6 @@ namespace CBP.ResponsavelPatrimonial.API.Configuration
     public static void RegisterServices(this IServiceCollection services)
     {
       //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
       services.AddScoped<IMediatorHandler, MediatorHandler>();
 
       services.AddScoped<IRequestHandler<RegistrarResponsavelCommand, ValidationResult>, ResponsavelCommandHandler>();
@@ -24,6 +23,8 @@ namespace CBP.ResponsavelPatrimonial.API.Configuration
       services.AddScoped<IRequestHandler<AdicionarEnderecoCommand, ValidationResult>, ResponsavelCommandHandler>();
 
       services.AddScoped<INotificationHandler<ResponsavelRegistradoEvent>, ResponsavelEventHandler>();
+
+      services.AddAutoMapper(typeof(Startup));
 
       services.AddScoped<IResponsavelRepository, ResponsavelRepository>();
       services.AddScoped<ResponsavelContext>();

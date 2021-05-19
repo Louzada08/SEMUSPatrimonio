@@ -1,4 +1,5 @@
-﻿using CBP.WebAPI.Core.Usuario;
+﻿using CBP.Core.Communication;
+using CBP.WebAPI.Core.Usuario;
 using CBP.WebApp.MVC.Extensions;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace CBP.WebApp.MVC.Models
     [Email]
     public string Email { get; set; }
 
-    public Funcao Funcao { get; set; }
+    public Funcoes Funcao { get; set; }
 
     public bool Excluido { get; set; }
 

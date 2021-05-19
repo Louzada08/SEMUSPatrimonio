@@ -16,28 +16,26 @@
             <h4 class="text-center text-break">Seja bem vindo ao Controle Patrimonial</h4>
 
             <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
 
+                    <div class="form-group">
+                        <label asp-for="Senha"></label>
+                        <input type="password" asp-for="Senha" class="form-control" />
+                        <span asp-validation-for="Senha" class="text-danger"></span>
+                        <p>
+                            <a asp-action="Registro" asp-controller="Identidade">Esqueceu sua senha?</a>
+                        </p>
+                    </div>
 
-                <div class="form-group">
-                    <label asp-for="Email"></label>
-                    <input asp-for="Email" class="form-control" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="Senha"></label>
-                    <input type="password" asp-for="Senha" class="form-control" />
-                    <span asp-validation-for="Senha" class="text-danger"></span>
-                    <p>
-                        <a asp-action="Registro" asp-controller="Identidade">Esqueceu sua senha?</a>
-                    </p>
-                </div>
-
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Entrar</button>
-                </div>
-            </form>
-        </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Entrar</button>
+                    </div>
+                </form>
+</div>
     </div>
 
 </section>

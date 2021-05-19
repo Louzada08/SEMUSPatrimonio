@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CBP.Core.Data;
+using CBP.ResponsavelPatrimonial.API.DTO;
 
 namespace CBP.ResponsavelPatrimonial.API.Models
 {
@@ -13,7 +14,7 @@ namespace CBP.ResponsavelPatrimonial.API.Models
 
     void AdicionarEndereco(Endereco endereco);
     Task<Responsavel> GetResponsavelId(Guid id);
-    Task<IEnumerable<Responsavel>> ObterTodos();
+    Task<IEnumerable<UsuarioViewModel>> ObterTodos();
     Task<Responsavel> ObterPorEmail(string email);
   }
 }

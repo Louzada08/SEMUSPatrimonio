@@ -18,20 +18,6 @@ namespace CBP.WebApp.MVC.Controllers
     }
 
     [HttpPost]
-    public async Task<IActionResult> Editar(ResponsavelViewModel responsavelViewModel)
-    {
-      var resposta = await _responsavelService.Atualizacao(responsavelViewModel);
-
-      if (ResponsePossuiErros(resposta))
-      {
-        TempData["Erros"] =
-          ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage)).ToList();
-      }
-
-      return RedirectToAction("Detalhe","Usuario", responsavelViewModel.Id);
-    }
-
-    [HttpPost]
     public async Task<IActionResult> NovoEndereco(EnderecoViewModel endereco)
     {
       var response = await _responsavelService.AdicionarEndereco(endereco);

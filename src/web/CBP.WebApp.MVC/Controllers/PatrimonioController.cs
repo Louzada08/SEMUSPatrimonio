@@ -1,10 +1,13 @@
-﻿using CBP.WebApp.MVC.Services;
+﻿using CBP.WebAPI.Core.Identidade;
+using CBP.WebApp.MVC.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
 namespace CBP.WebApp.MVC.Controllers
 {
+  [Authorize]
   public class PatrimonioController : MainController
   {
     private readonly IPatrimonioService _patrimonioService;
@@ -24,6 +27,7 @@ namespace CBP.WebApp.MVC.Controllers
     }
 
     [HttpGet]
+    [ClaimsAuthorize("NivelDeAcesso", "Responsavel")]
     [Route("patrimonio-detalhe/{id}")]
     public async Task<IActionResult> PatrimonioDetalhe(Guid id)
     {

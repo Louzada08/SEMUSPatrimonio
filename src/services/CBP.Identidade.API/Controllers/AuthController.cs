@@ -1,20 +1,23 @@
-﻿using System;
+﻿using CBP.Core.Mediator;
+using CBP.Core.Messages.Integration;
+using CBP.Identidade.API.Application.Events;
+using CBP.Identidade.API.Models;
+using CBP.MessageBus;
+using CBP.WebAPI.Core.Controllers;
+using CBP.WebAPI.Core.Identidade;
+using CBP.WebAPI.Core.Usuario;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using CBP.WebAPI.Core.Identidade;
-using CBP.Identidade.API.Models;
-using CBP.WebAPI.Core.Controllers;
-using CBP.Core.Messages.Integration;
-using CBP.MessageBus;
-using Microsoft.AspNetCore.Authorization;
 
 namespace CBP.Identidade.API.Controllers
 {
@@ -53,7 +56,8 @@ namespace CBP.Identidade.API.Controllers
 
       if (result.Succeeded)
       {
-        var funcao = (short)usuarioRegistro.Funcao;
+        
+        var funcao = Funcao.ObterEnumIdPeloNome(usuarioRegistro.Funcao);
 
         var responsavelResult = await RegistrarResponsavel(usuarioRegistro);
 
@@ -74,6 +78,29 @@ namespace CBP.Identidade.API.Controllers
       }
 
       return CustomResponse();
+    }
+
+    [HttpPut("editar-conta")]
+    public async Task<IActionResult> Atualizar(ResponsavelAtualizar responsavelEditar)
+    {
+      var responsavelResult = await EditarResponsavel(responsavelEditar);
+
+      //if (result.IsValid)
+      //{
+      //  var clainsContext = _aspNetUser.ObterHttpContext();
+
+      //  //var user = _aspNetUser.FindByIdAsync(responsavel.Id.ToString());
+      //  if (user. == TaskStatus.RanToCompletion)
+      //  {
+      //    var funcao = Funcao.ObterEnumIdPeloNome(responsavelObter.Funcao);
+
+      //    await _aspNetUser. RemoveClaimAsync(user.Result, new Claim("NivelDeAcesso", funcao.ToString("d2")));
+      //    await _aspNetUser.AddClaimAsync(user.Result, new Claim("NivelDeAcesso", Funcao.ObterEnumIdPeloNome(responsavel.Funcao).ToString("d2")));
+      //  } 
+      //}
+
+      return CustomResponse();
+
     }
 
     [AllowAnonymous]
@@ -170,18 +197,44 @@ namespace CBP.Identidade.API.Controllers
       var usuario = await _userManager.FindByEmailAsync(usuarioRegistro.Email);
 
       var usuarioRegistrado = new UsuarioRegistradoIntegrationEvent(
-          Guid.Parse(usuario.Id), usuarioRegistro.Nome, usuarioRegistro.Funcao.ToString(), usuarioRegistro.Email, false);
+          Guid.Parse(usuario.Id), usuarioRegistro.Nome, usuarioRegistro.Funcao, usuarioRegistro.Email, false);
 
       try
       {
         return await _bus.RequestAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(usuarioRegistrado);
       }
-      catch
+      catch 
       {
         await _userManager.DeleteAsync(usuario);
         throw;
       }
     }
 
+    private async Task<ResponseMessage> EditarResponsavel(ResponsavelAtualizar responsavel)
+    {
+      //var responsavelExistente = await _userManager.FindByEmailAsync(responsavel.Email);
+
+      //if (responsavelExistente != null && responsavelExistente.Id != responsavel.Id.ToString())
+      //{
+      //  if (!responsavelExistente.Equals(responsavel))
+      //  {
+      //    AdicionarErro("Este responsavel não existe.");
+      //    return ValidationResult;
+      //  }
+      //}
+
+      var responsavelAtualizado = new ResponsavelAtualizadoEvent(
+          responsavel.Id, responsavel.Nome, responsavel.Funcao, responsavel.Email, responsavel.Excluido);
+
+      try
+      {
+        return await _bus.RequestAsync<ResponsavelAtualizadoEvent, ResponseMessage>(responsavelAtualizado);
+      }
+      catch
+      {
+        throw;
+      }
+
+    }
   }
 }

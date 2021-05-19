@@ -1,4 +1,4 @@
-﻿using CBP.WebAPI.Core.Usuario;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -10,7 +10,7 @@ namespace CBP.Identidade.API.Models
     public string Nome { get; set; }
 
     [Required(ErrorMessage = "O campo {0} é obrigatório")]
-    public Funcao Funcao { get; set; }
+    public string Funcao { get; set; }
 
     [Required(ErrorMessage = "O campo {0} é obrigatório")]
     [EmailAddress(ErrorMessage = "O campo {0} está em formato inválido")]
@@ -38,6 +38,7 @@ namespace CBP.Identidade.API.Models
   public class UsuarioRespostaLogin
   {
     public string AccessToken { get; set; }
+    public Guid RefreshToken { get; set; }
     public double ExpiresIn { get; set; }
     public UsuarioToken UsuarioToken { get; set; }
   }

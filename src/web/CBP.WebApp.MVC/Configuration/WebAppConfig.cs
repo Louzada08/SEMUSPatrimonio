@@ -53,6 +53,7 @@ namespace CBP.WebApp.MVC.Configuration
         endpoints.MapControllerRoute(
                   name: "default",
                   pattern: "{controller=Patrimonio}/{action=Index}/{id?}");
+        //pattern: "{controller=Identidade}/{action=Login}");
       });
     }
   }

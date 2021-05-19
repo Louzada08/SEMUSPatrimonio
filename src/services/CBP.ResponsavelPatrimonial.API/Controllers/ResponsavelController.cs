@@ -1,7 +1,6 @@
-﻿using CBP.Core.Mediator;
-using CBP.Core.Messages.Integration;
-using CBP.MessageBus;
-using CBP.ResponsavelPatrimonial.API.Application.Commands;
+﻿using AutoMapper;
+using CBP.Core.Mediator;
+using CBP.ResponsavelPatrimonial.API.DTO;
 using CBP.ResponsavelPatrimonial.API.Models;
 using CBP.WebAPI.Core.Controllers;
 using Microsoft.AspNetCore.Mvc;
@@ -31,65 +30,9 @@ namespace CBP.ResponsavelPatrimonial.API.Controllers
     }
 
     [HttpGet("responsaveis")]
-    public async Task<IEnumerable<Responsavel>> ObterListaResponsaveis()
+    public async Task<IEnumerable<UsuarioViewModel>> ObterListaResponsaveis()
     {
       return await _responsavelRepository.ObterTodos();
-    }
-
-    [HttpPut("responsavel-editar/{id}")]
-    public async Task<IActionResult> Atualizar(Guid id, AtualizarResponsavelCommand responsavel)
-    {
-      var responsavelObter = await _responsavelRepository.GetResponsavelId(id);
-
-      if (responsavelObter == null) return NotFound();
-
-        var responsavelAtualizado = new AtualizarResponsavelCommand(responsavel.Id, responsavel.Nome, responsavel.Funcao, 
-            responsavel.Email, responsavel.Excluido);
-
-      return CustomResponse(await _mediator.EnviarComando(responsavelAtualizado));
-
-
-      //if (responsavel is null) return NotFound();
-
-
-      //if (!ModelState.IsValid) return CustomResponse(ModelState);
-
-      //var user = await _userManager.FindByIdAsync(id.ToString());
-
-      //if (user == null)
-      //{
-      //  return NotFound($"Usuário '{usuarioRegistro.Nome}' não encontrado");
-      //}
-
-      //user.Id = id.ToString();
-      //user.Email = usuarioRegistro.Email;
-      //user.UserName = usuarioRegistro.Email;
-
-      //var result = await _userManager.UpdateAsync(user);
-
-      //if (result.Succeeded)
-      //{
-      //  //var funcao = (short)usuarioRegistro.Funcao;
-
-
-      //  //if (!responsavelResult.ValidationResult.IsValid)
-      //  //{
-      //  //  await _userManager.DeleteAsync(user);
-      //  //  return CustomResponse(responsavelResult.ValidationResult);
-      //  //}
-
-      //  //await _userManager.AddClaimAsync(user, new Claim("NivelDeAcesso", funcao.ToString("d2")));
-
-      //  //return CustomResponse(await GerarJwt(usuarioRegistro.Email));
-      //  return CustomResponse(responsavelResult);
-      //}
-
-      //foreach (var error in result.Errors)
-      //{
-      //  AdicionarErroProcessamento(error.Description);
-      //}
-
-      //return CustomResponse();
     }
 
     //  private async Task<AtualizarResponsavelCommand> EditarResponsavel(Responsavel responsavelEdita)

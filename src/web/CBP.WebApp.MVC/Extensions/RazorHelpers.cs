@@ -37,12 +37,14 @@ namespace CBP.WebApp.MVC.Extensions
     public static string SelectOptionsPorQuantidade(this RazorPage page, int quantidade, int valorSelecionado = 0)
     {
       var sb = new StringBuilder();
-      for (var i = 1; i <= quantidade; i++)
-      {
-        var selected = "";
-        if (i == valorSelecionado) selected = "selected";
-        sb.Append($"<option {selected} value='{i}'>{i}</option>");
-      }
+      //for (var i = 1; i <= quantidade; i++)
+      //{
+      //  var selected = "";
+      //  if (i == valorSelecionado) selected = "selected";
+      //  sb.Append($"<option {selected} value='{i}'>{i}</option>");
+      //}
+
+      sb.Append($"value='{valorSelecionado}'");
 
       return sb.ToString();
     }

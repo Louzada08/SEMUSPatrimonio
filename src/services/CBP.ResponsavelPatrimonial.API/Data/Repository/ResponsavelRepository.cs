@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using CBP.Core.Data;
+using CBP.ResponsavelPatrimonial.API.DTO;
 using CBP.ResponsavelPatrimonial.API.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,10 +12,11 @@ namespace CBP.ResponsavelPatrimonial.API.Data.Repository
   public class ResponsavelRepository : IResponsavelRepository
   {
     private readonly ResponsavelContext _context;
-
-    public ResponsavelRepository(ResponsavelContext context)
+    private readonly IMapper _mapper;
+    public ResponsavelRepository(ResponsavelContext context, IMapper mapper)
     {
       _context = context;
+      _mapper = mapper;
     }
 
     public IUnitOfWork UnitOfWork => _context;
@@ -23,9 +26,9 @@ namespace CBP.ResponsavelPatrimonial.API.Data.Repository
       return await _context.Responsaveis.FirstOrDefaultAsync(u => u.Id == id);
     }
 
-    public async Task<IEnumerable<Responsavel>> ObterTodos()
+    public async Task<IEnumerable<UsuarioViewModel>> ObterTodos()
     {
-      return await _context.Responsaveis.AsNoTracking().ToListAsync();
+      return _mapper.Map<IEnumerable<UsuarioViewModel>>(await _context.Responsaveis.AsNoTracking().ToListAsync());
     }
 
     public Task<Responsavel> ObterPorEmail(string email)

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CBP.BemPatrimonial.API.Controllers
 {
-  [Authorize]
+
   public class PatrimonioController : MainController
   {
     private readonly IPatrimonioRepository _patrimonioRepository;
@@ -19,14 +19,12 @@ namespace CBP.BemPatrimonial.API.Controllers
       _patrimonioRepository = patrimonioRepository;
     }
 
-    //[AllowAnonymous]
     [HttpGet("patrimonio/vitrine")]
     public async Task<IEnumerable<Patrimonio>> Index()
     {
       return await _patrimonioRepository.ObterTodos();
     }
 
-    [ClaimsAuthorize("NivelDeAcesso", "Responsavel")]
     [HttpGet("patrimonio/patrimonios/{id}")]
     public async Task<Patrimonio> ProdutoDetalhe(Guid id)
     {

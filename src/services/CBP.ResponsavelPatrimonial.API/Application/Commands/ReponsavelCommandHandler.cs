@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace CBP.ResponsavelPatrimonial.API.Application.Commands
 {
-  public class ResponsavelCommandHandler : CommandHandler, IRequestHandler<RegistrarResponsavelCommand, ValidationResult>,
+  public class ResponsavelCommandHandler : CommandHandler, 
+        IRequestHandler<RegistrarResponsavelCommand, ValidationResult>,
         IRequestHandler<AtualizarResponsavelCommand, ValidationResult>,
         IRequestHandler<AdicionarEnderecoCommand, ValidationResult>
   {
@@ -24,7 +25,7 @@ namespace CBP.ResponsavelPatrimonial.API.Application.Commands
     {
       if (!message.EhValido()) return message.ValidationResult;
 
-      var responsavel = new Responsavel(message.Id, message.Nome, message.Funcao, message.Email.Endereco, message.Excluido);
+      var responsavel = new Responsavel(message.Id, message.Nome, message.Funcao, message.Email, message.Excluido);
 
       var responsavelExistente = await _responsavelRepository.ObterPorEmail(responsavel.Email.Endereco);
 
@@ -36,7 +37,7 @@ namespace CBP.ResponsavelPatrimonial.API.Application.Commands
 
       _responsavelRepository.Adicionar(responsavel);
 
-      responsavel.AdicionarEvento(new ResponsavelRegistradoEvent(message.Id, message.Nome, message.Funcao, message.Email.Endereco, message.Excluido));
+      responsavel.AdicionarEvento(new ResponsavelRegistradoEvent(message.Id, message.Nome, message.Funcao, message.Email, message.Excluido));
 
       return await PersistirDados(_responsavelRepository.UnitOfWork);
     }
@@ -45,7 +46,7 @@ namespace CBP.ResponsavelPatrimonial.API.Application.Commands
     {
       if (!message.EhValido()) return message.ValidationResult;
 
-      var responsavel = new Responsavel(message.Id, message.Nome, message.Funcao, message.Email.Endereco, message.Excluido);
+      var responsavel = new Responsavel(message.Id, message.Nome, message.Funcao, message.Email, message.Excluido);
 
       var responsavelExistente = await _responsavelRepository.ObterPorEmail(responsavel.Email.Endereco);
 
@@ -60,7 +61,7 @@ namespace CBP.ResponsavelPatrimonial.API.Application.Commands
 
       _responsavelRepository.Atualizar(responsavel);
 
-      responsavel.AdicionarEvento(new ResponsavelAtualizadoEvent(message.Id, message.Nome, message.Funcao, message.Email.Endereco, message.Excluido));
+      responsavel.AdicionarEvento(new ResponsavelAtualizadoEvent(message.Id, message.Nome, message.Funcao, message.Email, message.Excluido));
 
       return await PersistirDados(_responsavelRepository.UnitOfWork);
     }

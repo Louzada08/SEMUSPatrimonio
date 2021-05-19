@@ -8,7 +8,7 @@ namespace CBP.Transferencia.API.Model
 {
   public class TermoTransferencia
   {
-    internal const int MAX_QUANTIDADE_ITEM = 25;
+    internal const int MAX_QUANTIDADE_ITEM = 5;
 
     public Guid Id { get; set; }
     public Guid ResponsavelCedenteId { get; set; }
@@ -49,12 +49,14 @@ namespace CBP.Transferencia.API.Model
 
     internal void AdicionarItem(TermoTransferenciaItem item)
     {
+      if (!item.EhValido()) return;
+
       item.AssociarTermoTransferencia(Id);
 
       if (TermoTransferenciaItemExistente(item))
       {
         var itemExistente = ObterPorPatrimonioId(item.PatrimonioId);
-        itemExistente.AdicionarUnidades(1);
+        itemExistente.AdicionarUnidades(item.Quantidade);
 
         item = itemExistente;
         Itens.Remove(itemExistente);

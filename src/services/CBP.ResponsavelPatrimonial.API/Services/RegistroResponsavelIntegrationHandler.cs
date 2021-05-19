@@ -8,7 +8,6 @@ using CBP.Core.Mediator;
 using CBP.Core.Messages.Integration;
 using CBP.MessageBus;
 using CBP.ResponsavelPatrimonial.API.Application.Commands;
-using CBP.Core.DomainObjects;
 
 namespace CBP.ResponsavelPatrimonial.API.Services
 {
@@ -46,8 +45,8 @@ namespace CBP.ResponsavelPatrimonial.API.Services
 
     private async Task<ResponseMessage> RegistrarResponsavel(UsuarioRegistradoIntegrationEvent message)
     {
-      Email email = new Email(message.Email);
-      var responsavelCommand = new RegistrarResponsavelCommand(message.Id, message.Nome, message.Funcao, email, message.Excluido);
+      var responsavelCommand = new RegistrarResponsavelCommand(message.Id, message.Nome, message.Funcao, message.Email, message.Excluido);
+
       ValidationResult sucesso;
 
       using (var scope = _serviceProvider.CreateScope())

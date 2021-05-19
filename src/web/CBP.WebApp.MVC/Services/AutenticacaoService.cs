@@ -1,4 +1,6 @@
-﻿using CBP.WebApp.MVC.Extensions;
+﻿using AutoMapper;
+using CBP.WebApp.MVC.DTO;
+using CBP.WebApp.MVC.Extensions;
 using CBP.WebApp.MVC.Models;
 using Microsoft.Extensions.Options;
 using System;
@@ -12,19 +14,28 @@ namespace CBP.WebApp.MVC.Services
   {
     Task<UsuarioRespostaLogin> Login(UsuarioLogin usuarioLogin);
     Task<UsuarioRespostaLogin> Registro(UsuarioViewModel usuarioRegistro);
-    Task<UsuarioRespostaLogin> Atualizacao(UsuarioViewModel usuarioRegistro);
+    Task<UsuarioRespostaLogin> Atualizacao(UsuarioViewModel responsavelViewModel);
+
+    //Task RealizarLogin(UsuarioRespostaLogin resposta);
+    //Task Logout();
+    //bool TokenExpirado();
+    //Task<bool> RefreshTokenValido();
   }
 
   public class AutenticacaoService : Service, IAutenticacaoService
   {
     private readonly HttpClient _httpClient;
 
+    private readonly IMapper _mapper;
+    //private readonly IAuthenticationService _authenticationService;
+
     public AutenticacaoService(HttpClient httpClient,
-                               IOptions<AppSettings> settings)
+                               IOptions<AppSettings> settings, IMapper mapper)
     {
       httpClient.BaseAddress = new Uri(settings.Value.AutenticacaoUrl);
 
       _httpClient = httpClient;
+      _mapper = mapper;
     }
 
     public async Task<IEnumerable<UsuarioViewModel>> ObterTodosUsuarios()
@@ -57,9 +68,9 @@ namespace CBP.WebApp.MVC.Services
 
     public async Task<UsuarioRespostaLogin> Registro(UsuarioViewModel usuarioRegistro)
     {
-      var registroContent = ObterConteudo(usuarioRegistro);
+      var registroContent = ObterConteudo(_mapper.Map<UsuarioDTO>(usuarioRegistro));
 
-      var response = await _httpClient.PostAsync("/api/identidade/nova-conta", registroContent);
+       var response = await _httpClient.PostAsync("/api/identidade/nova-conta", registroContent);
 
       if (!TratarErrosResponse(response))
       {
@@ -72,9 +83,52 @@ namespace CBP.WebApp.MVC.Services
       return await DeserializarObjetoResponse<UsuarioRespostaLogin>(response);
     }
 
-    public Task<UsuarioRespostaLogin> Atualizacao(UsuarioViewModel usuarioRegistro)
+    public async Task<UsuarioRespostaLogin> Atualizacao(UsuarioViewModel usuario)
     {
-      throw new NotImplementedException();
+      var responsavelContent = ObterConteudo(usuario);
+
+      var response = await _httpClient.PutAsync($"/responsavel-editar/{usuario.Id}", responsavelContent);
+
+      if (!TratarErrosResponse(response))
+      {
+        return new UsuarioRespostaLogin
+        {
+          ResponseResult = await DeserializarObjetoResponse<ResponseResult>(response)
+        };
+      }
+
+      return await DeserializarObjetoResponse<UsuarioRespostaLogin>(response);
     }
+
+    //public async Task<UsuarioRespostaLogin> UtilizarRefreshToken(string refreshToken)
+    //{
+    //  var refreshTokenContent = ObterConteudo(refreshToken);
+
+    //  var response = await _httpClient.PostAsync("/api/identidade/refresh-token", refreshTokenContent);
+
+    //  if (!TratarErrosResponse(response))
+    //  {
+    //    return new UsuarioRespostaLogin
+    //    {
+    //      ResponseResult = await DeserializarObjetoResponse<ResponseResult>(response)
+    //    };
+    //  }
+
+    //  return await DeserializarObjetoResponse<UsuarioRespostaLogin>(response);
+    //}
+
+    //public async Task<bool> RefreshTokenValido()
+    //{
+    //  var resposta = await UtilizarRefreshToken(_user.ObterUserRefreshToken());
+
+    //  if (resposta.AccessToken != null && resposta.ResponseResult == null)
+    //  {
+    //    await RealizarLogin(resposta);
+    //    return true;
+    //  }
+
+    //  return false;
+    //}
+
   }
 }

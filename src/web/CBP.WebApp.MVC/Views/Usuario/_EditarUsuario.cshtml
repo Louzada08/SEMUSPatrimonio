@@ -1,4 +1,4 @@
-﻿@model CBP.WebApp.MVC.Models.ResponsavelViewModel
+﻿@model CBP.WebApp.MVC.Models.UsuarioViewModel
 
 @{
     ViewData["Title"] = "Editar Usuário";
@@ -16,7 +16,7 @@
                     </button>
                 </div>
                 <vc:summary></vc:summary>
-                <form asp-controller="Responsavel" asp-action="Editar" method="post">
+                <form asp-controller="Usuario" asp-action="Edicao" method="post">
                     <div class="modal-body">
 
                         <div class="form-group">
@@ -33,8 +33,8 @@
 
                         <div class="form-group">
                             <label asp-for="Email"></label>
-                            <input asp-for="Email.Endereco"  class="form-control" />
-                            <span asp-validation-for="Email.Endereco" class="text-danger"></span>
+                            <br/>@Model.Email
+                            <input type="hidden" asp-for="Email" class="form-control" />
                         </div>
 
                         <div class="form-group">

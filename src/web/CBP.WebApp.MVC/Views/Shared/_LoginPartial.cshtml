@@ -42,7 +42,7 @@
                             @{
                               foreach (var funcao in AppUser.ObterClaims())
                               {
-                                  if (funcao.Type == "NivelDeAcesso" && int.Parse(funcao.Value) >= ((int)Funcao.Administrador))
+                                  if (funcao.Type == "NivelDeAcesso" && int.Parse(funcao.Value) >= ((int)Funcoes.Administrador))
                                   {
                                         <a class="dropdown-item" asp-controller="Usuario" asp-action="Index">Cadastro Usuário/Responsavel</a>
                                         { break; }

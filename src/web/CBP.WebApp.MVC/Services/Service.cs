@@ -2,8 +2,8 @@
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using CBP.Core.Communication;
 using CBP.WebApp.MVC.Extensions;
-using CBP.WebApp.MVC.Models;
 
 namespace CBP.WebApp.MVC.Services
 {
@@ -44,6 +44,7 @@ namespace CBP.WebApp.MVC.Services
       response.EnsureSuccessStatusCode();
       return true;
     }
+
     protected ResponseResult RetornoOk()
     {
       return new ResponseResult();

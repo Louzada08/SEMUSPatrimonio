@@ -20,7 +20,7 @@ namespace CBP.WebAPI.Core.Identidade
 
     private static short ObtemNivelDeAcesso(string claimValue)
     {
-      foreach(var item in Enum.GetValues(typeof(Funcao)).Cast<Funcao>())
+      foreach (var item in Enum.GetValues(typeof(Funcoes)).Cast<Funcoes>())
       {
         if (item.ToString().Contains(claimValue)) return (short)item;
       }

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using CBP.WebApp.MVC.Models;
+using CBP.Core.Communication;
 
 namespace CBP.WebApp.MVC.Controllers
 {

@@ -26,6 +26,11 @@ namespace CBP.WebAPI.Core.Usuario
       return EstaAutenticado() ? _accessor.HttpContext.User.GetUserEmail() : "";
     }
 
+    public string ObterUserRefreshToken()
+    {
+      return EstaAutenticado() ? _accessor.HttpContext.User.GetUserRefreshToken() : "";
+    }
+
     public string ObterUserToken()
     {
       return EstaAutenticado() ? _accessor.HttpContext.User.GetUserToken() : "";

@@ -5,15 +5,16 @@ using Microsoft.Extensions.Options;
 using CBP.WebApp.MVC.Extensions;
 using CBP.WebApp.MVC.Models;
 using System.Collections.Generic;
+using AutoMapper;
+using CBP.Core.Communication;
 
 namespace CBP.WebApp.MVC.Services
 {
   public interface IResponsavelService
   {
-    Task<IEnumerable<ResponsavelViewModel>> ObterTodosUsuarios();
+    Task<IEnumerable<UsuarioViewModel>> ObterTodosUsuarios();
     Task<ResponsavelViewModel> ObterResponsavelPorId(Guid id);
     Task<ResponsavelViewModel> ObterPorId(Guid id);
-    Task<ResponseResult> Atualizacao(ResponsavelViewModel responsavelViewModel);
     Task<ResponseResult> AdicionarEndereco(EnderecoViewModel endereco);
   }
 
@@ -28,13 +29,14 @@ namespace CBP.WebApp.MVC.Services
       httpClient.BaseAddress = new Uri(settings.Value.ResponsavelUrl);
     }
 
-    public async Task<IEnumerable<ResponsavelViewModel>> ObterTodosUsuarios()
+    public async Task<IEnumerable<UsuarioViewModel>> ObterTodosUsuarios()
     {
       var responsaveis = await _httpClient.GetAsync("/responsaveis");
 
       TratarErrosResponse(responsaveis);
 
-      return await DeserializarObjetoResponse<IEnumerable<ResponsavelViewModel>>(responsaveis);
+      var responsaveisDeser = await DeserializarObjetoResponse<IEnumerable<UsuarioViewModel>>(responsaveis);
+      return responsaveisDeser;
     }
 
     public async Task<ResponsavelViewModel> ObterResponsavelPorId(Guid id)
@@ -55,17 +57,6 @@ namespace CBP.WebApp.MVC.Services
       TratarErrosResponse(response);
 
       return await DeserializarObjetoResponse<ResponsavelViewModel>(response);
-    }
-
-    public async Task<ResponseResult> Atualizacao(ResponsavelViewModel responsavel)
-    {
-      var responsavelContent = ObterConteudo(responsavel);
-
-      var response = await _httpClient.PutAsync($"/responsavel-editar/{responsavel.Id}", responsavelContent);
-
-      if (!TratarErrosResponse(response)) return await DeserializarObjetoResponse<ResponseResult>(response);
-
-      return RetornoOk();
     }
 
     public async Task<ResponseResult> AdicionarEndereco(EnderecoViewModel endereco)
