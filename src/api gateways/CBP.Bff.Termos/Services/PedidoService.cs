@@ -12,11 +12,11 @@ namespace CBP.Bff.Termos.Services
 {
   public interface ITermoTransferenciaService
   {
-    Task<ResponseResult> FinalizarPedido(PedidoDTO pedido);
-    Task<PedidoDTO> ObterUltimoPedido();
-    Task<IEnumerable<PedidoDTO>> ObterListaPorClienteId();
+    //Task<ResponseResult> FinalizarPedido(PedidoDTO pedido);
+    //Task<PedidoDTO> ObterUltimoPedido();
+    //Task<IEnumerable<PedidoDTO>> ObterListaPorClienteId();
 
-    Task<VoucherDTO> ObterVoucherPorCodigo(string codigo);
+    //Task<VoucherDTO> ObterVoucherPorCodigo(string codigo);
   }
 
   public class PedidoService : Service, ITermoTransferenciaService
@@ -26,19 +26,19 @@ namespace CBP.Bff.Termos.Services
     public PedidoService(HttpClient httpClient, IOptions<AppServicesSettings> settings)
     {
       _httpClient = httpClient;
-      _httpClient.BaseAddress = new Uri(settings.Value.TermoTransferenciaUrl);
+      _httpClient.BaseAddress = new Uri(settings.Value.GuiaUrl);
     }
 
-    public async Task<ResponseResult> FinalizarPedido(PedidoDTO pedido)
-    {
-      var pedidoContent = ObterConteudo(pedido);
+    //public async Task<ResponseResult> FinalizarPedido(PedidoDTO pedido)
+    //{
+    //  var pedidoContent = ObterConteudo(pedido);
 
-      var response = await _httpClient.PostAsync("/pedido/", pedidoContent);
+    //  var response = await _httpClient.PostAsync("/pedido/", pedidoContent);
 
-      if (!TratarErrosResponse(response)) return await DeserializarObjetoResponse<ResponseResult>(response);
+    //  if (!TratarErrosResponse(response)) return await DeserializarObjetoResponse<ResponseResult>(response);
 
-      return RetornoOk();
-    }
+    //  return RetornoOk();
+    //}
 
     public async Task<PedidoDTO> ObterUltimoPedido()
     {

@@ -16,7 +16,7 @@ namespace CBP.Bff.Termos.Services
         public PagamentoService(HttpClient httpClient, IOptions<AppServicesSettings> settings)
         {
             _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri(settings.Value.TermoTransferenciaUrl);
+            _httpClient.BaseAddress = new Uri(settings.Value.GuiaUrl);
         }
     }
 }

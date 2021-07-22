@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using CBP.WebApp.MVC.Models;
 using CBP.WebApp.MVC.Extensions;
-using CBP.Core.Communication;
+//using CBP.Core.Communication;
 
 namespace CBP.WebApp.MVC.Services
 {

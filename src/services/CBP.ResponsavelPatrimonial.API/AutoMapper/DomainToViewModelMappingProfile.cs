@@ -8,9 +8,13 @@ namespace CBP.ResponsavelPatrimonial.API.AutoMapper
   {
     public DomainToViewModelMappingProfile()
     {
-      CreateMap<Responsavel, UsuarioViewModel>()
-        .ForMember(d => d.Email, o => o.MapFrom(s => s.Email.Endereco))
+      CreateMap<Responsavel, ResponsavelDTO>()
+        .ForMember(d => d.Email, m => m.MapFrom(o => o.Email.Endereco))
+        .ForMember(d => d.Funcao, m => m.MapFrom(o => o.Funcao))
         .ReverseMap();
+
+      CreateMap<Endereco, EnderecoDTO>();
+
     }
 
   }

@@ -23,7 +23,7 @@ namespace CBP.Bff.Termos.Services
     public GuiaService(HttpClient httpClient, IOptions<AppServicesSettings> settings)
     {
       _httpClient = httpClient;
-      _httpClient.BaseAddress = new Uri(settings.Value.TermoTransferenciaUrl);
+      _httpClient.BaseAddress = new Uri(settings.Value.GuiaUrl);
     }
 
     public async Task<GuiaTransferenciaDTO> ObterGuia()

@@ -3,6 +3,7 @@ using CBP.Bff.Termos.Services;
 using CBP.WebAPI.Core.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,67 +14,92 @@ namespace CBP.Bff.Termos.Controllers
   {
     private readonly IGuiaService _guiaService;
     private readonly IPatrimonioService _patrimonioService;
-    private readonly ITermoTransferenciaService _termoService;
 
-    public GuiaController(IGuiaService guiaService, IPatrimonioService catalogoService,
-      ITermoTransferenciaService termoService)
+    public GuiaController(IGuiaService guiaService, IPatrimonioService patrimonioService)
     {
       _guiaService = guiaService;
-      _patrimonioService = catalogoService;
-      _termoService = termoService;
+      _patrimonioService = patrimonioService;
     }
 
     [HttpGet]
-    [Route("guia/guia")]
+    [Route("guia/transferencia")]
     public async Task<IActionResult> Index()
     {
       return CustomResponse(await _guiaService.ObterGuia());
     }
 
     [HttpGet]
-    [Route("guia/guia-quantidade")]
-    public async Task<int> ObterQuantidadeCarrinho()
+    [Route("guia/transferencia-quantidade")]
+    public async Task<int> ObterQuantidadeGuia()
     {
       var quantidade = await _guiaService.ObterGuia();
       return quantidade?.Itens.Sum(i => i.QuantidadeEstoque) ?? 0;
     }
 
     [HttpPost]
-    [Route("transferencia/guia/items")]
-    public async Task<IActionResult> AdicionarItemCarrinho()
+    [Route("guia/transferencia/items")]
+    public async Task<IActionResult> AdicionarItemGuia(ItemGuiaDTO itemPatrimonio)
     {
-      return CustomResponse();
+      var patrimonio = await _patrimonioService.ObterPorId(itemPatrimonio.PatrimonioId);
+
+      await ValidarItemGuia(patrimonio, itemPatrimonio.QuantidadeEstoque, true);
+      if (!OperacaoValida()) return CustomResponse();
+
+      itemPatrimonio.Descricao = patrimonio.Descricao;
+      itemPatrimonio.ValorBem = patrimonio.ValorBem;
+      itemPatrimonio.DataTransferencia = patrimonio.DataTransferencia;
+
+      var resposta = await _guiaService.AdicionarItemGuia(itemPatrimonio);
+
+      return CustomResponse(resposta);
     }
 
     [HttpPut]
-    [Route("transferencia/guia/items/{produtoId}")]
-    public async Task<IActionResult> AtualizarItemCarrinho()
+    [Route("guia/transferencia/items/{patrimonioId}")]
+    public async Task<IActionResult> AtualizarItemGuia(Guid patrimonioId, ItemGuiaDTO itemPatrimonio)
     {
-      return CustomResponse();
+      var patrimonio = await _patrimonioService.ObterPorId(patrimonioId);
+
+      await ValidarItemGuia(patrimonio, itemPatrimonio.QuantidadeEstoque);
+      if (!OperacaoValida()) return CustomResponse();
+
+      var resposta = await _guiaService.AtualizarItemGuia(patrimonioId, itemPatrimonio);
+
+      return CustomResponse(resposta);
     }
 
     [HttpDelete]
-    [Route("transferencia/guia/items/{produtoId}")]
-    public async Task<IActionResult> RemoverItemCarrinho()
+    [Route("guia/transferencia/items/{patrimonioId}")]
+    public async Task<IActionResult> RemoverItemGuia(Guid patrimonioId)
     {
-      return CustomResponse();
+      var patrimonio = await _patrimonioService.ObterPorId(patrimonioId);
+
+      if (patrimonio == null)
+      {
+        AdicionarErroProcessamento("Patrimonio inexistente!");
+        return CustomResponse();
+      }
+
+      var resposta = await _guiaService.RemoverItemGuia(patrimonioId);
+
+      return CustomResponse(resposta);
     }
 
-    private async Task ValidarItemCarrinho(ItemPatrimonioDTO produto, int quantidade, bool adicionarProduto = false)
+    private async Task ValidarItemGuia(ItemPatrimonioDTO patrimonio, int quantidade, bool adicionarPatrimonio = false)
     {
-      if (produto == null) AdicionarErroProcessamento("Patrimonio inexistente!");
-      if (quantidade < 1) AdicionarErroProcessamento($"Escolha ao menos uma unidade do patrimonio {produto.Descricao}");
+      if (patrimonio == null) AdicionarErroProcessamento("Patrimonio inexistente!");
+      if (quantidade < 1) AdicionarErroProcessamento($"Escolha ao menos uma unidade do patrimonio {patrimonio.Descricao}");
 
       var guia = await _guiaService.ObterGuia();
-      var itemCarrinho = guia.Itens.FirstOrDefault(p => p.PatrimonioId == produto.Id);
+      var itemGuia = guia.Itens.FirstOrDefault(p => p.PatrimonioId == patrimonio.Id);
 
-      if (itemCarrinho != null && adicionarProduto && itemCarrinho.QuantidadeEstoque + quantidade > produto.QuantidadeEstoque)
+      if (itemGuia != null && adicionarPatrimonio && itemGuia.QuantidadeEstoque + quantidade > patrimonio.QuantidadeEstoque)
       {
-        AdicionarErroProcessamento($"O produto {produto.Descricao} possui {produto.QuantidadeEstoque} unidades em estoque, você selecionou {quantidade}");
+        AdicionarErroProcessamento($"O produto {patrimonio.Descricao} possui {patrimonio.QuantidadeEstoque} unidades em estoque, você selecionou {quantidade}");
         return;
       }
 
-      if (quantidade > produto.QuantidadeEstoque) AdicionarErroProcessamento($"O produto {produto.Descricao} possui {produto.QuantidadeEstoque} unidades em estoque, você selecionou {quantidade}");
+      if (quantidade > patrimonio.QuantidadeEstoque) AdicionarErroProcessamento($"O produto {patrimonio.Descricao} possui {patrimonio.QuantidadeEstoque} unidades em estoque, você selecionou {quantidade}");
     }
   }
 }

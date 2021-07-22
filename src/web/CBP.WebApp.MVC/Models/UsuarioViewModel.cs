@@ -1,14 +1,12 @@
-﻿using CBP.Core.Communication;
+﻿using System;
 using CBP.WebAPI.Core.Usuario;
-using CBP.WebApp.MVC.Extensions;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace CBP.WebApp.MVC.Models
 {
-  public class UsuarioViewModel
+  public class UsuarioRegistro
   {
     public Guid Id { get; set; }
 
@@ -17,8 +15,8 @@ namespace CBP.WebApp.MVC.Models
     public string Nome { get; set; }
 
     [Required(ErrorMessage = "O campo {0} é obrigatório")]
-    //[EmailAddress(ErrorMessage = "O campo {0} está em formato inválido")]
-    [Email]
+    [EmailAddress(ErrorMessage = "O campo {0} está em formato inválido")]
+    [DisplayName("E-mail")]
     public string Email { get; set; }
 
     public Funcoes Funcao { get; set; }

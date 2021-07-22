@@ -1,10 +1,10 @@
-﻿@model CBP.WebApp.MVC.Models.ResponsavelRegistro
+﻿@model CBP.WebApp.MVC.Models.ResponsavelViewModel
 
 @{
     ViewData["Title"] = "Editar Usuário";
 }
 
-<div class="modal fade" id="editarUsuarioModal" tabindex="-1" role="dialog" aria-labelledby="editarUsuarioModalLabel" aria-hidden="true">
+<div class="modal fade" id="editarResponsavelModal" tabindex="-1" role="dialog" aria-labelledby="editarResponsavelModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div id="myModalContent">
@@ -16,7 +16,7 @@
                     </button>
                 </div>
                 <vc:summary></vc:summary>
-                <form asp-controller="Usuario" asp-action="Edicao" method="post">
+                <form asp-controller="Responsavel" asp-action="Edicao" method="post">
                     <div class="modal-body">
 
                         <div class="form-group">

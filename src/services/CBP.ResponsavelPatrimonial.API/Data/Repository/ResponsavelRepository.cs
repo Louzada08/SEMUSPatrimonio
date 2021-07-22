@@ -26,9 +26,9 @@ namespace CBP.ResponsavelPatrimonial.API.Data.Repository
       return await _context.Responsaveis.FirstOrDefaultAsync(u => u.Id == id);
     }
 
-    public async Task<IEnumerable<UsuarioViewModel>> ObterTodos()
+    public async Task<IEnumerable<ResponsavelDTO>> ObterTodos()
     {
-      return _mapper.Map<IEnumerable<UsuarioViewModel>>(await _context.Responsaveis.AsNoTracking().ToListAsync());
+      return _mapper.Map<IEnumerable<ResponsavelDTO>>(await _context.Responsaveis.AsNoTracking().ToListAsync());
     }
 
     public Task<Responsavel> ObterPorEmail(string email)

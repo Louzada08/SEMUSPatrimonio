@@ -1,13 +1,13 @@
-﻿using CBP.WebApp.MVC.Models;
-using CBP.WebApp.MVC.Services;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
+using CBP.WebApp.MVC.Models;
+using CBP.WebApp.MVC.Services;
 
 namespace CBP.WebApp.MVC.Controllers
 {
@@ -26,6 +26,40 @@ namespace CBP.WebApp.MVC.Controllers
     {
       return View();
     }
+
+    //[HttpPost]
+    //[Route("nova-conta")]
+    //public async Task<IActionResult> Registro(UsuarioLogin usuarioLogin, string returnUrl = null)
+    //{
+    //  ViewData["ReturnUrl"] = returnUrl;
+
+    //  if (!ModelState.IsValid) return View(usuarioLogin);
+
+    //  var resposta = await _autenticacaoService.Login(usuarioLogin);
+
+    //  if (ResponsePossuiErros(resposta.ResponseResult)) return View(usuarioLogin);
+
+    //  await RealizarLogin(resposta);
+
+    //  if (string.IsNullOrEmpty(returnUrl)) return RedirectToAction("Index", controllerName: "Patrimonio");
+
+    //  return LocalRedirect(returnUrl);
+    //}
+    [HttpPost]
+    [Route("nova-conta")]
+    public async Task<IActionResult> Registro(UsuarioRegistro usuarioRegistro)
+    {
+      if (!ModelState.IsValid) return View(usuarioRegistro);
+
+      var resposta = await _autenticacaoService.Registro(usuarioRegistro);
+
+      if (ResponsePossuiErros(resposta.ResponseResult)) return View(usuarioRegistro);
+
+      await RealizarLogin(resposta);
+
+      return RedirectToAction("Index", "Patrimonio");
+    }
+
 
     [HttpGet]
     [Route("login")]

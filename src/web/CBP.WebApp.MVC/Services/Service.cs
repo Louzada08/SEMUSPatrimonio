@@ -2,8 +2,9 @@
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using CBP.Core.Communication;
+//using CBP.Core.Communication;
 using CBP.WebApp.MVC.Extensions;
+using CBP.WebApp.MVC.Models;
 
 namespace CBP.WebApp.MVC.Services
 {

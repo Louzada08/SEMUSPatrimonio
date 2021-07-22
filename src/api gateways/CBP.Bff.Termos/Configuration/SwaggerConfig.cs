@@ -15,7 +15,7 @@ namespace CBP.Bff.Termos.Configuration.Configuration
                 {
                     Title = "Patrimônio Termos BFF API Gateway",
                     Description = "Esta API faz parte da Aplicação Controle de Patrimonial.",
-                    Contact = new OpenApiContact() {Name = "Eduardo Pires", Email = "contato@desenvolvedor.io"},
+                    Contact = new OpenApiContact() {Name = "Anderson Luiz Louzada", Email = "valuz.anderson.to@gmail.com"},
                     License = new OpenApiLicense() {Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT")}
                 });
 

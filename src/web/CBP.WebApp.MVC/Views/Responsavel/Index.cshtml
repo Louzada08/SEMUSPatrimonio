@@ -1,5 +1,5 @@
 ﻿@using CBP.WebApp.MVC.Models
-@model IEnumerable<UsuarioRegistro>
+@model IEnumerable<ResponsavelViewModel>
 @{
     ViewData["Title"] = "Todos os patrimônios";
 }
@@ -8,11 +8,6 @@
     <div class="container" style=" padding-top: 90px">
         <vc:Summary></vc:Summary>
         <div class="row">
-            <div class="col-md-10">
-                <a href="javascript:void(0)" class="btn btn-primary float-md-left" data-toggle="modal" data-target="#novoUsuarioModal">
-                    <i class="fa fa-location-arrow"></i> Novo Usuário
-                </a>
-            </div>
             <div class="col-md-2">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb justify-content-end">
@@ -51,14 +46,14 @@
                     </div>
                     <div class="col-md-2 border-left border-right border-info">
 
-                        <a class="btn btn-info" asp-route-id="@item.Id" asp-controller="Usuario" asp-action="Detalhe">
+                        <a class="btn btn-info" asp-route-id="@item.Id" asp-controller="responsavel" asp-action="Detalhe">
                             Detalhe
                         </a>
                         @*<button type="button" class="btn btn-info" data-toggle="modal" data-target="#editarUsuarioModal" data-Id="@item.Id"
                                 asp-controller="Usuario" asp-action="Editar">
                             Editar
                         </button>*@
-                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#excluirUsuarioModal" data-Id="@item.Id">Excluir</button>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#excluirResponsavelModal" data-Id="@item.Id">Excluir</button>
                         @*<a asp-controller="Usuario" asp-action="Excluir" asp-route-id="@item.Id">Excluir</a>*@
                     </div>
                 </div>
@@ -67,8 +62,6 @@
     </div>
 
 </section>
-
-<partial name="_NovoUsuario" model="new UsuarioRegistro()" />
 
 @section Scripts {
 

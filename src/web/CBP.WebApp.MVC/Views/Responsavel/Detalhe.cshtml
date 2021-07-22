@@ -1,4 +1,4 @@
-﻿@model CBP.WebApp.MVC.Models.UsuarioRegistro
+﻿@model CBP.WebApp.MVC.Models.ResponsavelViewModel
 @{
     ViewData["Title"] = "Detalhe";
 }
@@ -54,7 +54,7 @@
             </dl>
         </div>
         <div>
-            <button class="btn btn-primary" data-toggle="modal" data-target="#editarUsuarioModal">Editar</button> |
+            <button class="btn btn-primary" data-toggle="modal" data-target="#editarResponsavelModal">Editar</button> |
             <button class="btn btn-primary" data-toggle="modal" data-target="#resetSenhaModal">Reset Senha</button> |
             <button class="btn btn-primary" data-toggle="modal" data-target="#trocarEmailModal">Trocar Email</button> |
             @*@Html.ActionLink("Edit", "Editar", new { id = Model.Id })*@
@@ -63,7 +63,7 @@
     </div>
 </section>
 
-<partial name="_EditarUsuario" model="Model" />
+<partial name="_EditarResponsavel" model="Model" />
 
 @section Scripts {
 

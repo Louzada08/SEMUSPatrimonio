@@ -7,5 +7,6 @@
     public string TermoTransferenciaUrl { get; set; }
     public string ResponsavelUrl { get; set; }
     public string UsuarioUrl { get; set; }
+    public string TermosBffUrl { get; set; }
   }
 }

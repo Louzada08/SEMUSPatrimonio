@@ -14,7 +14,7 @@ namespace CBP.ResponsavelPatrimonial.API.Models
 
     void AdicionarEndereco(Endereco endereco);
     Task<Responsavel> GetResponsavelId(Guid id);
-    Task<IEnumerable<UsuarioViewModel>> ObterTodos();
+    Task<IEnumerable<ResponsavelDTO>> ObterTodos();
     Task<Responsavel> ObterPorEmail(string email);
   }
 }

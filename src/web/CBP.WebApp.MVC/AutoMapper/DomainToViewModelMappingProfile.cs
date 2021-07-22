@@ -8,9 +8,13 @@ namespace CBP.WebApp.MVC.AutoMapper
   {
     public DomainToViewModelMappingProfile()
     {
-      CreateMap<UsuarioViewModel, UsuarioDTO> ()
+      CreateMap<ResponsavelViewModel, ResponsavelDTO> ()
         .ForMember(d => d.Funcao, o => o.MapFrom(s => s.Funcao.ToString()))
         .ReverseMap();
+
+      //CreateMap<UsuarioRegistro, UsuarioDTO>()
+      //  .ForMember(d => d.Funcao, o => o.MapFrom(s => s.Funcao.ToString()))
+      //  .ReverseMap();
     }
 
   }

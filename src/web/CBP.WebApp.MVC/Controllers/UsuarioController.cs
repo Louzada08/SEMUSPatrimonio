@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 using CBP.WebAPI.Core.Identidade;
 using CBP.WebApp.MVC.Controllers;
-using CBP.WebApp.MVC.DTO;
 using CBP.WebApp.MVC.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,26 +15,29 @@ namespace CBP.WebApp.MVC.Services
   {
     private readonly IAutenticacaoService _autenticacaoService;
     private readonly IResponsavelService _responsavelService;
+    private readonly IUsuarioService _usuarioService;
     private readonly IMapper _mapper;
 
-    public UsuarioController(IAutenticacaoService autenticacaoService, IResponsavelService responsavelService, IMapper mapper)
+    public UsuarioController(IAutenticacaoService autenticacaoService, IResponsavelService responsavelService,
+      IUsuarioService usuarioService, IMapper mapper)
     {
       _autenticacaoService = autenticacaoService;
       _responsavelService = responsavelService;
+      _usuarioService = usuarioService;
       _mapper = mapper;
     }
 
-    [ClaimsAuthorize("NivelDeAcesso", "Administrador")]
+    [ClaimsAuthorize("NivelDeAcesso", "Responsavel")]
     [HttpGet]
     [Route("usuarios")]
     public async Task<IActionResult> Index()
     {
-      var usuarios = await _responsavelService.ObterTodosUsuarios();
+      var usuarios = await _usuarioService.ObterTodos();
       return View(usuarios);
     }
 
     [HttpGet]
-    [Route("responsavel/{id}")]
+    [Route("usuario/{id}")]
     public async Task<IActionResult> Detalhe(Guid id)
     {
       var responsavel = await _responsavelService.ObterResponsavelPorId(id);
@@ -46,7 +47,7 @@ namespace CBP.WebApp.MVC.Services
 
     [HttpPost]
     [Route("nova-conta")]
-    public async Task<IActionResult> Registro(UsuarioViewModel usuarioRegistro)
+    public async Task<IActionResult> Registro(UsuarioRegistro usuarioRegistro)
     {
       if (!ModelState.IsValid) return View(usuarioRegistro);
 
@@ -58,20 +59,6 @@ namespace CBP.WebApp.MVC.Services
       return RedirectToAction(actionName: "Index", controllerName: "Usuario");
 
       //return LocalRedirect("usuarios");
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Edicao(UsuarioViewModel usuarioViewModel)
-    {
-      var resposta = await _autenticacaoService.Atualizacao(usuarioViewModel);
-
-      if (ResponsePossuiErros(resposta.ResponseResult))
-      {
-        TempData["Erros"] =
-          ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage)).ToList();
-      }
-
-      return RedirectToAction("Detalhe", "Usuario", usuarioViewModel.Id);
     }
 
   }

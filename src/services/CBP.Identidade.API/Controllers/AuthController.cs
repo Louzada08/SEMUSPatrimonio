@@ -103,7 +103,7 @@ namespace CBP.Identidade.API.Controllers
 
     }
 
-    [AllowAnonymous]
+    [AllowAnonymous] 
     [HttpPost("autenticar")]
     public async Task<ActionResult> Login(UsuarioLogin usuarioLogin)
     {

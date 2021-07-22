@@ -11,7 +11,7 @@ namespace CBP.WebApp.MVC.Services
 {
   public interface IUsuarioService
   {
-    Task<IEnumerable<UsuarioViewModel>> ObterTodos();
+    Task<IEnumerable<UsuarioRegistro>> ObterTodos();
   }
 
   public class UsuarioService : Service, IUsuarioService
@@ -26,13 +26,13 @@ namespace CBP.WebApp.MVC.Services
       _httpClient = httpClient;
     }
 
-    public async Task<IEnumerable<UsuarioViewModel>> ObterTodos()
+    public async Task<IEnumerable<UsuarioRegistro>> ObterTodos()
     {
       var response = await _httpClient.GetAsync("/usuarios");
 
       TratarErrosResponse(response);
 
-      var usuarios = await DeserializarObjetoResponse<IEnumerable<UsuarioViewModel>>(response);
+      var usuarios = await DeserializarObjetoResponse<IEnumerable<UsuarioRegistro>>(response);
 
       return usuarios;
     }

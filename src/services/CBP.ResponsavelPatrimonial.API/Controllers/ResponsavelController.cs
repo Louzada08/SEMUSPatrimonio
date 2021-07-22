@@ -14,43 +14,39 @@ namespace CBP.ResponsavelPatrimonial.API.Controllers
   {
     private readonly IResponsavelRepository _responsavelRepository;
     private readonly IMediatorHandler _mediator;
+    private readonly IMapper _mapper;
 
-    public ResponsavelController(IMediatorHandler mediator, IResponsavelRepository responsavelRepository)
+    public ResponsavelController(IMediatorHandler mediator, IResponsavelRepository responsavelRepository, IMapper mapper)
     {
       _mediator = mediator;
+      _mapper = mapper;
       _responsavelRepository = responsavelRepository;
     }
 
     [HttpGet("responsavel/{id}")]
     public async Task<IActionResult> ObterResponsavelId(Guid id)
     {
-      var responsavel = await _responsavelRepository.GetResponsavelId(id);
+      var responsavel = _mapper.Map<Responsavel>(await _responsavelRepository.GetResponsavelId(id));
+
+      //var responsavel = await _responsavelRepository.GetResponsavelId(id);
 
       return responsavel == null ? NotFound() : CustomResponse(responsavel);
     }
 
     [HttpGet("responsaveis")]
-    public async Task<IEnumerable<UsuarioViewModel>> ObterListaResponsaveis()
+    public async Task<IEnumerable<ResponsavelDTO>> ObterListaResponsaveis()
     {
       return await _responsavelRepository.ObterTodos();
     }
 
-    //  private async Task<AtualizarResponsavelCommand> EditarResponsavel(Responsavel responsavelEdita)
-    //{
-    //  var responsavel = await _responsavelRepository.GetResponsavelId(responsavelEdita.Id);
+    [HttpPut("responsavel-editar")]
+    public async Task<IActionResult> EditarResponsavel(Responsavel responsavelEdita)
+    {
 
-    //  var responsavelAtualizado = new UsuarioRegistradoIntegrationEvent(
-    //      responsavelEdita.Id, responsavelEdita.Nome, responsavelEdita.Funcao.ToString(), responsavelEdita.Email.Endereco, responsavelEdita.Excluido);
+      _responsavelRepository.Atualizar(_mapper.Map<Responsavel, Responsavel>(responsavelEdita));
 
-    //  try
-    //  {
-    //    return await _bus.RequestAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(responsavelAtualizado);
-    //  }
-    //  catch
-    //  {
-    //    throw;
-    //  }
-    //}
+      return CustomResponse(responsavelEdita);
+    }
 
   }
 }

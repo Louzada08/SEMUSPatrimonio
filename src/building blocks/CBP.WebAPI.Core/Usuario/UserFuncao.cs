@@ -17,7 +17,7 @@ namespace CBP.WebAPI.Core.Usuario
     public string Nome { get; private set; }
     public int Codigo { get; private set; }
 
-    protected Funcao() { }
+    public Funcao() { }
 
     public Funcao(int codigo = 0)
     {

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CBP.WebAPI.Core.Usuario;
+using CBP.WebApp.MVC.Extensions;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -13,26 +15,14 @@ namespace CBP.WebApp.MVC.Models
     public string Nome { get; set; }
 
     [Required(ErrorMessage = "O campo {0} é obrigatório")]
-    [DisplayName("Função")]
-    public string Funcao { get; set; }
-
-    [Required(ErrorMessage = "O campo {0} é obrigatório")]
-    [EmailAddress(ErrorMessage = "O campo {0} está em formato inválido")]
-    [DisplayName("E-mail")]
+    //[EmailAddress(ErrorMessage = "O campo {0} está em formato inválido")]
+    [Email]
     public string Email { get; set; }
+
+    public Funcoes Funcao { get; set; }
+
     public bool Excluido { get; set; }
-  }
 
-  public class EnderecoViewModel
-  {
-    public string Logradouro { get; set; }
-    public string Numero { get; set; }
-    public string Complemento { get; set; }
-    public string Bairro { get; set; }
-    public string Cep { get; set; }
-    public string Cidade { get; set; }
-    public string Estado { get; set; }
-    public Guid ResponsavelId { get; set; }
+    public EnderecoViewModel EnderecoViewModel { get; set; }
   }
-
 }
