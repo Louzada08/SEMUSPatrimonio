@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-//using CBP.Core.Communication;
 using CBP.WebApp.MVC.DTO;
 using CBP.WebApp.MVC.Extensions;
 using CBP.WebApp.MVC.Models;

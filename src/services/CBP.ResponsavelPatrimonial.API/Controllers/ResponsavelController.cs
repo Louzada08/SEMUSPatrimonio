@@ -26,9 +26,7 @@ namespace CBP.ResponsavelPatrimonial.API.Controllers
     [HttpGet("responsavel/{id}")]
     public async Task<IActionResult> ObterResponsavelId(Guid id)
     {
-      var responsavel = _mapper.Map<Responsavel>(await _responsavelRepository.GetResponsavelId(id));
-
-      //var responsavel = await _responsavelRepository.GetResponsavelId(id);
+      var responsavel = _mapper.Map<ResponsavelDTO>(await _responsavelRepository.GetResponsavelId(id));
 
       return responsavel == null ? NotFound() : CustomResponse(responsavel);
     }
@@ -40,10 +38,10 @@ namespace CBP.ResponsavelPatrimonial.API.Controllers
     }
 
     [HttpPut("responsavel-editar")]
-    public async Task<IActionResult> EditarResponsavel(Responsavel responsavelEdita)
+    public async Task<IActionResult> EditarResponsavel(ResponsavelDTO responsavelEdita)
     {
 
-      _responsavelRepository.Atualizar(_mapper.Map<Responsavel, Responsavel>(responsavelEdita));
+      _responsavelRepository.Atualizar(_mapper.Map<Responsavel>(responsavelEdita));
 
       return CustomResponse(responsavelEdita);
     }

@@ -13,7 +13,7 @@ namespace CBP.ResponsavelPatrimonial.API.Configuration
             {
                 c.SwaggerDoc("v1", new OpenApiInfo()
                 {
-                    Title = "Controle Patrimonial API",
+                    Title = "Controle Patrimonial API - RESPONSAVEL",
                     Description = "Esta API faz parte do projeto Patrimônio em ASP.NET Core.",
                     Contact = new OpenApiContact() { Name = "Anderson Luiz Louzada", Email = "valuz.anderson.to@gmail.com" },
                     License = new OpenApiLicense() { Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT") }

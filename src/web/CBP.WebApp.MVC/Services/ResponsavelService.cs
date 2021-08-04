@@ -67,7 +67,7 @@ namespace CBP.WebApp.MVC.Services
 
       if(!TratarErrosResponse(response)) return await DeserializarObjetoResponse<ResponseResult>(response);
 
-      return null;
+      return RetornoOk();
     }
 
     public async Task<ResponseResult> AdicionarEndereco(EnderecoViewModel endereco)
@@ -78,8 +78,8 @@ namespace CBP.WebApp.MVC.Services
 
       if (!TratarErrosResponse(response)) return await DeserializarObjetoResponse<ResponseResult>(response);
 
-      //return RetornoOk();
-      return null;
+      return RetornoOk();
+     // return null;
     }
 
   }

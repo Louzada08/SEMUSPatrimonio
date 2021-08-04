@@ -1,11 +1,9 @@
-﻿using System;
+﻿using CBP.BemPatrimonial.API.Models;
+using CBP.WebAPI.Core.Controllers;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CBP.BemPatrimonial.API.Models;
-using CBP.WebAPI.Core.Controllers;
-using CBP.WebAPI.Core.Identidade;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 
 namespace CBP.BemPatrimonial.API.Controllers
 {

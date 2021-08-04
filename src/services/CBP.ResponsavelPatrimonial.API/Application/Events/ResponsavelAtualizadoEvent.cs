@@ -9,6 +9,7 @@ namespace CBP.ResponsavelPatrimonial.API.Application.Events
     public string Nome { get; private set; }
     public string Funcao { get; private set; }
     public string Email { get; private set; }
+
     public bool Excluido { get; private set; }
 
     public ResponsavelAtualizadoEvent(Guid id, string nome, string funcao, string email, bool excluido)

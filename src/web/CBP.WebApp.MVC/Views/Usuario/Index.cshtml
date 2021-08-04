@@ -1,5 +1,5 @@
-﻿@using CBP.WebApp.MVC.Models
-@model IEnumerable<UsuarioRegistro>
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<IdentityUser>
 @{
     ViewData["Title"] = "Todos os patrimônios";
 }
@@ -37,17 +37,16 @@
             </div>
         </div>
         @{
-            foreach (var item in Model.OrderBy(p => p.Nome))
+            foreach (var item in Model.OrderBy(p => p.UserName))
             {
                 <div class="row border-left border-bottom border-info">
                     <div class="col-md-4">
-                        @item.Nome
+                        @item.UserName
                     </div>
                     <div class="col-md-4 border-left border-info">
                         @item.Email
                     </div>
                     <div class="col-md-2 border-left border-info">
-                        @item.Funcao
                     </div>
                     <div class="col-md-2 border-left border-right border-info">
 
@@ -55,9 +54,9 @@
                             Detalhe
                         </a>
                         @*<button type="button" class="btn btn-info" data-toggle="modal" data-target="#editarUsuarioModal" data-Id="@item.Id"
-                                asp-controller="Usuario" asp-action="Editar">
-                            Editar
-                        </button>*@
+                                    asp-controller="Usuario" asp-action="Editar">
+                                Editar
+                            </button>*@
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#excluirUsuarioModal" data-Id="@item.Id">Excluir</button>
                         @*<a asp-controller="Usuario" asp-action="Excluir" asp-route-id="@item.Id">Excluir</a>*@
                     </div>

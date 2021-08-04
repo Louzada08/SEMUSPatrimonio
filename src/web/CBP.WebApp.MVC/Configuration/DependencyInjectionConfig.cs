@@ -11,7 +11,8 @@ using Polly.Retry;
 using Polly.Extensions.Http;
 using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using CBP.WebAPI.Core.Usuario;
-using CBP.WebApp.MVC.AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using CBP.WebApp.MVC.Models;
 
 namespace CBP.WebApp.MVC.Configuration
 {
@@ -51,11 +52,11 @@ namespace CBP.WebApp.MVC.Configuration
           .AddTransientHttpErrorPolicy(
               p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
-      //services.AddHttpClient<IUsuarioService, UsuarioService>()
-      //    .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
-      //    .AddPolicyHandler(PollyExtensions.EsperarTentar())
-      //    .AddTransientHttpErrorPolicy(
-      //        p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+      services.AddHttpClient<IUsuarioService, UsuarioService>()
+          .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
+          .AddPolicyHandler(PollyExtensions.EsperarTentar())
+          .AddTransientHttpErrorPolicy(
+              p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
       #endregion
     }
   }

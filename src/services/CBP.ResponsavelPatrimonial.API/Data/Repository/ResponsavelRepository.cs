@@ -44,6 +44,7 @@ namespace CBP.ResponsavelPatrimonial.API.Data.Repository
     public void Atualizar(Responsavel responsavel)
     {
       _context.Responsaveis.Update(responsavel);
+      var status = _context.SaveChanges();
     }
 
     public void Remover(Responsavel responsavel)

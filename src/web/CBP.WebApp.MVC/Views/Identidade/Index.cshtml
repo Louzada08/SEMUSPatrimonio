@@ -1,0 +1,82 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<IdentityUser>
+@{
+    ViewData["Title"] = "Cadastro de Usuários";
+}
+
+<section>
+    <div class="container" style=" padding-top: 90px">
+        <vc:Summary></vc:Summary>
+        <div class="row">
+            <div class="col-md-10">
+                <a href="javascript:void(0)" class="btn btn-primary float-md-left" data-toggle="modal" data-target="#novoUsuarioModal">
+                    <i class="fa fa-location-arrow"></i> Novo Usuário
+                </a>
+            </div>
+            <div class="col-md-2">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-end">
+                        <li class="breadcrumb-item"><a asp-controller="Patrimonio" asp-action="Index">Inicio</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Usuario</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row border border-info">
+            <div class="col-md-4 border-info">
+                <h6>Usuário Id</h6>
+            </div>
+            <div class="col-md-4 border-left border-info">
+                <h6>Nome</h6>
+            </div>
+            <div class="col-md-2 border-left border-info">
+                <h6>Função</h6>
+            </div>
+            <div class="col-md-2 border-left border-info">
+                <h6>Comandos</h6>
+            </div>
+        </div>
+        @{
+            foreach (var item in Model.OrderBy(p => p.UserName))
+            {
+                <div class="row border-left border-bottom border-info">
+                    <div class="col-md-4">
+                        @item.Id
+                    </div>
+                    <div class="col-md-4 border-left border-info">
+                        @item.UserName
+                    </div>
+                    <div class="col-md-2 border-left border-info">
+                    </div>
+                    <div class="col-md-2 border-left border-right border-info">
+
+                        <a class="btn btn-info" asp-route-id="@item.Id" asp-controller="Identidade" asp-action="Editar">
+                            Editar
+                        </a>
+                        @*<button type="button" class="btn btn-info" data-toggle="modal" data-target="#editarUsuarioModal" data-Id="@item.Id"
+                                asp-controller="Usuario" asp-action="Editar">
+                            Editar
+                        </button>*@
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#excluirUsuarioModal" data-Id="@item.Id">Excluir</button>
+                        @*<a asp-controller="Usuario" asp-action="Excluir" asp-route-id="@item.Id">Excluir</a>*@
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+</section>
+
+<partial name="_NovoUsuario" model="new UsuarioRegistro()" />
+
+@section Scripts {
+
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(document).ready(function () {
+            BuscaCep();
+        });
+    </script>
+
+}

@@ -44,6 +44,10 @@ namespace CBP.WebApp.MVC.Controllers
     [HttpPost]
     public async Task<IActionResult> Edicao(ResponsavelViewModel responsavelViewModel)
     {
+      var responsavel = await _responsavelService.ObterResponsavelPorId(responsavelViewModel.Id);
+
+      if (responsavel == null) return NotFound();
+
       //var resposta = await _responsavelService.Atualizacao(_mapper.Map<ResponsavelRegistro>(usuarioViewModel));
       var resposta = await _responsavelService.Atualizacao(responsavelViewModel);
 
@@ -53,8 +57,7 @@ namespace CBP.WebApp.MVC.Controllers
           ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage)).ToList();
       }
 
-      return RedirectToAction("Detalhe", "Responsavel", responsavelViewModel.Email);
-      //return RedirectToAction("Detalhe", "Usuario", usuarioViewModel.Id);
+      return RedirectToAction("Detalhe", new { id = responsavelViewModel.Id });
     }
 
     [HttpPost]

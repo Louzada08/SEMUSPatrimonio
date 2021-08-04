@@ -13,7 +13,7 @@ namespace CBP.Catalogo.API.Configuration
       {
         c.SwaggerDoc("v1", new OpenApiInfo()
         {
-          Title = "NerdStore Enterprise Patrimônio API",
+          Title = "NerdStore Enterprise API - PATRIMÔNIO",
           Description = "Esta API faz parte da Unidade de Controle de Patrimônio/SEMUS made ASP.NET Core 3.1.",
           Contact = new OpenApiContact() { Name = "Anderson Luiz Louzada", Email = "valuz.anderson.to@gmail.com" },
           License = new OpenApiLicense() { Name = "PRIVATE", Url = new Uri("http://saude.palmas.to.gov.br") }

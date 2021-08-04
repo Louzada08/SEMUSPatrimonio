@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 
 namespace CBP.WebAPI.Core.Usuario
 {
@@ -55,5 +56,6 @@ namespace CBP.WebAPI.Core.Usuario
     {
       return _accessor.HttpContext;
     }
+
   }
 }

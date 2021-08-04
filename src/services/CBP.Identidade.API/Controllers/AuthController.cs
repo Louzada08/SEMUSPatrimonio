@@ -1,5 +1,4 @@
-﻿using CBP.Core.Mediator;
-using CBP.Core.Messages.Integration;
+﻿using CBP.Core.Messages.Integration;
 using CBP.Identidade.API.Application.Events;
 using CBP.Identidade.API.Models;
 using CBP.MessageBus;
@@ -56,7 +55,7 @@ namespace CBP.Identidade.API.Controllers
 
       if (result.Succeeded)
       {
-        
+
         var funcao = Funcao.ObterEnumIdPeloNome(usuarioRegistro.Funcao);
 
         var responsavelResult = await RegistrarResponsavel(usuarioRegistro);
@@ -103,7 +102,7 @@ namespace CBP.Identidade.API.Controllers
 
     }
 
-    [AllowAnonymous] 
+    [AllowAnonymous]
     [HttpPost("autenticar")]
     public async Task<ActionResult> Login(UsuarioLogin usuarioLogin)
     {
@@ -203,7 +202,7 @@ namespace CBP.Identidade.API.Controllers
       {
         return await _bus.RequestAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(usuarioRegistrado);
       }
-      catch 
+      catch
       {
         await _userManager.DeleteAsync(usuario);
         throw;
