@@ -19,6 +19,10 @@ namespace CBP.WebApp.MVC.AutoMapper
         .ForMember(d => d.Senha, o => o.MapFrom(s => s.PasswordHash))
         .ForMember(d => d.SenhaConfirmacao, o => o.MapFrom(s => s.PasswordHash))
         .ReverseMap();
+
+      CreateMap<RoleRegistroViewModel, IdentityRole>()
+        .ForMember(d => d.Name, o => o.MapFrom(s => s.FuncaoNome))
+        .ReverseMap();
     }
 
   }

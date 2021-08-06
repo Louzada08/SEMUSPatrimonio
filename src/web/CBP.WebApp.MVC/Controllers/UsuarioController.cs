@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CBP.WebAPI.Core.Identidade;
 using CBP.WebApp.MVC.Controllers;
+using CBP.WebApp.MVC.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -30,6 +31,29 @@ namespace CBP.WebApp.MVC.Services
     {
       var usuarios = await _usuarioService.ObterTodos();
       return View(usuarios);
+    }
+
+    [ClaimsAuthorize("NivelDeAcesso", "Responsavel")]
+    [HttpGet]
+    [Route("roles")]
+    public async Task<ActionResult> RoleIndex()
+    {
+      var roles = await _usuarioService.ObterTodosRoles();
+      return View(roles);
+    }
+
+    [ClaimsAuthorize("NivelDeAcesso", "Responsavel")]
+    [HttpPost]
+    [Route("nova-role")]
+    public async Task<ActionResult> RoleRegistro(RoleRegistroViewModel roleRegistro)
+    {
+      if (!ModelState.IsValid) return View(roleRegistro);
+
+      var resposta = await _usuarioService.RoleRegistro(roleRegistro);
+
+      if (ResponsePossuiErros(resposta.ResponseResult)) return View(roleRegistro);
+
+      return RedirectToAction("RoleIndex", "Usuario");
     }
 
     //[HttpGet]

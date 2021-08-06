@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using CBP.WebApp.MVC.Models;
 using CBP.WebApp.MVC.Services;
-using Microsoft.AspNetCore.Identity;
 
 namespace CBP.WebApp.MVC.Controllers
 {
@@ -19,14 +18,6 @@ namespace CBP.WebApp.MVC.Controllers
     public IdentidadeController(IAutenticacaoService autenticacaoService)
     {
       _autenticacaoService = autenticacaoService;
-    }
-
-    [HttpGet]
-    public IActionResult Index()
-    {
-      var users = _autenticacaoService.ObterTodosUsers();
-
-      return View(users);
     }
 
     [HttpGet]

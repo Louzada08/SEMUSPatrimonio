@@ -1,7 +1,10 @@
-﻿using CBP.WebAPI.Core.Controllers;
+﻿using CBP.Identidade.API.Models;
+using CBP.WebAPI.Core.Controllers;
+using CBP.WebAPI.Core.Usuario;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -28,41 +31,28 @@ namespace CBP.Identidade.API.Controllers
     }
 
     // GET api/usuario/obter-roles
-    [HttpGet("obter-funcoes")]
+    [HttpGet("obter-roles")]
     public IEnumerable<IdentityRole> ObtemRoles()
     {
       return _roleManager.Roles;
     }
 
     // GET api/usuario/nova-roles
-    [HttpGet("nova-funcao")]
+    [HttpPost("nova-role")]
     public async Task<ActionResult> RegistrarRole(FuncaoRegistro funcaoRegistro)
     {
       if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-      var funcao = new IdentityRole
+      var role = new IdentityRole
       {
-        Name = funcaoRegistro.Nome
+        Name = funcaoRegistro.FuncaoNome
       };
 
-      var result = await _roleManager.CreateAsync(funcao);
+      var result = await _roleManager.CreateAsync(role);
 
       if (result.Succeeded)
       {
-
-        var funcao = Funcao.ObterEnumIdPeloNome(usuarioRegistro.Funcao);
-
-        var responsavelResult = await RegistrarResponsavel(usuarioRegistro);
-
-        if (!responsavelResult.ValidationResult.IsValid)
-        {
-          await _userManager.DeleteAsync(user);
-          return CustomResponse(responsavelResult.ValidationResult);
-        }
-
-        await _userManager.AddClaimAsync(user, new Claim("NivelDeAcesso", funcao.ToString("d2")));
-
-        return CustomResponse(await GerarJwt(usuarioRegistro.Email));
+        var funcao = Funcao.ObterEnumIdPeloNome(funcaoRegistro.FuncaoNome);
       }
 
       foreach (var error in result.Errors)

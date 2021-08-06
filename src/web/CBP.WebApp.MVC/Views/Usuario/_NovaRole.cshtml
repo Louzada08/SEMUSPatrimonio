@@ -1,0 +1,46 @@
+﻿@model CBP.WebApp.MVC.Models.RoleRegistroViewModel
+
+@{
+    ViewData["Title"] = "Nova Função ( Permissão )";
+}
+
+<div class="modal fade" id="novaRoleModal" tabindex="-1" role="dialog" aria-labelledby="novaRoleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="myModalContent">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">@ViewData["Title"]</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">x</span><span class="sr-only">Fechar</span>
+                    </button>
+                </div>
+                <vc:summary></vc:summary>
+                <form asp-controller="Usuario" asp-action="RoleRegistro" method="post">
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label asp-for="FuncaoNome"></label>
+                            <select class="form-control" asp-for="FuncaoNome" placeholder="Funcao">
+                                <option>Administrador</option>
+                                <option selected>Responsavel</option>
+                                <option>Operador</option>
+                                <option>Desenvolvedor</option>
+                            </select>
+                            <span asp-validation-for="FuncaoNome" class="text-danger"></span>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <input type="submit" value="Salvar" class="btn btn-success" />
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    BuscaCep();
+</script>

@@ -7,12 +7,15 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using AutoMapper;
 using CBP.WebApp.MVC.Models;
+using CBP.WebApp.MVC.DTO;
 
 namespace CBP.WebApp.MVC.Services
 {
   public interface IUsuarioService
   {
     Task<IEnumerable<IdentityUser>> ObterTodos();
+    Task<IEnumerable<IdentityRole>> ObterTodosRoles();
+    Task<RoleResposta> RoleRegistro(RoleRegistroViewModel roleRegistro);
   }
 
   public class UsuarioService : Service, IUsuarioService
@@ -42,5 +45,38 @@ namespace CBP.WebApp.MVC.Services
 
     }
 
+    #region Roles
+    public async Task<IEnumerable<IdentityRole>> ObterTodosRoles()
+    {
+      var response = await _httpClient.GetAsync("api/usuario/obter-roles");
+
+      TratarErrosResponse(response);
+
+      var roles = await DeserializarObjetoResponse<IEnumerable<IdentityRole>>(response);
+
+
+      return roles;
+    }
+
+    public async Task<RoleResposta> RoleRegistro(RoleRegistroViewModel roleRegistro)
+    {
+      var registroContent = ObterConteudo(_mapper.Map<IdentityRole>(roleRegistro));
+      //var registroContent = ObterConteudo(roleRegistro);
+
+      var response = await _httpClient.PostAsync("/api/usuario/nova-role", registroContent);
+
+      if (!TratarErrosResponse(response))
+      {
+        return new RoleResposta
+        {
+          ResponseResult = await DeserializarObjetoResponse<ResponseResult>(response)
+        };
+      }
+
+      var resposta = await DeserializarObjetoResponse<RoleResposta>(response);
+      return resposta;
+    }
+
+    #endregion Roles
   }
 }
