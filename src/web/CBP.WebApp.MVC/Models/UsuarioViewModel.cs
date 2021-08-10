@@ -8,7 +8,7 @@ namespace CBP.WebApp.MVC.Models
 {
   public class UsuarioRegistro
   {
-    public Guid Id { get; set; }
+    public string Id { get; set; }
 
     [Required(ErrorMessage = "O campo {0} é obrigatório")]
     [DisplayName("Nome Completo")]

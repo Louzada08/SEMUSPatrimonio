@@ -3,6 +3,7 @@ using CBP.WebAPI.Core.Controllers;
 using CBP.WebAPI.Core.Usuario;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -20,6 +21,25 @@ namespace CBP.Identidade.API.Controllers
     {
       _roleManager = roleManager;
       _userManager = userManager;
+    }
+
+    // GET: api/usuario/obter-usuario/{id}
+    [HttpGet("obter-usuario/{id}")]
+    public async Task<UsuarioRegistro> ObtemUserId(string id)
+    {
+      var usuario = await _userManager.FindByIdAsync(id);
+
+      var userClaims = await _userManager.GetClaimsAsync(usuario);
+
+      var usuarioRegistro = new UsuarioRegistro
+      {
+        Id = usuario.Id,
+        Email = usuario.Email,
+        Nome = usuario.UserName,
+        Funcao = Funcao.ObterEnumNomePeloId(int.Parse(userClaims.Select(c => c.Value).FirstOrDefault()))
+      };
+
+      return usuarioRegistro;
     }
 
     // GET: api/usuario/obter-usuarios
@@ -76,9 +96,26 @@ namespace CBP.Identidade.API.Controllers
     }
 
     // DELETE api/<AdmUsuarioController>/5
-    [HttpDelete("{id}")]
-    public void Delete(int id)
+    [HttpDelete("delete-usuario/{id}")]
+    public async Task<ActionResult> Delete(string id)
     {
+      var user = await _userManager.FindByIdAsync(id);
+
+      if(user == null)
+      {
+        return CustomResponse(ModelState.Values);
+      }
+
+      var result = await _userManager.DeleteAsync(user);
+
+      if (result.Succeeded) return CustomResponse();
+
+      foreach (var error in result.Errors)
+      {
+        AdicionarErroProcessamento(error.Description);
+      }
+
+      return CustomResponse();
     }
   }
 }

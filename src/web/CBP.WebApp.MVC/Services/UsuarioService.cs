@@ -13,7 +13,9 @@ namespace CBP.WebApp.MVC.Services
 {
   public interface IUsuarioService
   {
+    Task<UsuarioRegistro> ObterUsuarioPorId(string id);
     Task<IEnumerable<IdentityUser>> ObterTodos();
+    Task<ResponseResult> ExcluirUsuario(string id);
     Task<IEnumerable<IdentityRole>> ObterTodosRoles();
     Task<RoleResposta> RoleRegistro(RoleRegistroViewModel roleRegistro);
   }
@@ -32,6 +34,17 @@ namespace CBP.WebApp.MVC.Services
       _mapper = mapper;
     }
 
+    public async Task<UsuarioRegistro> ObterUsuarioPorId(string id)
+    {
+      var response = await _httpClient.GetAsync($"api/usuario/obter-usuario/{id}");
+      
+      TratarErrosResponse(response);
+
+      var usuario = await DeserializarObjetoResponse<UsuarioDTO>(response);
+
+      return _mapper.Map<UsuarioRegistro>(usuario); 
+    }
+
     public async Task<IEnumerable<IdentityUser>> ObterTodos()
     {
       var response = await _httpClient.GetAsync("api/usuario/obter-usuarios");
@@ -40,9 +53,16 @@ namespace CBP.WebApp.MVC.Services
 
       var usuarios = await DeserializarObjetoResponse<IEnumerable<IdentityUser>>(response);
 
-
       return usuarios;
+    }
 
+    public async Task<ResponseResult> ExcluirUsuario(string id)
+    {
+      var response = await _httpClient.DeleteAsync($"api/usuario/delete-usuario/{id}");
+
+      TratarErrosResponse(response);
+
+      return RetornoOk();
     }
 
     #region Roles

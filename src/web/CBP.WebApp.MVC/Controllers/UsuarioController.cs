@@ -4,6 +4,7 @@ using CBP.WebApp.MVC.Controllers;
 using CBP.WebApp.MVC.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace CBP.WebApp.MVC.Services
@@ -56,14 +57,24 @@ namespace CBP.WebApp.MVC.Services
       return RedirectToAction("RoleIndex", "Usuario");
     }
 
-    //[HttpGet]
-    //[Route("usuario/{id}")]
-    //public async Task<IActionResult> Detalhe(Guid id)
-    //{
-    //  var responsavel = await _responsavelService.ObterResponsavelPorId(id);
+    [HttpGet]
+    [Route("usuario/{id}")]
+    public async Task<ActionResult> Detalhe(Guid id)
+    {
+      var user = await _usuarioService.ObterUsuarioPorId(id.ToString());
 
-    //  return View(responsavel);
-    //}
+      return View(user);
+    }
+
+    [ClaimsAuthorize("NivelDeAcesso", "Responsavel")]
+    [HttpPost]
+    [Route("delete-usuario")]
+    public async Task<ActionResult> ExcluiUsuario(Guid id)
+    {
+      var user = await _usuarioService.ExcluirUsuario(id.ToString());
+
+      return RedirectToAction("Index", "Usuario");
+    }
 
     //[HttpPost]
     //[Route("nova-conta")]

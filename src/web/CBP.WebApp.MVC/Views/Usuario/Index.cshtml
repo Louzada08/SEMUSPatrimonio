@@ -24,41 +24,52 @@
         </div>
         <div class="row border border-info">
             <div class="col-md-4 border-info">
-                <h6>Nome Completo</h6>
+                <h6>Id</h6>
             </div>
-            <div class="col-md-4 border-left border-info">
+            <div class="col-md-8 border-left border-info">
                 <h6>Email</h6>
-            </div>
-            <div class="col-md-2 border-left border-info">
-                <h6>Função</h6>
-            </div>
-            <div class="col-md-2 border-left border-info">
-                <h6>Comandos</h6>
             </div>
         </div>
         @{
-            foreach (var item in Model.OrderBy(p => p.UserName))
+            if (Model.Any())
+            {
+
+                foreach (var item in Model.OrderBy(p => p.UserName))
+                {
+                    <div class="row border-left border-bottom border-info">
+                        <div class="col-md-4">
+                            @item.Id
+                        </div>
+                        <div class="col-md-4 border-left border-right border-info">
+                            @item.Email
+                        </div>
+                        <div class="col-md-4 border-right border-info">
+                            <form method="post" asp-action="ExcluiUsuario" asp-route-id="@item.">
+
+                                <a class="btn btn-info" asp-route-id="@item.Id" asp-controller="Usuario" asp-action="Detalhe">
+                                    Detalhe
+                                </a>
+
+                                <span id="confirmaDeleteSpan_@item.Id" style="display:none">
+                                    <span>Excluir este usuário ?</span>
+                                    <button type="submit" class="btn btn-danger">Sim</button>
+                                    <a href="#" class="btn btn-primary" onclick="confirmaDelete('@item.Id',false)">Não</a>
+                                </span>
+
+                                <span id="deleteSpan_@item.Id">
+                                    <a href="#" class="btn btn-danger" onclick="confirmaDelete('@item.Id',true)">Excluir</a>
+                                </span>
+                            </form>
+
+                        </div>
+                    </div>
+                }
+            }
+            else
             {
                 <div class="row border-left border-bottom border-info">
                     <div class="col-md-4">
-                        @item.UserName
-                    </div>
-                    <div class="col-md-4 border-left border-info">
-                        @item.Email
-                    </div>
-                    <div class="col-md-2 border-left border-info">
-                    </div>
-                    <div class="col-md-2 border-left border-right border-info">
-
-                        <a class="btn btn-info" asp-route-id="@item.Id" asp-controller="Usuario" asp-action="Detalhe">
-                            Detalhe
-                        </a>
-                        @*<button type="button" class="btn btn-info" data-toggle="modal" data-target="#editarUsuarioModal" data-Id="@item.Id"
-                                    asp-controller="Usuario" asp-action="Editar">
-                                Editar
-                            </button>*@
-                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#excluirUsuarioModal" data-Id="@item.Id">Excluir</button>
-                        @*<a asp-controller="Usuario" asp-action="Excluir" asp-route-id="@item.Id">Excluir</a>*@
+                        Sem usuários registrados
                     </div>
                 </div>
             }
@@ -74,9 +85,17 @@
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script>
-        $(document).ready(function () {
-            BuscaCep();
-        });
-    </script>
+        function confirmaDelete(uniqueId, isDeleteClicked) {
+            var deleteSpan = 'deleteSpan_' + uniqueId;
+            var confirmaDeleteSpan = 'confirmaDeleteSpan_' + uniqueId;
 
+            if (isDeleteClicked) {
+                $('#' + deleteSpan).hide();
+                $('#' + confirmaDeleteSpan).show();
+            } else {
+                $('#' + deleteSpan).show();
+                $('#' + confirmaDeleteSpan).hide();
+            }
+        }
+    </script>
 }

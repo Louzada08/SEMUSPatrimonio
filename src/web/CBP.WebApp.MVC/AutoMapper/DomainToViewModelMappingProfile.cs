@@ -13,11 +13,12 @@ namespace CBP.WebApp.MVC.AutoMapper
         .ForMember(d => d.Funcao, o => o.MapFrom(s => s.Funcao.ToString()))
         .ReverseMap();
 
-      CreateMap<IdentityUser, UsuarioDTO>()
+      CreateMap<UsuarioRegistro, UsuarioDTO>()
         .ForMember(d => d.Email, o => o.MapFrom(s => s.Email))
-        .ForMember(d => d.Nome, o => o.MapFrom(s => s.UserName))
-        .ForMember(d => d.Senha, o => o.MapFrom(s => s.PasswordHash))
-        .ForMember(d => d.SenhaConfirmacao, o => o.MapFrom(s => s.PasswordHash))
+        .ForMember(d => d.Nome, o => o.MapFrom(s => s.Nome))
+        .ForMember(d => d.Funcao, o => o.MapFrom(s => s.Funcao.ToString()))
+        .ForMember(d => d.Senha, o => o.MapFrom(s => s.Senha))
+        .ForMember(d => d.SenhaConfirmacao, o => o.MapFrom(s => s.SenhaConfirmacao))
         .ReverseMap();
 
       CreateMap<RoleRegistroViewModel, IdentityRole>()
