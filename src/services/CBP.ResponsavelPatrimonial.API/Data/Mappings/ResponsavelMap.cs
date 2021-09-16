@@ -15,15 +15,6 @@ namespace CBP.ResponsavelPatrimonial.API.Data.Mappings
                 .IsRequired()
                 .HasColumnType("varchar(100)");
 
-            //builder.OwnsOne(c => c.Cpf, tf =>
-            //{
-            //    tf.Property(c => c.Numero)
-            //        .IsRequired()
-            //        .HasMaxLength(Cpf.CpfMaxLength)
-            //        .HasColumnName("Cpf")
-            //        .HasColumnType($"varchar({Cpf.CpfMaxLength})");
-            //});
-
             builder.OwnsOne(c => c.Email, tf =>
             {
                 tf.Property(c => c.Endereco)

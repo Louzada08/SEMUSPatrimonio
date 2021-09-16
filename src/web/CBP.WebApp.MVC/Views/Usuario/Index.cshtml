@@ -37,14 +37,28 @@
                 foreach (var item in Model.OrderBy(p => p.UserName))
                 {
                     <div class="row border-left border-bottom border-info">
-                        <div class="col-md-4">
-                            @item.Id
-                        </div>
-                        <div class="col-md-4 border-left border-right border-info">
-                            @item.Email
-                        </div>
+                                <div class="col-md-4">
+                                    @if (!item.LockoutEnabled)
+                                    {
+                                        <span style="text-decoration-line:line-through">@item.Id</span>
+                                    }
+                                    else
+                                    {
+                                        <span>@item.Id</span>
+                                    }
+                                </div>
+                                <div class="col-md-4 border-left border-right border-info">
+                                    @if (!item.LockoutEnabled)
+                                    {
+                                        <span style="text-decoration-line:line-through">@item.Email</span>
+                                    }
+                                    else
+                                    {
+                                        <span>@item.Email</span>
+                                    }
+                                </div>
                         <div class="col-md-4 border-right border-info">
-                            <form method="post" asp-action="ExcluiUsuario" asp-route-id="@item.">
+                            <form method="post" asp-action="ExcluiUsuario" asp-route-id="@item.Id">
 
                                 <a class="btn btn-info" asp-route-id="@item.Id" asp-controller="Usuario" asp-action="Detalhe">
                                     Detalhe

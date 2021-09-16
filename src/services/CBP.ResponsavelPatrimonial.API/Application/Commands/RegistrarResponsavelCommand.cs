@@ -1,10 +1,17 @@
 ﻿using System;
+using CBP.Core.Messages;
 using FluentValidation;
 
 namespace CBP.ResponsavelPatrimonial.API.Application.Commands
 {
-  public class RegistrarResponsavelCommand : ResponsavelCommand
+  public class RegistrarResponsavelCommand : Command
   {
+    public Guid Id { get; private set; }
+    public string Nome { get; private set; }
+    public string Email { get; private set; }
+    public string Funcao { get; private set; }
+    public bool Excluido { get; private set; }
+
     public RegistrarResponsavelCommand(Guid id, string nome, string funcao, string email, bool excluido)
     {
       AggregateId = id;
@@ -41,11 +48,6 @@ namespace CBP.ResponsavelPatrimonial.API.Application.Commands
             .Must(TerEmailValido)
             .WithMessage("O e-mail informado não é válido.");
       }
-
-      //protected static bool TerCpfValido(string cpf)
-      //{
-      //    return Core.DomainObjects.Cpf.Validar(cpf);
-      //}
 
       protected static bool TerEmailValido(string email)
       {

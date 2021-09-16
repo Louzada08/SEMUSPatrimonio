@@ -1,10 +1,17 @@
-﻿using FluentValidation;
+﻿using CBP.Core.Messages;
+using FluentValidation;
 using System;
 
 namespace CBP.ResponsavelPatrimonial.API.Application.Commands
 {
-  public class AtualizarResponsavelCommand : ResponsavelCommand
+  public class AtualizarResponsavelCommand : Command
   {
+    public Guid Id { get; private set; }
+    public string Nome { get; private set; }
+    public string Funcao { get; private set; }
+    public string Email { get; private set; }
+    public bool Excluido { get; private set; }
+
     public AtualizarResponsavelCommand(Guid id, string nome, string funcao, string email, bool excluido)
     {
       AggregateId = id;

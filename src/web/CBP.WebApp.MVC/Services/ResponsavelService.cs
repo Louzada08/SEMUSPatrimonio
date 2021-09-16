@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using CBP.WebApp.MVC.Extensions;
 using CBP.WebApp.MVC.Models;
 using System.Collections.Generic;
+using AutoMapper;
 
 namespace CBP.WebApp.MVC.Services
 {
@@ -20,12 +21,15 @@ namespace CBP.WebApp.MVC.Services
   public class ResponsavelService : Service, IResponsavelService
   {
     private readonly HttpClient _httpClient;
+    private readonly IMapper _mapper;
 
     public ResponsavelService(HttpClient httpClient,
-        IOptions<AppSettings> settings)
+        IOptions<AppSettings> settings, IMapper mapper)
     {
       _httpClient = httpClient;
       httpClient.BaseAddress = new Uri(settings.Value.ResponsavelUrl);
+      _mapper = mapper;
+
     }
 
     public async Task<IEnumerable<ResponsavelViewModel>> ObterTodosResponsaveis()
@@ -35,7 +39,8 @@ namespace CBP.WebApp.MVC.Services
       TratarErrosResponse(responsaveis);
 
       var responsaveisDeser = await DeserializarObjetoResponse<IEnumerable<ResponsavelViewModel>>(responsaveis);
-      return responsaveisDeser;
+
+      return _mapper.Map<IEnumerable<ResponsavelViewModel>>(responsaveisDeser);
     }
 
     public async Task<ResponsavelViewModel> ObterResponsavelPorId(Guid id)
@@ -46,7 +51,8 @@ namespace CBP.WebApp.MVC.Services
 
       var responsavel = await DeserializarObjetoResponse<ResponsavelViewModel>(response);
 
-      return responsavel;
+      return _mapper.Map<ResponsavelViewModel>(responsavel);
+
     }
 
     public async Task<ResponsavelViewModel> ObterPorId(Guid id)

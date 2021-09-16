@@ -1,0 +1,44 @@
+﻿@model CBP.WebApp.MVC.Models.ResetSenhaViewModel
+
+@{
+    ViewData["Title"] = "Redefina sua senha";
+}
+
+<div class="modal fade" id="resetSenhaModal" tabindex="-1" role="dialog" aria-labelledby="resetaSenhaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="myModalContent">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">@ViewData["Title"]</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">x</span><span class="sr-only">Fechar</span>
+                    </button>
+                </div>
+                <vc:summary></vc:summary>
+                <form asp-controller="Usuario" asp-action="ResetSenha" method="post">
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label asp-for="UserName"></label>
+                            <input asp-for="UserName" class="form-control" />
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="NewPassword"></label>
+                            <input type="password" asp-for="NewPassword" class="form-control" />
+                            <span asp-validation-for="NewPassword" class="text-danger"></span>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <input type="submit" value="Resetar" class="btn btn-success" />
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

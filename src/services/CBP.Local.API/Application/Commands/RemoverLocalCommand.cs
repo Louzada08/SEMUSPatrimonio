@@ -1,10 +1,12 @@
 ﻿using System;
+using CBP.Core.Messages;
 using FluentValidation;
 
-namespace CBP.Identidade.API.Application.Commands
+namespace CBP.Local.API.Application.Commands
 {
-  public class RemoverResponsavelCommand : ResponsavelCommand
+  public class RemoverResponsavelCommand : Command
   {
+    public Guid Id { get; private set; }
     public RemoverResponsavelCommand(Guid id)
     {
       AggregateId = id;

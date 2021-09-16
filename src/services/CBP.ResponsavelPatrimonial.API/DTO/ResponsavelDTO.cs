@@ -1,5 +1,8 @@
 ﻿using CBP.WebAPI.Core.Usuario;
+using CBP.Core.DomainObjects;
 using System;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace CBP.ResponsavelPatrimonial.API.DTO
 {

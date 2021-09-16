@@ -1,5 +1,4 @@
 ﻿using CBP.Core.Messages.Integration;
-using CBP.Identidade.API.Application.Events;
 using CBP.Identidade.API.Models;
 using CBP.MessageBus;
 using CBP.WebAPI.Core.Controllers;
@@ -21,21 +20,26 @@ using System.Threading.Tasks;
 namespace CBP.Identidade.API.Controllers
 {
   [Route("api/identidade")]
-  public class AuthController : MainController
+  public partial class AuthController : MainController
   {
     private readonly SignInManager<IdentityUser> _signInManager;
     private readonly UserManager<IdentityUser> _userManager;
+    private readonly RoleManager<IdentityRole> _roleManager;
     private readonly AppSettings _appSettings;
+    private readonly IAspNetUser _aspNetUser;
+
 
     private readonly IMessageBus _bus;
     public AuthController(SignInManager<IdentityUser> signInManager,
                           UserManager<IdentityUser> userManager,
-                          IOptions<AppSettings> appSettings,
-                          IMessageBus bus)
+                          IOptions<AppSettings> appSettings, IAspNetUser aspNetUser,
+                          IMessageBus bus, RoleManager<IdentityRole> roleManager)
     {
       _signInManager = signInManager;
       _userManager = userManager;
+      _roleManager = roleManager;
       _appSettings = appSettings.Value;
+      _aspNetUser = aspNetUser;
       _bus = bus;
     }
 
@@ -82,7 +86,7 @@ namespace CBP.Identidade.API.Controllers
     [HttpPut("editar-conta")]
     public async Task<IActionResult> Atualizar(ResponsavelAtualizar responsavelEditar)
     {
-      var responsavelResult = await EditarResponsavel(responsavelEditar);
+      //var responsavelResult = await EditarResponsavel(responsavelEditar);
 
       //if (result.IsValid)
       //{
@@ -196,21 +200,21 @@ namespace CBP.Identidade.API.Controllers
       var usuario = await _userManager.FindByEmailAsync(usuarioRegistro.Email);
 
       var usuarioRegistrado = new UsuarioRegistradoIntegrationEvent(
-          Guid.Parse(usuario.Id), usuarioRegistro.Nome, usuarioRegistro.Funcao, usuarioRegistro.Email, false);
+          Guid.Parse(usuario.Id), usuarioRegistro.Nome, usuarioRegistro.Funcao, usuarioRegistro.Email, usuarioRegistro.Excluido);
 
       try
       {
         return await _bus.RequestAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(usuarioRegistrado);
       }
-      catch
+      catch 
       {
         await _userManager.DeleteAsync(usuario);
         throw;
       }
     }
 
-    private async Task<ResponseMessage> EditarResponsavel(ResponsavelAtualizar responsavel)
-    {
+    //private async Task<ResponseMessage> EditarResponsavel(ResponsavelAtualizar responsavel)
+    //{
       //var responsavelExistente = await _userManager.FindByEmailAsync(responsavel.Email);
 
       //if (responsavelExistente != null && responsavelExistente.Id != responsavel.Id.ToString())
@@ -222,18 +226,18 @@ namespace CBP.Identidade.API.Controllers
       //  }
       //}
 
-      var responsavelAtualizado = new ResponsavelAtualizadoEvent(
-          responsavel.Id, responsavel.Nome, responsavel.Funcao, responsavel.Email, responsavel.Excluido);
+      //var responsavelAtualizado = new ResponsavelAtualizadoEvent(
+      //    responsavel.Id, responsavel.Nome, responsavel.Funcao, responsavel.Email, responsavel.Excluido);
 
-      try
-      {
-        return await _bus.RequestAsync<ResponsavelAtualizadoEvent, ResponseMessage>(responsavelAtualizado);
-      }
-      catch
-      {
-        throw;
-      }
-
-    }
+      //try
+      //{
+      //  return await _bus.RequestAsync<ResponsavelAtualizadoEvent, ResponseMessage>(responsavelAtualizado);
+      //}
+      //catch
+      //{
+      //  throw;
+      //}
+      
+    //}
   }
 }

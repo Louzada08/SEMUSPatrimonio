@@ -26,9 +26,4 @@
     <ProjectReference Include="..\..\building blocks\CBP.WebAPI.Core\CBP.WebAPI.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Application\Queries\" />
-  </ItemGroup>
-
-
 </Project>

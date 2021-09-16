@@ -1,10 +1,12 @@
 ﻿using System;
+using CBP.Core.Messages;
 using FluentValidation;
 
 namespace CBP.ResponsavelPatrimonial.API.Application.Commands
 {
-  public class RemoverResponsavelCommand : ResponsavelCommand
+  public class RemoverResponsavelCommand : Command
   {
+    public Guid Id { get; private set; }
     public RemoverResponsavelCommand(Guid id)
     {
       AggregateId = id;

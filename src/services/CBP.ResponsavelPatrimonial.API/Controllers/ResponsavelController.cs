@@ -18,9 +18,9 @@ namespace CBP.ResponsavelPatrimonial.API.Controllers
 
     public ResponsavelController(IMediatorHandler mediator, IResponsavelRepository responsavelRepository, IMapper mapper)
     {
+      _responsavelRepository = responsavelRepository;
       _mediator = mediator;
       _mapper = mapper;
-      _responsavelRepository = responsavelRepository;
     }
 
     [HttpGet("responsavel/{id}")]
@@ -30,11 +30,12 @@ namespace CBP.ResponsavelPatrimonial.API.Controllers
 
       return responsavel == null ? NotFound() : CustomResponse(responsavel);
     }
-
+    
     [HttpGet("responsaveis")]
     public async Task<IEnumerable<ResponsavelDTO>> ObterListaResponsaveis()
     {
-      return await _responsavelRepository.ObterTodos();
+      var responsaveis = _mapper.Map<IEnumerable<ResponsavelDTO>>(await _responsavelRepository.ObterTodos());
+      return responsaveis;
     }
 
     [HttpPut("responsavel-editar")]

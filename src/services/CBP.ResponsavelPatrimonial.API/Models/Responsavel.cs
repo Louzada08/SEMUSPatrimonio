@@ -10,7 +10,9 @@ namespace CBP.ResponsavelPatrimonial.API.Models
     public Email Email { get; protected set; }
     public bool Excluido { get; protected set; }
     public Endereco Endereco { get; protected set; }
-
+    public Guid UnidadeId { get; protected set; }
+    public Unidade Unidade { get; set; }
+    
     protected Responsavel() { }
 
     public Responsavel(Guid id, string nome, string funcao, string email, bool excluido = false)
@@ -31,5 +33,6 @@ namespace CBP.ResponsavelPatrimonial.API.Models
     {
       Endereco = endereco;
     }
+
   }
 }

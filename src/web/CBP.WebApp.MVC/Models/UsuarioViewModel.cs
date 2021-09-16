@@ -1,5 +1,4 @@
-﻿using System;
-using CBP.WebAPI.Core.Usuario;
+﻿using CBP.WebAPI.Core.Usuario;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -8,7 +7,7 @@ namespace CBP.WebApp.MVC.Models
 {
   public class UsuarioRegistro
   {
-    public string Id { get; set; }
+    //public string Id { get; set; }
 
     [Required(ErrorMessage = "O campo {0} é obrigatório")]
     [DisplayName("Nome Completo")]
@@ -21,6 +20,7 @@ namespace CBP.WebApp.MVC.Models
 
     public Funcoes Funcao { get; set; }
 
+    [DisplayName("Bloqueado")]
     public bool Excluido { get; set; }
 
     [Required(ErrorMessage = "O campo {0} é obrigatório")]

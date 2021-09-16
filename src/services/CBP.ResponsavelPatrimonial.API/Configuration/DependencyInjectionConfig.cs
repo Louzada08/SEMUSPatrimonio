@@ -1,12 +1,14 @@
 ﻿using FluentValidation.Results;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Http;
+using CBP.Core.Mediator;
 using CBP.ResponsavelPatrimonial.API.Application.Commands;
 using CBP.ResponsavelPatrimonial.API.Application.Events;
 using CBP.ResponsavelPatrimonial.API.Data;
 using CBP.ResponsavelPatrimonial.API.Models;
-using CBP.Core.Mediator;
 using CBP.ResponsavelPatrimonial.API.Data.Repository;
+using CBP.ResponsavelPatrimonial.API.Application.Queries;
 
 namespace CBP.ResponsavelPatrimonial.API.Configuration
 {
@@ -14,18 +16,25 @@ namespace CBP.ResponsavelPatrimonial.API.Configuration
   {
     public static void RegisterServices(this IServiceCollection services)
     {
-      //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-      services.AddScoped<IMediatorHandler, MediatorHandler>();
-
-      services.AddScoped<IRequestHandler<RegistrarResponsavelCommand, ValidationResult>, ResponsavelCommandHandler>();
-      services.AddScoped<IRequestHandler<AtualizarResponsavelCommand, ValidationResult>, ResponsavelCommandHandler>();
-      //services.AddScoped<IRequestHandler<RemoverResponsavelCommand, ValidationResult>, ResponsavelCommandHandler>();
-      services.AddScoped<IRequestHandler<AdicionarEnderecoCommand, ValidationResult>, ResponsavelCommandHandler>();
-
-      services.AddScoped<INotificationHandler<ResponsavelRegistradoEvent>, ResponsavelEventHandler>();
-
+      // API
+      services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
       services.AddAutoMapper(typeof(Startup));
 
+      // Commands
+      services.AddScoped<IRequestHandler<RegistrarResponsavelCommand, ValidationResult>, ResponsavelCommandHandler>();
+      //services.AddScoped<IRequestHandler<AtualizarResponsavelCommand, ValidationResult>, ResponsavelCommandHandler>();
+      //services.AddScoped<IRequestHandler<RemoverResponsavelCommand, ValidationResult>, ResponsavelCommandHandler>();
+      services.AddScoped<IRequestHandler<AdicionarEnderecoCommand, ValidationResult>, ResponsavelCommandHandler>();
+      services.AddScoped<IRequestHandler<ObterResponsavelCommand, ValidationResult>, ResponsavelCommandHandler>();
+
+      // Events
+      services.AddScoped<INotificationHandler<ResponsavelRegistradoEvent>, ResponsavelEventHandler>();
+
+      // Application
+      services.AddScoped<IMediatorHandler, MediatorHandler>();
+      services.AddScoped<IResponsavelQueries, ResponsavelQueries>();
+
+      // Data
       services.AddScoped<IResponsavelRepository, ResponsavelRepository>();
       services.AddScoped<ResponsavelContext>();
     }

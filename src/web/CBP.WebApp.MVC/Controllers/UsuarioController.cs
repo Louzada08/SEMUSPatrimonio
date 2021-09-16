@@ -5,6 +5,7 @@ using CBP.WebApp.MVC.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CBP.WebApp.MVC.Services
@@ -13,15 +14,15 @@ namespace CBP.WebApp.MVC.Services
   public class UsuarioController : MainController
   {
     //private readonly IAutenticacaoService _autenticacaoService;
-    //private readonly IResponsavelService _responsavelService;
     private readonly IUsuarioService _usuarioService;
+    private readonly IResponsavelService _responsavelService;
     private readonly IMapper _mapper;
 
-    public UsuarioController(IUsuarioService usuarioService, IMapper mapper)
+    public UsuarioController(IUsuarioService usuarioService, IMapper mapper, IResponsavelService responsavelService)
     {
       //_autenticacaoService = autenticacaoService;
-      //_responsavelService = responsavelService;
       _usuarioService = usuarioService;
+      _responsavelService = responsavelService;
       _mapper = mapper;
     }
 
@@ -65,6 +66,36 @@ namespace CBP.WebApp.MVC.Services
 
       return View(user);
     }
+
+    [HttpPost]
+    [Route("usuario/{id}")]
+    public async Task<ActionResult> Edicao(UsuarioRegistro usuarioRegistro)
+    {
+      var user = await _usuarioService.Atualiza(usuarioRegistro);
+
+      return RedirectToAction("Index", "Usuario");
+    }
+
+    [AllowAnonymous]
+    [HttpPost("usuario-resetsenha")]
+    public async Task<ActionResult> ResetSenha(ResetSenhaViewModel usuario)
+    {
+      var resposta = await _usuarioService.ResetDeSenha(usuario);
+
+      if (resposta == null) return NotFound();
+
+      //var resposta = await _responsavelService.Atualizacao(_mapper.Map<ResponsavelRegistro>(usuarioViewModel));
+     // var resposta = await _usuarioService.ResetDeSenha(user);
+
+      if (ResponsePossuiErros(resposta))
+      {
+        TempData["Erros"] =
+          ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage)).ToList();
+      }
+
+      return RedirectToAction("Index", "Usuario");
+    }
+
 
     [ClaimsAuthorize("NivelDeAcesso", "Responsavel")]
     [HttpPost]

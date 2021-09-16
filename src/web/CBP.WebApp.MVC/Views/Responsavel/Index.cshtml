@@ -51,11 +51,11 @@
                             Detalhe
                         </a>
                         @*<button type="button" class="btn btn-info" data-toggle="modal" data-target="#editarUsuarioModal" data-Id="@item.Id"
-                                asp-controller="Usuario" asp-action="Editar">
-                            Editar
-                        </button>*@
-                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#excluirResponsavelModal" data-Id="@item.Id">Excluir</button>
-                        @*<a asp-controller="Usuario" asp-action="Excluir" asp-route-id="@item.Id">Excluir</a>*@
+                asp-controller="Usuario" asp-action="Editar">
+            Editar
+        </button>*@
+                        @*<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#excluirResponsavelModal" data-Id="@item.Id">Excluir</button>
+        <a asp-controller="Usuario" asp-action="Excluir" asp-route-id="@item.Id">Excluir</a>*@
                     </div>
                 </div>
             }

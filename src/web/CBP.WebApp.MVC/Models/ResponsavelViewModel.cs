@@ -1,8 +1,8 @@
 ﻿using CBP.WebAPI.Core.Usuario;
-using CBP.WebApp.MVC.Extensions;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using CBP.WebApp.MVC.Extensions;
 
 namespace CBP.WebApp.MVC.Models
 {

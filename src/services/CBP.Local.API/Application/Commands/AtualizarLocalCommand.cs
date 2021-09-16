@@ -1,11 +1,18 @@
-﻿using FluentValidation;
+﻿using CBP.Core.Messages;
+using FluentValidation;
 using System;
 
-namespace CBP.Identidade.API.Application.Commands
-{
-  public class AtualizarResponsavelCommand : ResponsavelCommand
+namespace CBP.Local.API.Application.Commands
+{  
+  public class AtualizarLocalCommand : Command
   {
-    public AtualizarResponsavelCommand(Guid id, string nome, string funcao, string email, bool excluido)
+    public Guid Id { get; private set; }
+    public string Nome { get; private set; }
+    public string Funcao { get; private set; }
+    public string Email { get; private set; }
+    public bool Excluido { get; private set; }
+
+    public AtualizarLocalCommand(Guid id, string nome, string funcao, string email, bool excluido)
     {
       AggregateId = id;
       Id = id;
@@ -15,17 +22,17 @@ namespace CBP.Identidade.API.Application.Commands
       Excluido = excluido;
     }
 
-    public AtualizarResponsavelCommand() { }
+    public AtualizarLocalCommand() { }
 
     public override bool EhValido()
     {
-      ValidationResult = new AtualizarResponsavelValidation().Validate(this);
+      ValidationResult = new AtualizarLocalValidation().Validate(this);
       return ValidationResult.IsValid;
     }
 
-    public class AtualizarResponsavelValidation : AbstractValidator<AtualizarResponsavelCommand>
+    public class AtualizarLocalValidation : AbstractValidator<AtualizarLocalCommand>
     {
-      public AtualizarResponsavelValidation()
+      public AtualizarLocalValidation()
       {
         RuleFor(c => c.Id)
             .NotEqual(Guid.Empty)

@@ -1,4 +1,5 @@
-﻿@model CBP.WebApp.MVC.Models.UsuarioRegistro
+﻿@using Microsoft.AspNetCore.Identity
+@model CBP.WebApp.MVC.Models.UsuarioRegistro
 @{
     ViewData["Title"] = "Detalhe";
 }
@@ -22,22 +23,16 @@
             <hr />
             <dl class="row">
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Id)
+                    @Html.DisplayNameFor(model => model.Email)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Id)
+                    @Html.DisplayFor(model => model.Email)
                 </dd>
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.Nome)
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Nome)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Email)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model =>  model.Email)
                 </dd>
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.Funcao)
@@ -53,6 +48,7 @@
                 </dd>
             </dl>
         </div>
+
         <div>
             <button class="btn btn-primary" data-toggle="modal" data-target="#editarUsuarioModal">Editar</button> |
             <button class="btn btn-primary" data-toggle="modal" data-target="#resetSenhaModal">Reset Senha</button> |
@@ -64,8 +60,9 @@
 </section>
 
 <partial name="_EditarUsuario" model="Model" />
+<partial name="_ResetSenha" model="new ResetSenhaViewModel() { UserName = Model.Email }" />
 
 @section Scripts {
 
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
+}

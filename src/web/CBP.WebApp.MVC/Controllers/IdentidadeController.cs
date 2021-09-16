@@ -29,15 +29,15 @@ namespace CBP.WebApp.MVC.Controllers
 
     //[HttpPost]
     //[Route("nova-conta")]
-    //public async Task<IActionResult> Registro(UsuarioLogin usuarioLogin, string returnUrl = null)
+    //public async Task<IActionResult> Registro(UsuarioRegistro usuarioRegistro, string returnUrl = null)
     //{
     //  ViewData["ReturnUrl"] = returnUrl;
 
-    //  if (!ModelState.IsValid) return View(usuarioLogin);
+    //  if (!ModelState.IsValid) return View(usuarioRegistro);
 
-    //  var resposta = await _autenticacaoService.Login(usuarioLogin);
+    //  var resposta = await _autenticacaoService.Registro(usuarioRegistro);
 
-    //  if (ResponsePossuiErros(resposta.ResponseResult)) return View(usuarioLogin);
+    //  if (ResponsePossuiErros(resposta.ResponseResult)) return View(usuarioRegistro);
 
     //  await RealizarLogin(resposta);
 
@@ -56,7 +56,7 @@ namespace CBP.WebApp.MVC.Controllers
 
       if (ResponsePossuiErros(resposta.ResponseResult)) return View(usuarioRegistro);
 
-      await RealizarLogin(resposta);
+     //await RealizarLogin(resposta);
 
       return RedirectToAction("Index", "Patrimonio");
     }

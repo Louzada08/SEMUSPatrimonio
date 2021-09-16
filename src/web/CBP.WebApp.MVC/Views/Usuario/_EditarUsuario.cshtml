@@ -19,11 +19,11 @@
                 <form asp-controller="Usuario" asp-action="Edicao" method="post">
                     <div class="modal-body">
 
-                        <div class="form-group">
+                        @*<div class="form-group">
                             <label asp-for="Id"></label>
                             <br />@Model.Id
                             <input type="hidden" asp-for="Id" class="form-control" />
-                        </div>
+                        </div>*@
 
                         <div class="form-group">
                             <label asp-for="Nome"></label>
@@ -33,7 +33,7 @@
 
                         <div class="form-group">
                             <label asp-for="Email"></label>
-                            <br/>@Model.Email
+                            <br />@Model.Email
                             <input type="hidden" asp-for="Email" class="form-control" />
                         </div>
 
@@ -48,17 +48,23 @@
                             <span asp-validation-for="Funcao" class="text-danger"></span>
                         </div>
 
-                        @*<div class="form-group">
-                            <label asp-for="Usuario.Senha"></label>
-                            <input type="password" asp-for="Usuario.Senha"  class="form-control" />
-                            <span asp-validation-for="Usuario.Senha" class="text-danger"></span>
+                        <div class="form-group">
+                            <label asp-for="Excluido"></label>
+                            <input asp-for="Excluido" class="form-control" />
+                            <span asp-validation-for="Excluido" class="text-danger"></span>
                         </div>
 
-                        <div class="form-group">
-                            <label asp-for="Usuario.SenhaConfirmacao"></label>
-                            <input type="password" asp-for="Usuario.SenhaConfirmacao"  class="form-control" />
-                            <span asp-validation-for="Usuario.SenhaConfirmacao" class="text-danger"></span>
-                        </div>*@
+                        @*<div class="form-group">
+            <label asp-for="Usuario.Senha"></label>
+            <input type="password" asp-for="Usuario.Senha"  class="form-control" />
+            <span asp-validation-for="Usuario.Senha" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Usuario.SenhaConfirmacao"></label>
+            <input type="password" asp-for="Usuario.SenhaConfirmacao"  class="form-control" />
+            <span asp-validation-for="Usuario.SenhaConfirmacao" class="text-danger"></span>
+        </div>*@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
