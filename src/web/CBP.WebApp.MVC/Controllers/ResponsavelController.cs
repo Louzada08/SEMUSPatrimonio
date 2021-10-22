@@ -60,6 +60,7 @@ namespace CBP.WebApp.MVC.Controllers
       return RedirectToAction("Detalhe", new { id = responsavelViewModel.Id });
     }
 
+    [ClaimsAuthorize("NivelDeAcesso", "Operador")]
     [HttpPost]
     public async Task<IActionResult> NovoEndereco(EnderecoViewModel endereco)
     {
@@ -68,7 +69,7 @@ namespace CBP.WebApp.MVC.Controllers
       if (ResponsePossuiErros(response)) TempData["Erros"] =
           ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage)).ToList();
 
-      return RedirectToAction("Usuario", "Detalhe");
+      return RedirectToAction("Detalhe", new { id = endereco.ResponsavelId });
     }
   }
 }

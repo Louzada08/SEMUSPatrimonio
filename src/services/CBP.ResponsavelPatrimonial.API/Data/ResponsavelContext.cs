@@ -15,7 +15,7 @@ namespace CBP.ResponsavelPatrimonial.API.Data
     private readonly IMediatorHandler _mediatorHandler;
 
     public ResponsavelContext(DbContextOptions<ResponsavelContext> options, IMediatorHandler mediatorHandler)
-        : base(options) 
+        : base(options)
     {
       _mediatorHandler = mediatorHandler;
       ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
@@ -24,6 +24,7 @@ namespace CBP.ResponsavelPatrimonial.API.Data
 
     public DbSet<Responsavel> Responsaveis { get; set; }
     public DbSet<Endereco> Enderecos { get; set; }
+    public DbSet<Unidade> Unidades { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -65,7 +66,8 @@ namespace CBP.ResponsavelPatrimonial.API.Data
           .ForEach(entity => entity.Entity.LimparEventos());
 
       var tasks = domainEvents
-          .Select(async (domainEvent) => {
+          .Select(async (domainEvent) =>
+          {
             await mediator.PublicarEvento(domainEvent);
           });
 

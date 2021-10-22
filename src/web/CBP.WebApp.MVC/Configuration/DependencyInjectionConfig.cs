@@ -11,8 +11,6 @@ using Polly.Retry;
 using Polly.Extensions.Http;
 using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using CBP.WebAPI.Core.Usuario;
-using Microsoft.AspNetCore.Identity;
-using CBP.WebApp.MVC.Models;
 
 namespace CBP.WebApp.MVC.Configuration
 {

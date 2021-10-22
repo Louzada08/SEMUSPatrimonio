@@ -3,15 +3,17 @@ using System;
 using CBP.ResponsavelPatrimonial.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CBP.ResponsavelPatrimonial.API.Migrations
 {
     [DbContext(typeof(ResponsavelContext))]
-    partial class ResponsavelContextModelSnapshot : ModelSnapshot
+    [Migration("20211019223237_UnidadeResponsavelIdNotNull")]
+    partial class UnidadeResponsavelIdNotNull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

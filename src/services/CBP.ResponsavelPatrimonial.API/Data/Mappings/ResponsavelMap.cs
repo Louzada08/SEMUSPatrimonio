@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CBP.ResponsavelPatrimonial.API.Data.Mappings
 {
-    public class ClienteMapping : IEntityTypeConfiguration<Responsavel>
+    public class ResponsavelMapping : IEntityTypeConfiguration<Responsavel>
     {
         public void Configure(EntityTypeBuilder<Responsavel> builder)
         {

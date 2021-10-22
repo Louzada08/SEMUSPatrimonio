@@ -23,6 +23,6 @@ namespace CBP.WebApp.MVC.Models
 
     public bool Excluido { get; set; }
 
-    public EnderecoViewModel EnderecoViewModel { get; set; }
+    public EnderecoViewModel Endereco { get; set; }
   }
 }

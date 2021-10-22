@@ -37,7 +37,7 @@
                     @Html.DisplayNameFor(model => model.Email)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model =>  model.Email)
+                    @Html.DisplayFor(model => model.Email)
                 </dd>
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.Funcao)
@@ -53,16 +53,24 @@
                 </dd>
             </dl>
         </div>
+
         <div>
             <button class="btn btn-primary" data-toggle="modal" data-target="#editarResponsavelModal">Editar</button> |
             <a class="btn btn-primary" asp-action="Index"> Voltar</a>
         </div>
+
+        <div class="card-body border-top">
+            <partial name="_Endereco" model="Model" />
+        </div>
+
     </div>
 </section>
 
 <partial name="_EditarResponsavel" model="Model" />
+<partial name="_NovoEndereco" />
+
 
 @section Scripts {
 
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
+}

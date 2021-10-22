@@ -6,6 +6,7 @@ using CBP.WebApp.MVC.Extensions;
 using CBP.WebApp.MVC.Models;
 using System.Collections.Generic;
 using AutoMapper;
+using CBP.WebApp.MVC.DTO;
 
 namespace CBP.WebApp.MVC.Services
 {
@@ -29,7 +30,6 @@ namespace CBP.WebApp.MVC.Services
       _httpClient = httpClient;
       httpClient.BaseAddress = new Uri(settings.Value.ResponsavelUrl);
       _mapper = mapper;
-
     }
 
     public async Task<IEnumerable<ResponsavelViewModel>> ObterTodosResponsaveis()
@@ -51,8 +51,8 @@ namespace CBP.WebApp.MVC.Services
 
       var responsavel = await DeserializarObjetoResponse<ResponsavelViewModel>(response);
 
-      return _mapper.Map<ResponsavelViewModel>(responsavel);
-
+      var r = _mapper.Map<ResponsavelViewModel>(responsavel);
+      return r;
     }
 
     public async Task<ResponsavelViewModel> ObterPorId(Guid id)
@@ -78,7 +78,9 @@ namespace CBP.WebApp.MVC.Services
 
     public async Task<ResponseResult> AdicionarEndereco(EnderecoViewModel endereco)
     {
-      var enderecoContent = ObterConteudo(endereco);
+      var enderecoDTO = _mapper.Map<EnderecoDTO>(endereco);
+
+      var enderecoContent = ObterConteudo(enderecoDTO);
 
       var response = await _httpClient.PostAsync("/responsavel/endereco/", enderecoContent);
 

@@ -40,6 +40,7 @@ namespace CBP.ResponsavelPatrimonial.API.Data.Repository
     public void Adicionar(Responsavel responsavel)
     {
       _context.Responsaveis.Add(responsavel);
+      var status = _context.SaveChanges();
     }
 
     public void Atualizar(Responsavel responsavel)
@@ -53,9 +54,28 @@ namespace CBP.ResponsavelPatrimonial.API.Data.Repository
       _context.Responsaveis.Remove(responsavel);
     }
 
-    public void AdicionarEndereco(Endereco endereco)
+    public async Task<Endereco> ObterEnderecoPorId(Guid id)
+    {
+      return await _context.Enderecos.FirstOrDefaultAsync(e => e.ResponsavelId == id);
+    }
+
+    public bool AdicionarEndereco(Endereco endereco)
     {
       _context.Enderecos.Add(endereco);
+      var status = _context.SaveChanges() > 0;
+      return status;
+    }
+
+    public void Adicionar(Unidade unidade)
+    {
+      _context.Unidades.Add(unidade);
+      var status = _context.SaveChanges();
+    }
+
+    public void Atualizar(Unidade unidade)
+    {
+      _context.Unidades.Update(unidade);
+      var status = _context.SaveChanges();
     }
 
     public void Dispose()

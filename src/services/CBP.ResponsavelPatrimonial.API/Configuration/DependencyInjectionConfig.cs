@@ -9,6 +9,7 @@ using CBP.ResponsavelPatrimonial.API.Data;
 using CBP.ResponsavelPatrimonial.API.Models;
 using CBP.ResponsavelPatrimonial.API.Data.Repository;
 using CBP.ResponsavelPatrimonial.API.Application.Queries;
+using CBP.WebAPI.Core.Usuario;
 
 namespace CBP.ResponsavelPatrimonial.API.Configuration
 {
@@ -18,13 +19,13 @@ namespace CBP.ResponsavelPatrimonial.API.Configuration
     {
       // API
       services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+      services.AddScoped<IAspNetUser, AspNetUser>();
       services.AddAutoMapper(typeof(Startup));
 
       // Commands
       services.AddScoped<IRequestHandler<RegistrarResponsavelCommand, ValidationResult>, ResponsavelCommandHandler>();
       //services.AddScoped<IRequestHandler<AtualizarResponsavelCommand, ValidationResult>, ResponsavelCommandHandler>();
       //services.AddScoped<IRequestHandler<RemoverResponsavelCommand, ValidationResult>, ResponsavelCommandHandler>();
-      services.AddScoped<IRequestHandler<AdicionarEnderecoCommand, ValidationResult>, ResponsavelCommandHandler>();
       services.AddScoped<IRequestHandler<ObterResponsavelCommand, ValidationResult>, ResponsavelCommandHandler>();
 
       // Events

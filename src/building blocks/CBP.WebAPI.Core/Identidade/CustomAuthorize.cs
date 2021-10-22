@@ -14,8 +14,9 @@ namespace CBP.WebAPI.Core.Identidade
     {
       var nivelDeAcesso = ObtemNivelDeAcesso(claimValue);
 
-      return context.User.Identity.IsAuthenticated &&
+      var verdade = context.User.Identity.IsAuthenticated &&
              context.User.Claims.Any(c => c.Type == claimName && short.Parse(c.Value) >= nivelDeAcesso);
+      return verdade;
     }
 
     private static short ObtemNivelDeAcesso(string claimValue)

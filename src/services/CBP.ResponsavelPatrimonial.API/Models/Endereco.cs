@@ -13,8 +13,6 @@ namespace CBP.ResponsavelPatrimonial.API.Models
     public string Cidade { get; private set; }
     public string Estado { get; private set; }
     public Guid ResponsavelId { get; private set; }
-
-    // EF Relation
     public Responsavel Responsavel { get; protected set; }
 
     protected Endereco() { }
@@ -31,5 +29,8 @@ namespace CBP.ResponsavelPatrimonial.API.Models
       Estado = estado;
       ResponsavelId = responsavelId;
     }
+
+    public void AtribuirResponsavelId(Guid id) => ResponsavelId = id;
+    public Endereco CriarEndereco() => new Endereco();
   }
 }

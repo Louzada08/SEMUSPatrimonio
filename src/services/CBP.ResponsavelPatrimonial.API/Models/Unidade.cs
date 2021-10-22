@@ -6,6 +6,11 @@ namespace CBP.ResponsavelPatrimonial.API.Models
 {
   public class Unidade : Entity, IAggregateRoot
   {
+    public string Nome { get; private set; }
+
+    private readonly List<Responsavel> _responsavel;
+    public IReadOnlyCollection<Responsavel> Responsavel => _responsavel;
+
     public Unidade(string nome, List<Responsavel> responsaveis)
     {
       Nome = nome;
@@ -14,10 +19,5 @@ namespace CBP.ResponsavelPatrimonial.API.Models
 
     public Unidade() { }
 
-    public string Nome { get; private set; }
-    public Guid ResponsavelId { get; private set; }
-
-    private readonly List<Responsavel> _responsavel;
-    public IReadOnlyCollection<Responsavel> Responsavel => _responsavel;
   }
 }

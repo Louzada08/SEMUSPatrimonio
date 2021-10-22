@@ -11,6 +11,10 @@ namespace CBP.WebApp.MVC.AutoMapper
     {
       CreateMap<ResponsavelViewModel, ResponsavelDTO> ()
         .ForMember(d => d.Funcao, o => o.MapFrom(s => s.Funcao.ToString()))
+        .ForMember(d => d.Endereco, o => o.MapFrom(s => s.Endereco))
+        .ReverseMap();
+
+      CreateMap<EnderecoViewModel, EnderecoDTO>()
         .ReverseMap();
 
       CreateMap<UsuarioRegistro, UsuarioDTO>()

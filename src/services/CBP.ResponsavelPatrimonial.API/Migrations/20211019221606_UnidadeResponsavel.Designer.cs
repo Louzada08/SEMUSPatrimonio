@@ -3,15 +3,17 @@ using System;
 using CBP.ResponsavelPatrimonial.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CBP.ResponsavelPatrimonial.API.Migrations
 {
     [DbContext(typeof(ResponsavelContext))]
-    partial class ResponsavelContextModelSnapshot : ModelSnapshot
+    [Migration("20211019221606_UnidadeResponsavel")]
+    partial class UnidadeResponsavel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,7 +81,7 @@ namespace CBP.ResponsavelPatrimonial.API.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
-                    b.Property<Guid>("UnidadeId")
+                    b.Property<Guid?>("UnidadeId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
@@ -99,6 +101,9 @@ namespace CBP.ResponsavelPatrimonial.API.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
+                    b.Property<Guid>("ResponsavelId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.ToTable("Unidade");
@@ -116,8 +121,7 @@ namespace CBP.ResponsavelPatrimonial.API.Migrations
                 {
                     b.HasOne("CBP.ResponsavelPatrimonial.API.Models.Unidade", "Unidade")
                         .WithMany("Responsavel")
-                        .HasForeignKey("UnidadeId")
-                        .IsRequired();
+                        .HasForeignKey("UnidadeId");
 
                     b.OwnsOne("CBP.Core.DomainObjects.Email", "Email", b1 =>
                         {
