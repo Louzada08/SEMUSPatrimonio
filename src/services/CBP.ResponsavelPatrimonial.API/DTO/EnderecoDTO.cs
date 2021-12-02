@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace CBP.WebApp.MVC.DTO
+namespace CBP.ResponsavelPatrimonial.API.DTO
 {
   public class EnderecoDTO
   {
@@ -15,6 +12,6 @@ namespace CBP.WebApp.MVC.DTO
     public string Cidade { get; set; }
     public string Estado { get; set; }
     public Guid ResponsavelId { get; set; }
-    public ResponsavelDTO Responsavel { get; set; }
   }
+
 }

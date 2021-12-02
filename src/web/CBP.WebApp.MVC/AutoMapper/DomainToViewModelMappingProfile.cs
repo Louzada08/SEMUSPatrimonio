@@ -14,8 +14,8 @@ namespace CBP.WebApp.MVC.AutoMapper
         .ForMember(d => d.Endereco, o => o.MapFrom(s => s.Endereco))
         .ReverseMap();
 
-      CreateMap<EnderecoViewModel, EnderecoDTO>()
-        .ReverseMap();
+      //CreateMap<EnderecoViewModel, EnderecoDTO>()
+      //  .ReverseMap();
 
       CreateMap<UsuarioRegistro, UsuarioDTO>()
         .ForMember(d => d.Email, o => o.MapFrom(s => s.Email))

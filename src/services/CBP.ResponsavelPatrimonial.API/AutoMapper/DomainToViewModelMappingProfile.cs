@@ -11,9 +11,10 @@ namespace CBP.ResponsavelPatrimonial.API.AutoMapper
       CreateMap<Responsavel, ResponsavelDTO>()
         .ForMember(d => d.Email, m => m.MapFrom(o => o.Email.Endereco))
         .ForMember(d => d.Funcao, m => m.MapFrom(o => o.Funcao))
+        .ForMember(d => d.EnderecoDTO, m => m.MapFrom(o => o.Endereco))
         .ReverseMap();
 
-      CreateMap<Endereco, EnderecoDTO>();
+     // CreateMap<Endereco, EnderecoDTO>();
 
     }
 

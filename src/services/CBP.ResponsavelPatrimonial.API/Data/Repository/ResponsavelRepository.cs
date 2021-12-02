@@ -23,7 +23,11 @@ namespace CBP.ResponsavelPatrimonial.API.Data.Repository
 
     public async Task<Responsavel> GetResponsavelId(Guid id)
     {
-      return await _context.Responsaveis.FirstOrDefaultAsync(u => u.Id == id);
+      var respEnd = await _context.Responsaveis
+          .Include(e => e.Endereco)
+          .FirstOrDefaultAsync(e => e.Id == id);
+      
+      return respEnd;
     }
 
     public async Task<IEnumerable<Responsavel>> ObterTodos()
