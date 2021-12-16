@@ -5,27 +5,24 @@ namespace CBP.BemPatrimonial.API.Models
 {
   public class Patrimonio : Entity, IAggregateRoot
   {
-    public int CodigoPatrimonio { get; set; }
-    public int? CodigoPatrimonioCP { get; set; }
-    public string Descricao { get; set; }
-    public Guid EstadoConservacaoId { get; set; }
-    public EstadoConservacao EstadoConservacoes { get; set; }
-    public int? NumeroNotaFiscal { get; set; }
-    public Guid LocalId { get; set; }
-    public Local Locais { get; set; }
-    public string LocalComplemento { get; set; }
-    public DateTime DataEntrada { get; set; }
-    public DateTime? DataTransferencia { get; set; }
-    public DateTime? DataDoacao { get; set; }
-    public DateTime? DataEmprestimo { get; set; }
-    public DateTime? DataRetornoEmprestimo { get; set; }
-    public DateTime? DataBaixa { get; set; }
-    public int QuantidadeEstoque { get; set; }
-    public decimal ValorBem { get; set; }
-    public Guid? PessoaResponsavelId { get; set; }
-    public Pessoa PessoasResponsaveis { get; set; }
-    public int NumeroProcessoBaixa { get; set; }
-    public int CodigoDaBaixa { get; set; }
-    public bool Ativo { get; set; }
+    public int CodigoPatrimonio { get; private set; }
+    public int? CodigoPatrimonioCP { get; private set; }
+    public string Descricao { get; private set; }
+    public EstadoConservacao EstadoConservacao { get; private set; }
+    public int? NumeroNotaFiscal { get; private set; }
+    public Guid LocalId { get; private set; }
+    public Local Locais { get; private set; }
+    public DateTime DataEntrada { get; private set; }
+    public DateTime? DataTransferencia { get; private set; }
+    public DateTime? DataDoacao { get; private  set; }
+    public DateTime? DataEmprestimo { get; private set; }
+    public DateTime? DataRetornoEmprestimo { get; private set; }
+    public DateTime? DataBaixa { get; private set; }
+    public int QuantidadeEstoque { get; private set; }
+    public Guid? ResponsavelId { get; private set; }
+    public Responsavel Responsavel { get; private set; }
+    public int NumeroProcessoBaixa { get; private set; }
+    public int CodigoDaBaixa { get; private set; }
+    public bool Ativo { get; private set; }
   }
 }

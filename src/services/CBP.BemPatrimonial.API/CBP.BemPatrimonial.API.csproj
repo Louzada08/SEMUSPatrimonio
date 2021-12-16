@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Enums\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\building blocks\CBP.Core\CBP.Core.csproj" />
     <ProjectReference Include="..\..\building blocks\CBP.WebAPI.Core\CBP.WebAPI.Core.csproj" />
   </ItemGroup>
