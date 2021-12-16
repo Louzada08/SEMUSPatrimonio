@@ -1,7 +1,7 @@
 ﻿using System;
 using CBP.Core.DomainObjects;
 
-namespace CBP.ResponsavelPatrimonial.API.Models
+namespace CBP.BemPatrimonial.API.Models
 {
   public class Responsavel : Entity, IAggregateRoot
   {

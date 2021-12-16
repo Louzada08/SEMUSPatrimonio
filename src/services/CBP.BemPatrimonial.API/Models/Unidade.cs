@@ -1,8 +1,7 @@
-﻿using System;
+﻿using CBP.Core.DomainObjects;
 using System.Collections.Generic;
-using CBP.Core.DomainObjects;
 
-namespace CBP.ResponsavelPatrimonial.API.Models
+namespace CBP.BemPatrimonial.API.Models
 {
   public class Unidade : Entity, IAggregateRoot
   {
